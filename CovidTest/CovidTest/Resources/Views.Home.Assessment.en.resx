@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Disclaimer_title" xml:space="preserve">
+    <value>Attention</value>
+  </data>
+  <data name="Disclaimer_paragraph1" xml:space="preserve">
+    <value>This self-assessment doesn't replace a medical or professional consultation, nor is it an official diagnostic test.</value>
+  </data>
+  <data name="Disclaimer_paragraph2" xml:space="preserve">
+    <value>COVID-19 can cause several symptoms, or it may not cause any symptoms at all. This self-assessment uses the most common and critical symptoms as a basis for recommending medical attention or emergency care.</value>
+  </data>
+  <data name="Disclaimer_ok" xml:space="preserve">
+    <value>GOT IT!</value>
+  </data>
+  <data name="Screen1_Step" xml:space="preserve">
+    <value>STEP 1 of 10</value>
+  </data>
+  <data name="Screen1_instruction" xml:space="preserve">
+    <value>First we need some information on your location (for statistical purposes we will only save your country and postal code)</value>
+  </data>
+  <data name="Screen1_postalcode" xml:space="preserve">
+    <value>Enter your postal code</value>
+  </data>
+  <data name="Screen1_country" xml:space="preserve">
+    <value>Select your country</value>
+  </data>
+  <data name="Screen1_Agreement_p1" xml:space="preserve">
+    <value>I agree to the</value>
+  </data>
+  <data name="Screen1_Agreement_p2" xml:space="preserve">
+    <value>privacy policy</value>
+  </data>
+  <data name="Screen1_Agreement_p4" xml:space="preserve">
+    <value>terms of service.</value>
+  </data>
+  <data name="Screen1_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Screen2_Step" xml:space="preserve">
+    <value>STEP 2 of 10</value>
+  </data>
+  <data name="Screen2_Question" xml:space="preserve">
+    <value>Have you been diagnosed by a doctor with or have ever had any of the following?</value>
+  </data>
+  <data name="Screen2_op1" xml:space="preserve">
+    <value>Lung condition (including asthma)</value>
+  </data>
+  <data name="Screen2_op2" xml:space="preserve">
+    <value>Heart disease</value>
+  </data>
+  <data name="Screen2_op3" xml:space="preserve">
+    <value>Diabetes</value>
+  </data>
+  <data name="Screen2_op4" xml:space="preserve">
+    <value>Cancer</value>
+  </data>
+  <data name="Screen2_op5" xml:space="preserve">
+    <value>Hypertension</value>
+  </data>
+  <data name="Screen2_op6" xml:space="preserve">
+    <value>Weakened immune system (because of AIDS, organ transplant, chemotherapy, etc.)</value>
+  </data>
+  <data name="Screen2_op7" xml:space="preserve">
+    <value>Severely overweight (BMI over 40)</value>
+  </data>
+  <data name="Screen2_op8" xml:space="preserve">
+    <value>Another chronic disease (of the kidneys, liver, nerves, etc.)</value>
+  </data>
+  <data name="Screen2_op9" xml:space="preserve">
+    <value>None of these</value>
+  </data>
+  <data name="Screen2_ButtBack" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Screen2_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Screen3_Step" xml:space="preserve">
+    <value>STEP 3 of 10</value>
+  </data>
+  <data name="Screen3_Question" xml:space="preserve">
+    <value>How old are you (or the person you are asking about)?</value>
+  </data>
+  <data name="Screen3_op1" xml:space="preserve">
+    <value>0-10</value>
+  </data>
+  <data name="Screen3_op2" xml:space="preserve">
+    <value>11-20</value>
+  </data>
+  <data name="Screen3_op3" xml:space="preserve">
+    <value>21-30</value>
+  </data>
+  <data name="Screen3_op4" xml:space="preserve">
+    <value>31-40</value>
+  </data>
+  <data name="Screen3_op5" xml:space="preserve">
+    <value>41-50</value>
+  </data>
+  <data name="Screen3_op6" xml:space="preserve">
+    <value>51-60</value>
+  </data>
+  <data name="Screen3_op7" xml:space="preserve">
+    <value>61-70</value>
+  </data>
+  <data name="Screen3_op8" xml:space="preserve">
+    <value>71-80</value>
+  </data>
+  <data name="Screen3_op9" xml:space="preserve">
+    <value>Over 80</value>
+  </data>
+  <data name="Screen3_ButtBack" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Screen3_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Screen4_Step" xml:space="preserve">
+    <value>STEP 4 of 10</value>
+  </data>
+  <data name="Screen4_Question" xml:space="preserve">
+    <value>Does it feel hot when you touch your chest or back? (or do you have a fever -- over 37.8º?)</value>
+  </data>
+  <data name="Screen4_op1" xml:space="preserve">
+    <value>YES</value>
+  </data>
+  <data name="Screen4_op2" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="Screen4_ButtBack" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Screen4_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Screen5.1_Step" xml:space="preserve">
+    <value>STEP 5 of 10</value>
+  </data>
+  <data name="Screen5.1_Question" xml:space="preserve">
+    <value>Do you have a new, continous cough?</value>
+  </data>
+  <data name="Screen5.1_Specification_New1" xml:space="preserve">
+    <value>New:</value>
+  </data>
+  <data name="Screen5.1_Specification_New2" xml:space="preserve">
+    <value>means a cough that you haven´t had before, or if you have a chronic cough, it´s goten worse.</value>
+  </data>
+  <data name="Screen5.1_Specification_Continuous1" xml:space="preserve">
+    <value>Continuos:</value>
+  </data>
+  <data name="Screen5.1_Specification_Continuous2" xml:space="preserve">
+    <value>means coughing repeatedly.</value>
+  </data>
+  <data name="Screen5.1_op1" xml:space="preserve">
+    <value>YES</value>
+  </data>
+  <data name="Screen5.1_op2" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="Screen5.1_ButtBack" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Screen5.1_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Screen5.2_Step" xml:space="preserve">
+    <value>STEP 5 of 10</value>
+  </data>
+  <data name="Screen5.2_Question" xml:space="preserve">
+    <value>Is the cough dry?</value>
+  </data>
+  <data name="Screen5.2_Specification_Dry1" xml:space="preserve">
+    <value>Dry:</value>
+  </data>
+  <data name="Screen5.2_Specification_Dry2" xml:space="preserve">
+    <value>means it´s tickly and doesn´t produce any phlegm (thick mucus).</value>
+  </data>
+  <data name="Screen5.2_op1" xml:space="preserve">
+    <value>YES</value>
+  </data>
+  <data name="Screen5.2_op2" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="Screen5.2_ButtBack" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Screen5.2_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Results_Screen_Green_Title" xml:space="preserve">
+    <value>RESULTS</value>
+  </data>
+  <data name="Results_Screen_Green_p1" xml:space="preserve">
+    <value>Based on your self-assessment, you are unlikely to have Coronavirus.</value>
+  </data>
+  <data name="Results_Screen_Green_p2" xml:space="preserve">
+    <value>As you reported:</value>
+  </data>
+  <data name="Results_Screen_Green_p3" xml:space="preserve">
+    <value>You are not hot to touch on your chest or back.</value>
+  </data>
+  <data name="Results_Screen_Green_p4" xml:space="preserve">
+    <value>You do not have a new, continuous cough.</value>
+  </data>
+  <data name="Results_Screen_Green_p5" xml:space="preserve">
+    <value>At this time, please:</value>
+  </data>
+  <data name="Results_Screen_Green_p6" xml:space="preserve">
+    <value>Wash your hands with soap and water frequently – for at least 20 seconds.</value>
+  </data>
+  <data name="Results_Screen_Green_p7" xml:space="preserve">
+    <value>Practice social distancing to protect yourself and others. Remember those who show no signs or symptoms of Coronavirus can still carry (and spread) it.</value>
+  </data>
+  <data name="Results_Screen_Green_Recom" xml:space="preserve">
+    <value>Read more about how to prevent the spread of Coronavirus</value>
+  </data>
+  <data name="Results_Screen_Green_ButtExit" xml:space="preserve">
+    <value>EXIT</value>
+  </data>
+  <data name="Results_Screen_Hey_Title" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Results_Screen_Hey_p1" xml:space="preserve">
+    <value>Based on the symptoms you reported, you may have coronavirus (COVID-19).</value>
+  </data>
+  <data name="Results_Screen_Hey_p2" xml:space="preserve">
+    <value>We'll ask you some more questions to evaluate your situation, and let you know what to do next.</value>
+  </data>
+  <data name="Results_Screen_Hey_p3" xml:space="preserve">
+    <value>Then:</value>
+  </data>
+  <data name="Results_Screen_Hey_p4" xml:space="preserve">
+    <value>Make your way home (if you aren't already there).</value>
+  </data>
+  <data name="Results_Screen_Hey_p5" xml:space="preserve">
+    <value>Take the most direct route (if using public transportation).</value>
+  </data>
+  <data name="Results_Screen_Hey_p6" xml:space="preserve">
+    <value>Try not to touch anything.</value>
+  </data>
+  <data name="Results_Screen_Hey_p7" xml:space="preserve">
+    <value>Cover your mouth and nose with a disposable tissue or at the elbow bend (not your hands) when coughing or sneezing.</value>
+  </data>
+  <data name="Results_Screen_Hey_p8" xml:space="preserve">
+    <value>To protect others, please do not visit a supermarket, doctor, pharmacy or hospital.</value>
+  </data>
+  <data name="Results_Screen_Hey_p9" xml:space="preserve">
+    <value>Read more recommendations about Coronavirus here</value>
+  </data>
+  <data name="Results_Screen_Hey_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Screen6_Step" xml:space="preserve">
+    <value>STEP 6 of 10</value>
+  </data>
+  <data name="Screen6_Question" xml:space="preserve">
+    <value>Please select the statement that is the most true for you</value>
+  </data>
+  <data name="Screen6_op1" xml:space="preserve">
+    <value>I feel completely out of breath and am unable to talk.</value>
+  </data>
+  <data name="Screen6_op2" xml:space="preserve">
+    <value>I can barely breathe and can speak only a few words.</value>
+  </data>
+  <data name="Screen6_op3" xml:space="preserve">
+    <value>I am starting to struggle to breathe: I am just able to get out a sentence.</value>
+  </data>
+  <data name="Screen6_op4" xml:space="preserve">
+    <value>I am noticing some changes in my breathing: it's a little more difficult for me to breathe, but I can still talk normally.</value>
+  </data>
+  <data name="Screen6_op5" xml:space="preserve">
+    <value>It is easy for me to breathe and I can carry a conversation.</value>
+  </data>
+  <data name="Screen6_ButtBack" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Screen6_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Results_Screen_Red_Title" xml:space="preserve">
+    <value>RESULTS</value>
+  </data>
+  <data name="Results_Screen_Red_p1" xml:space="preserve">
+    <value>Your symptoms indicate that you are struggling to breathe. This requires immediate medical attention.</value>
+  </data>
+  <data name="Results_Screen_Red_p2" xml:space="preserve">
+    <value>Contact your emergency hotline as soon as possible.</value>
+  </data>
+  <data name="Results_Screen_Red_p3" xml:space="preserve">
+    <value>Tell the operator that you may have coronavirus symptoms and provide:</value>
+  </data>
+  <data name="Results_Screen_Red_p4" xml:space="preserve">
+    <value>your address</value>
+  </data>
+  <data name="Results_Screen_Red_p5" xml:space="preserve">
+    <value>your phone number in case you get cut off</value>
+  </data>
+  <data name="Results_Screen_Red_p6" xml:space="preserve">
+    <value>Don't be alarmed if the ambulance crew arrives wearing protective clothing.</value>
+  </data>
+  <data name="Results_Screen_Red_p7" xml:space="preserve">
+    <value>This is so that the virus does not spread.</value>
+  </data>
+  <data name="Results_Screen_Red_p8" xml:space="preserve">
+    <value>Please do not go to a doctor or hospital instead of calling an ambulance.</value>
+  </data>
+  <data name="Results_Screen_Red_ButtExit" xml:space="preserve">
+    <value>EXIT</value>
+  </data>
+  <data name="Screen7_Step" xml:space="preserve">
+    <value>STEP 7 of 10</value>
+  </data>
+  <data name="Screen7_Instruction1" xml:space="preserve">
+    <value>Now let’s check your breathing</value>
+  </data>
+  <data name="Screen7_Instruction2" xml:space="preserve">
+    <value>Please stand, or sit up straight, and relax.</value>
+  </data>
+  <data name="Screen7_Instruction3.1" xml:space="preserve">
+    <value>We are going to ask you to</value>
+  </data>
+  <data name="Screen7_Instruction3.2" xml:space="preserve">
+    <value>count the amount of times you breathe</value>
+  </data>
+  <data name="Screen7_Instruction3.3" xml:space="preserve">
+    <value>in one minute.</value>
+  </data>
+  <data name="Screen7_Instruction4" xml:space="preserve">
+    <value>You should count an inhale and exhale as 1.</value>
+  </data>
+  <data name="Screen7_Instruction5" xml:space="preserve">
+    <value>Please make sure to count and try to remember it, as we will ask for your answer afterwards.</value>
+  </data>
+  <data name="Screen7_Instruction6.1" xml:space="preserve">
+    <value>When you are comfortable, relaxed, and ready, please press </value>
+  </data>
+  <data name="Screen7_Instruction6.2" xml:space="preserve">
+    <value>‘start’.</value>
+  </data>
+  <data name="Screen7_ButtStart" xml:space="preserve">
+    <value>START</value>
+  </data>
+  <data name="Activity_prep1" xml:space="preserve">
+    <value>Please take a deep breath and prepare yourself to count each breath.</value>
+  </data>
+  <data name="Activity_prep2" xml:space="preserve">
+    <value>Begin in…</value>
+  </data>
+  <data name="Activity_Screen_line1" xml:space="preserve">
+    <value>Count your breaths,</value>
+  </data>
+  <data name="Activity_Screen_line2" xml:space="preserve">
+    <value>inhale and exhale count as 1.</value>
+  </data>
+  <data name="Activity_Screen_restart" xml:space="preserve">
+    <value>If you want to restart the clock</value>
+  </data>
+  <data name="Activity_ButtRestart" xml:space="preserve">
+    <value>RESTART</value>
+  </data>
+  <data name="Screen8_Step" xml:space="preserve">
+    <value>STEP 8 of 10</value>
+  </data>
+  <data name="Screen8_Intro" xml:space="preserve">
+    <value>Based on the exercise you just did, please answer the following questions:</value>
+  </data>
+  <data name="Screen8_Question1" xml:space="preserve">
+    <value>A) How many breaths did you take within the timeframe of one minute?</value>
+  </data>
+  <data name="Screen8_Question2" xml:space="preserve">
+    <value>B) Think about your breathing yesterday. Compared to yesterday, how is your breathing now?</value>
+  </data>
+  <data name="Screen8_op1" xml:space="preserve">
+    <value>It's better</value>
+  </data>
+  <data name="Screen8_op2" xml:space="preserve">
+    <value>It's worse</value>
+  </data>
+  <data name="Screen8_op3" xml:space="preserve">
+    <value>It's about the same</value>
+  </data>
+  <data name="Screen8_ButtBack" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Screen8_ButtNext" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Screen9_Step" xml:space="preserve">
+    <value>STEP 9 of 10</value>
+  </data>
+  <data name="Screen9_Question" xml:space="preserve">
+    <value>Do you have any of the following symptoms?</value>
+  </data>
+  <data name="Screen9_Line" xml:space="preserve">
+    <value>Please select all that apply:</value>
+  </data>
+  <data name="Screen9_op1" xml:space="preserve">
+    <value>Suddenly become confused, or much more confused than normal</value>
+  </data>
+  <data name="Screen9_op2" xml:space="preserve">
+    <value>Choking</value>
+  </data>
+  <data name="Screen9_op3" xml:space="preserve">
+    <value>Lips turning blue</value>
+  </data>
+  <data name="Screen9_op4" xml:space="preserve">
+    <value>None of these</value>
+  </data>
+  <data name="Screen9_ButtBack" xml:space="preserve">
+    <value>BACK</value>
+  </data>
+  <data name="Screen9_ButtFinish" xml:space="preserve">
+    <value>NEXT</value>
+  </data>
+  <data name="Results_Screen_Orange_Title" xml:space="preserve">
+    <value>RESULTS</value>
+  </data>
+  <data name="Results_Screen_Orange_p1" xml:space="preserve">
+    <value>Based on the symptoms you reported, you might have a Coronavirus infection.</value>
+  </data>
+  <data name="Results_Screen_Orange_p2" xml:space="preserve">
+    <value>Please call your National Coronavirus Helpline, or try to contact your doctor</value>
+  </data>
+  <data name="Results_Screen_Orange_p3" xml:space="preserve">
+    <value>The operator/doctor will ask you more questions about your symptoms and tell you what to do next. Describe all your symptoms in detail, including your breathing frequency (based on the exercise) and how you are feeling today compared to yesterday.</value>
+  </data>
+  <data name="Results_Screen_Orange_p4" xml:space="preserve">
+    <value>You need to stay away from others until you have received further guidance. </value>
+  </data>
+  <data name="Results_Screen_Orange_p5" xml:space="preserve">
+    <value>Please do not visit a supermarket, doctor, pharmacy or hospital.</value>
+  </data>
+  <data name="Results_Screen_Orange_ButtExit" xml:space="preserve">
+    <value>EXIT</value>
+  </data>
+  <data name="Results_Screen_Yellow_Title" xml:space="preserve">
+    <value>RESULTS</value>
+  </data>
+  <data name="Results_Screen_Yellow_p1" xml:space="preserve">
+    <value>You have symptoms of coronavirus (COVID-19).</value>
+  </data>
+  <data name="Results_Screen_Yellow_p2" xml:space="preserve">
+    <value>You and those you live with need to stay at home.</value>
+  </data>
+  <data name="Results_Screen_Yellow_p3.1" xml:space="preserve">
+    <value>As a precaution, you and those you live with</value>
+  </data>
+  <data name="Results_Screen_Yellow_p3.2" xml:space="preserve">
+    <value>must follow the advice of the authorities and quarantine.</value>
+  </data>
+  <data name="Results_Screen_Yellow_p3.3" xml:space="preserve">
+    <value>This means you must:</value>
+  </data>
+  <data name="Results_Screen_Yellow_p4.1" xml:space="preserve">
+    <value>Not leave your home for any reason during this period</value>
+  </data>
+  <data name="Results_Screen_Yellow_p4.2" xml:space="preserve">
+    <value>Not go out to buy food or pick up medicine – have it delivered, or ask someone to buy them for you and drop it off at your door</value>
+  </data>
+  <data name="Results_Screen_Yellow_p4.3" xml:space="preserve">
+    <value>Not have any visitors, such as friends and family (only those you live with should be in your home)</value>
+  </data>
+  <data name="Results_Screen_Yellow_p5" xml:space="preserve">
+    <value>To protect others, please do not visit a supermarket, doctor, pharmacy or hospital.</value>
+  </data>
+  <data name="Results_Screen_Yellow_p6" xml:space="preserve">
+    <value>Testing for coronavirus is not needed for those who are self-isolating.</value>
+  </data>
+  <data name="Results_Screen_Yellow_p7" xml:space="preserve">
+    <value>Keep tracking your symptoms daily.</value>
+  </data>
+  <data name="Results_Screen_Yellow_recom" xml:space="preserve">
+    <value>Read more about self-isolating</value>
+  </data>
+  <data name="Results_Screen_Yellow_ButtExit" xml:space="preserve">
+    <value>EXIT</value>
+  </data>
+  <data name="Screen1_search" xml:space="preserve">
+    <value>Search your address</value>
+  </data>
+  <data name="WelcomeScreenTitle" xml:space="preserve">
+    <value>WELCOME TO THE SELF-CHECK AREA!</value>
+  </data>
+  <data name="WelcomeScreenWhoAssessing" xml:space="preserve">
+    <value>How would you like us to call you or the person you are assessing?</value>
+  </data>
+  <data name="WelcomeScreenWhoAssessing2" xml:space="preserve">
+    <value>(By entering the names of those you’re assessing you can track results separately)</value>
+  </data>
+  <data name="WelcomeScreenWhoAssessingExists" xml:space="preserve">
+    <value>Who are we assessing now?</value>
+  </data>
+  <data name="WelcomeScreenWhoAssessingPlaceHolder" xml:space="preserve">
+    <value>Enter Name/ Nickname</value>
+  </data>
+  <data name="WelcomeScreenWhoSomeoneElse" xml:space="preserve">
+    <value>Someone else</value>
+  </data>
+  <data name="Screen1_Agreement_p3" xml:space="preserve">
+    <value>and</value>
+  </data>
+</root>

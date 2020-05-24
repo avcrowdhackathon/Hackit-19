@@ -1,0 +1,123 @@
+﻿@using CovidTest.Controllers;
+@{
+    ViewData["Title"] = "My Results";
+
+    Assesment assesment = (Assesment)ViewData["Results"];
+}
+<div class="container" style="background-color:white; min-height:650px;">
+    @if (assesment != null && assesment.PartitionKey != "0")
+    {
+        <div class="row" style="padding:20px 100px 10px 100px;">
+            <div class="col-sm">
+                <h1 style="color:#707070; font-family:Poppins; font-size:30px; text-align: left;">Latest Assessment:</h1>
+
+                <p style="color:#707070;font-family:Poppins; font-size:22px;">Date: @DateTime.Parse(assesment.RowKey).ToString("dd/MM/yyyy")</p>
+            </div>
+            <div class="col-sm">
+
+            </div>
+        </div>
+        if (assesment.Evaluation == 1)
+        {
+
+            <div class="row" style="padding:20px 100px 100px 100px;">
+                <div class="col-sm">
+                    <img style="width:80%; margin-bottom:20px;border-radius: 25px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" src="~/images/green warning 4@4x.png" />
+                    <p style="color:#707070;font-family:Poppins; font-size:22px;">As you reported:</p>
+                    <p style="color:#707070;font-family:Poppins; font-size:20px;"> • You are not hot to touch on your chest or back.</p>
+                    <p style="color:#707070;font-family:Poppins; font-size:20px;"> • You do not have a new, continuous cough.</p>
+                </div>
+                <div class="col-sm">
+                    <p style="color:#707070;font-family:Poppins; font-size:20px;"> <b>At this time, please:</b></p>
+                    <p style="color:#707070;font-family:Poppins; font-size:20px;"> • Wash your hands with soap and water frequently  – for at least 20 seconds.</p>
+                    <p style="color:#707070;font-family:Poppins; font-size:20px;"> • Practice social distancing.</p>
+                    <a href="/Home/Assessment" role="button" class="btn btn-secondary" style="color:white;background-color:#233d40; font-family:Poppins; font-size:22px; padding: 0.375rem 0.75rem;">CHECK MY SYMPTOMS AGAIN</a>
+                </div>
+            </div>
+        }
+        else if (assesment.Evaluation == 2)
+        {
+            <div class="row" style="padding:20px 100px 100px 100px;">
+                <div class="col-sm">
+                    <img style="width: 80%;margin-bottom:20px;border-radius: 25px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" src="~/images/yellow warning@4x.png" />
+                </div>
+                <div class="col-sm">
+                    <p style="color:#F9CC3D;font-family:Poppins;font-size:20px;"><b>You have symptoms of coronavirus (COVID-19). </b></p>
+                    <p style="color:#707070;font-family:Poppins; font-size:18px; margin-top:-16px;">You and those you live with need to stay at home. </p>
+                    <p style="color:#707070;font-family:Poppins; font-size:14px;">As a precaution, you and those you live with <b style="color:#F9CC3D;">must follow authorities' advice and do quarantine.</b> This means you must: </p>
+                    <p style="color:#707070;font-family:Poppins; font-size:14px;">- not leave your home for any reason during this period</p>
+                    <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- not go out to buy food or pick up medicine – have it delivered, or ask someone to buy them for you and drop it off at your door </p>
+                    <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- not have any visitors, such as friends and family (only those you live with should be in your home) </p>
+                    <p style="color:#707070;font-family:Poppins;margin-top:18px; font-size:14px;"><b>Please avoid sharing personal items like dishes, utensils, bedding and towels. Please do wash your hands with soap and water frequently, for at least 20 seconds.</b></p>
+                    <p style="color:#707070;font-family:Poppins; font-size:14px;">You can use your yard (if you have one) as long as it is private (meaning it is not shared with people from other units). </p>
+                    <p style="color:#F9CC3D;font-family:Poppins;margin-top:14px; font-size:18px;"><b>To protect others, please do not visit a supermarket, doctor, pharmacy or hospital. </b></p>
+                    <p style="color:#F9CC3D;font-family:Poppins;margin-top:14px; font-size:18px;"><b>Testing for coronavirus is not needed for those who are self-isolating. </b></p>
+                    <p style="color:#707070;font-family:Poppins; font-size:18px;"><b>Keep tracking your symptoms daily.</b></p>
+                    <div class="row">
+                        <div class="col-sm">
+                            @*<a id="buttMyResults" role="button" style="color:white;background-color:#15C5D8; font-family:Poppins; font-size:22px; padding: 0.75rem 5rem; margin-left:auto;margin-right:auto;" name="next" href="/Home/Results" class="btn">Results</a>*@
+                        </div>
+                        <div class="col-sm">
+                            <a style="color:white;background-color:#D81515; font-family:Poppins; font-size:22px; padding: 0.75rem 6.3rem; margin-left:auto;margin-right:auto;" name="next" class="btn" href="/Home" role="button">Exit</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                }
+                else if (assesment.Evaluation == 3)
+                {
+
+                <div class="row" style="padding:20px 100px 10px 100px;">
+                    <div class="col-sm">
+                        <img style="width:80%;margin-bottom:20px;border-radius: 15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" src="~/images/orange warning 3@4x.png" />
+
+                    </div>
+                    <div class="col-sm">
+                        <p style="color:#ed7611;font-family:Poppins;margin-top:18px; font-size:20px;"><b>• Please call and speak to a nurse now</b></p>
+                        <p style="color:#ed7611;font-family:Poppins; font-size:18px;"><b>• Your symptoms suggest that you might have a coronavirus infection.</b></p>
+                        <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">The nurse will ask you more questions about your symptoms and tell you what to do next.</p>
+                        <p style="color:#ed7611;font-family:Poppins; font-size:18px;"><b>• You need to stay away from others until you have spoken to a nurse.</b></p>
+                        <p style="color:#15C5D8;font-family:Poppins; font-size:14px; margin-top:-16px;"><b onclick="goToIsolation()" style="text-decoration: underline;cursor:pointer;">Read more about self-isolating</b></p>
+                        <p style="color:#ed7611;font-family:Poppins; font-size:18px;"><b>• To protect others, please do not visit a supermarket, doctor, pharmacy or hospital.</b></p>
+                        <a href="/Home/Assessment" role="button" class="btn btn-secondary" style="color:white;background-color:#233d40; font-family:Poppins; font-size:22px; padding: 0.375rem 0.75rem;">CHECK MY SYMPTOMS AGAIN</a>
+                    </div>
+                </div>
+                }
+                else if (assesment.Evaluation == 4)
+                {
+                <div class="row" style="padding:20px 100px 10px 100px;">
+                    <div class="col-sm">
+                        <img style="width:80%;margin-bottom:20px;border-radius: 15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" src="~/images/red warning 3@4x.png" />
+
+                    </div>
+                    <div class="col-sm">
+                        <p style="color:#D81515;font-family:Poppins; font-size:14px;text-align: left;"> <b>•Your symptoms indicate that you are struggling to breathe. This requires immediate medical attention.</b></p>
+                        <p style="color:#D81515;font-family:Poppins; font-size:14px;text-align: left;"> <b>•Tell the operator that you may have coronavirus symptoms and provide:</b></p>
+                        <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: left;margin-top: -16px;"> - your location</p>
+                        <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: left;margin-top: -16px;">- your phone number in case you get cut off</p>
+                        <p style="color:#D81515;font-family:Poppins; font-size:14px;text-align: left;"> <b>•Don't be alarmed if the ambulance crew arrives wearing protective clothing.</b></p>
+                        <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: left;margin-top: -16px;"> This is so that the virus does not spread.</p>
+                        <p style="color:#D81515;font-family:Poppins; font-size:14px;text-align: left;"> <b>•Please do not go to a doctor or hospital instead of calling an ambulance.</b></p>
+                        <a href="/Home/Assessment" role="button" class="btn btn-secondary" style="color:white;background-color:#233d40; font-family:Poppins; font-size:22px; padding: 0.375rem 0.75rem;">CHECK MY SYMPTOMS AGAIN</a>
+                    </div>
+                </div>
+
+                }
+                }
+                else
+                {
+                <div class="row" style="padding:20px 100px 10px 100px;">
+                    <div class="col-sm">
+                        <h1 style="color:#707070; font-family:Poppins; font-size:30px; text-align: left;">Latest Assessment:</h1>
+
+                        <p style="color:#707070;font-family:Poppins; font-size:22px;">Date: You don´t have any Assesment</p>
+                    </div>
+                    <div class="col-sm">
+                    </div>
+                </div>
+                <div class="row" style="padding:20px 100px 10px 100px;">
+                    <a href="/Home/Assessment" role="button" class="btn btn-secondary" style="color:white;background-color:#233d40; font-family:Poppins; font-size:22px; padding: 0.375rem 0.75rem;">CHECK MY SYMPTOMS</a>
+                </div>
+
+                }
+            </div>

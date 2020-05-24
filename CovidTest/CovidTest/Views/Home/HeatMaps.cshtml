@@ -1,0 +1,597 @@
+﻿@using CovidTest.Controllers;
+@using System.Globalization;
+@model SelectCountry;
+@{
+    ViewData["Title"] = "Heat Maps";
+    Assesment assesment = (Assesment)ViewData["User"];
+}
+<link rel="stylesheet" href="~/css/example-commons.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+    #share {
+        display: none;
+        float: right;
+        font-size: 14px;
+        line-height: 170%;
+    }
+
+    #map {
+        height: 100%;
+        position: absolute;
+    }
+
+    /*.btn {
+        padding: 0px;
+    }*/
+
+    .symbol {
+        display: inline !important;
+        float: right;
+    }
+
+    #search-here {
+        z-index: 999;
+        width: 12em;
+        height: 3em;
+        /*position: absolute;*/
+        border-radius: 0.5em;
+        box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+        background-color: #eee;
+        text-align: center;
+        line-height: 3em;
+        font-weight: bold;
+        font-size: 1.2em;
+        /*top: 0;
+        bottom: 0;
+        margin: auto;
+        right: 0;
+        left: 0;*/
+        cursor: pointer;
+        position: absolute;
+        bottom: 8%;
+        left: 40%;
+        display: none;
+    }
+
+    /*#postCode {
+        z-index: 999;
+        width: 12em;
+        border-radius: 0.5em;
+        position: absolute;
+        top: 15%;
+        left: 24%;
+    }
+    #selectCountry {
+        z-index: 999;
+        width: 12em;
+        border-radius: 0.5em;
+        position: absolute;
+        top: 15%;
+        left: 40%;
+    }*/
+    .message-window {
+        position: absolute;
+        /*width: 27%;*/
+        width: 320px;
+        z-index: 777;
+        left: 0;
+        top: 5%;
+    }
+</style>
+<div class="wrapper" style="background-color:white; padding: 30px;height:90vh;">
+    
+    <div class="demo-wrapper" style="margin-top:-10px; width:100%; float:right; height:85vh;overflow: hidden;position: relative;">
+        <div class="message-window">
+            <div style="float:right;"> <button type="button" id="buttonHideTab" style=" border-radius: 0  0.5em  0.5em 0; float:right; color:gray; height:60px;padding:4px;" class="photo-details-messages btn btn-light"><i class="fas fa-caret-left"></i></button> </div>
+            <div id="cos" style="background-color:white;padding:10px;float:left;border-radius: 0.5em;width: 300px;">
+                <input id="autocomplete"
+                       class="form-control mr-sm-2" style="margin-bottom: 10px;"
+                       placeholder="Enter your address"
+                       onFocus="geolocate()"
+                       type="text" />
+                <input id="postCode" class="form-control mr-sm-2" style="margin-bottom: 10px;" type="search" placeholder="Postal Code" aria-label="Post Code">
+                <select id="selectCountry" class="browser-default custom-select" style="margin-bottom: 10px;" asp-for="country"
+                        asp-items="(List<SelectListItem>)@ViewData["Countries"]">
+                    <option>Please select country</option>
+                </select>
+                <button type="button" style="float:right;" onclick="search()" class="photo-details-messages btn btn-info btn-lg"><i class="fas fa-search"></i></button>
+            </div>
+          
+        </div>
+        <div id="map" style="position: relative;">
+        </div>
+        <div id="search-here" onclick="getMaps()">Update Map</div>
+    </div>
+    <div style="clear:both;"> </div>
+</div>
+@*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=APIKEY&libraries=visualization,places"></script>*@
+<script type="text/javascript">
+    
+    $('.photo-details-messages').click(function () {
+
+        var hidden = $('.message-window');
+        if (hidden.hasClass('visible')) {
+            $('#buttonHideTab').html('<i class="fas fa-caret-left"></i>');
+            hidden.animate({ "left": "0" }, "slow").removeClass('visible');
+        } else {
+            $('#buttonHideTab').html('<i class="fas fa-caret-right"></i>');
+            hidden.animate({ "left": "-300px" }, "slow").addClass('visible');
+        }
+    });
+
+    var placeSearch, autocomplete;
+
+    var componentForm = {
+        //street_number: 'short_name',
+        //route: 'long_name',
+        //locality: 'long_name',
+        //administrative_area_level_1: 'short_name',
+        countryauto: 'long_name',
+        postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search predictions to
+        // geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), { types: ['geocode'] });
+
+        // Avoid paying for data that you don't need by restricting the set of
+        // place fields that are returned to just the address components.
+        autocomplete.setFields(['address_component']);
+
+        // When the user selects an address from the drop-down, populate the
+        // address fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        ////for (var component in componentForm) {
+        ////    document.getElementById(component).value = '';
+        ////    document.getElementById(component).disabled = false;
+        ////}
+
+        document.getElementById("postCode").value = '';
+        $("#selectCountry").val("Please select country");
+
+        // Get each component of the address from the place details,
+        // and then fill-in the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            //if (addressType != "country")
+            //{
+            //if (componentForm[addressType]) {
+            //    var val = place.address_components[i][componentForm[addressType]];
+            //    document.getElementById(addressType).value = val;
+            //    }
+            //}
+            if (addressType == "postal_code")
+            {
+                var val = place.address_components[i]['short_name'];
+                document.getElementById("postCode").value = val;
+            }
+            else if (addressType == "country")
+            {
+                var val = place.address_components[i]['long_name'];
+                $("#selectCountry").val(val);
+            }
+        }
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle(
+                    { center: geolocation, radius: position.coords.accuracy });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+
+    var countryData;
+     $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetInfoCountries", "Home")',
+                  dataType: "json",
+                  cache: false,
+                  async: false,
+         success: function (data) {
+             countryData = data;
+             console.log(countryData);
+                      
+                    },
+                    error: function (errorMsg) {
+
+                    }
+    });
+
+    var datosDetalleMapa;
+    var datosDibujoMapa;
+    var latlng;
+        var map, heatmap;
+    var markers = [];
+    var circles = [];
+    var infoWindows = [];
+    var infowindow;
+    var geocoder;
+        var styles = {
+            default: null,
+            hide: [
+                {
+                    featureType: 'poi.business',
+                    stylers: [{ visibility: 'off' }]
+                }
+            ]
+        };
+    function initMap() {
+
+            geocoder= new google.maps.Geocoder();
+            latlng = getStartingLatLng();
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center:latlng,
+                mapTypeControlOptions: {
+                    mapTypeIds: []
+                },
+                minZoom: 8, maxZoom: 17,
+                mapTypeId: 'roadmap',
+                fullscreenControl: false,
+                streetViewControl: false
+            });
+            map.setOptions({ styles: styles['hide'] });
+            var primer = true;
+            google.maps.event.addListener(map, 'idle', function () {
+              
+                $("#search-here").show();
+                if (primer) {
+                    $("#search-here").hide();
+                    primer = false;
+                }
+            });
+
+            getMaps();
+            
+            $("#search-here").hide();
+            initAutocomplete();
+    }
+
+        function getStartingLatLng()
+        {
+            var LatStart = 41.378633;
+            var LngStart = 2.1523914;
+            LatStart = 37.9843892;
+            LngStart = 23.7274669;
+            @*@if (assesment != null && assesment.PartitionKey != "0"&& assesment.LatPost!=0)
+            {
+                @:LatStart = @assesment.LatPost.ToString().Replace(',','.');
+                @:LngStart = @assesment.LongPost.ToString().Replace(',','.');
+            }*@
+            return new google.maps.LatLng(LatStart, LngStart);
+        }
+   
+        function getMaps()
+        {
+
+            map.data.forEach(function (feature) {
+                // filter...
+                map.data.remove(feature);
+            });
+            while (markers.length) { markers.pop().setMap(null); }
+            while (circles.length) { circles.pop().setMap(null); }
+            while (infoWindows.length) { infoWindows.pop().setMap(null); }
+            $("#search-here").hide();
+            latlng = map.center;
+            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+
+                    var postalCodeRes = "";
+                    var countryRes = "";
+                    var administrative_area_level_5Res = "";
+                    var administrative_area_level_4Res = "";
+                    var administrative_area_level_3Res = "";
+                    var administrative_area_level_2Res = "";
+                    var administrative_area_level_1Res = "";
+
+                    for (i = 0; i < results.length; i++) {
+                        for (j = 0; j < results[i].address_components.length; j++) {
+                            if (results[i].address_components[j].types[0] == 'country')
+                            {
+                                countryRes = results[i].address_components[j].long_name;
+                            }
+                            else if (results[i].address_components[j].types[0] == 'postal_code') {
+                                postalCodeRes = results[i].address_components[j].long_name;
+                            }
+                            else if (results[i].address_components[j].types[0] == 'administrative_area_level_5')
+                            {
+                                administrative_area_level_5Res = results[i].address_components[j].long_name;
+                            }
+                            else if (results[i].address_components[j].types[0] == 'administrative_area_level_4') {
+                                administrative_area_level_4Res = results[i].address_components[j].long_name;
+                            }
+                            else if (results[i].address_components[j].types[0] == 'administrative_area_level_3') {
+                                administrative_area_level_3Res = results[i].address_components[j].long_name;
+                            }
+                            else if (results[i].address_components[j].types[0] == 'administrative_area_level_2') {
+                                administrative_area_level_2Res = results[i].address_components[j].long_name;
+                            }
+                            else if (results[i].address_components[j].types[0] == 'administrative_area_level_1') {
+                                administrative_area_level_1Res = results[i].address_components[j].long_name;
+                            }
+                           
+                        }
+                    }
+                    console.log(postalCodeRes);
+                    console.log(administrative_area_level_5Res);
+                    console.log(administrative_area_level_4Res);
+                    console.log(administrative_area_level_3Res);
+                    console.log(administrative_area_level_3Res);
+                    console.log(administrative_area_level_1Res);
+                    console.log(countryRes);
+                    
+                    var queryDraw = "";
+                    if (countryData[countryRes] != undefined)
+                    {
+                        console.log(countryData[countryRes].querylevel);
+                        if (countryData[countryRes].querylevel.toLowerCase() == "administrative_area_level_5") {
+                            queryDraw = administrative_area_level_5Res;
+                        }
+                        else if (countryData[countryRes].querylevel.toLowerCase() == "administrative_area_level_4") {
+                            queryDraw = administrative_area_level_4Res;
+                        }
+                        else if (countryData[countryRes].querylevel.toLowerCase() == "administrative_area_level_3") {
+                            queryDraw = administrative_area_level_3Res;
+                        }
+                        else if (countryData[countryRes].querylevel.toLowerCase() == "administrative_area_level_2") {
+                            queryDraw = administrative_area_level_2Res;
+                        }
+                        else if (countryData[countryRes].querylevel.toLowerCase() == "administrative_area_level_1") {
+                            queryDraw = administrative_area_level_1Res;
+                        }
+                        else
+                        {
+                            queryDraw = countryRes;
+                        }
+                    }
+                    else
+                    {
+                        queryDraw = administrative_area_level_2Res;
+                    }
+                $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetInfoMaps", "Home")',
+                data: { LatCtr: latlng.lat(), LngCtr: latlng.lng(), Country: countryRes, Level: queryDraw },
+                dataType: "json",
+                cache: false,
+                async: false,
+                success: function (data) {
+                    datosDetalleMapa = data.resultMapsDic;
+                    datosDibujoMapa = data.resultMapsDrawDic;
+
+                    for (k = 0; k < data.maps.length; k++)
+                    {
+                        map.data.loadGeoJson(data.maps[k]);
+                    }
+
+                    infowindow = new google.maps.InfoWindow({
+                        pixelOffset: new google.maps.Size(0, -10)
+                    });
+                    map.data.addListener('click', function (evt) {
+                       
+                        var SD_NAME = evt.feature.getProperty('NAME_3');
+                        var SD_TYPE = evt.feature.getProperty('ENGTYPE_3');
+                        if (countryData[countryRes] != undefined) {
+                            if (countryData[countryRes].drawlevel == "Administrative_area_level_1") {
+                                SD_NAME = evt.feature.getProperty('NAME_1');
+                                SD_TYPE = evt.feature.getProperty('ENGTYPE_1');
+                            }
+                            else if (countryData[countryRes].drawlevel == "Administrative_area_level_2") {
+                                SD_NAME = evt.feature.getProperty('NAME_2');
+                                SD_TYPE = evt.feature.getProperty('ENGTYPE_2');
+                            }
+                            else if (countryData[countryRes].drawlevel == "Administrative_area_level_3") {
+                                SD_NAME = evt.feature.getProperty('NAME_3');
+                                SD_TYPE = evt.feature.getProperty('ENGTYPE_3');
+                            }
+                            else if (countryData[countryRes].drawlevel == "Administrative_area_level_4") {
+                                SD_NAME = evt.feature.getProperty('NAME_4');
+                                SD_TYPE = evt.feature.getProperty('ENGTYPE_4');
+                            }
+                            else if (countryData[countryRes].drawlevel == "Administrative_area_level_5") {
+                                SD_NAME = evt.feature.getProperty('NAME_5');
+                                SD_TYPE = evt.feature.getProperty('ENGTYPE_5');
+                            }
+                        }
+                        console.log(SD_NAME);
+                        console.log(SD_TYPE);
+                        var contentStringb = "No Data Available";
+                        if (datosDibujoMapa[SD_NAME] != undefined) {
+
+                            if (datosDibujoMapa[SD_NAME].evaluations > 0)
+                            {
+                            contentStringb = '<div id="content">' +
+                                '<div id="siteNotice">' +
+                                '</div>' +
+                                '<h5 id="firstHeading" class="firstHeading">Reported Cases</h5>' +
+                                    '<h6 id="firstHeading" class="firstHeading">'+SD_TYPE  + ': ' +SD_NAME + '</h6>' +
+                                '<div id="bodyContent">' +
+                                '<p><b>' + "High Risk : " + '</b>' + datosDibujoMapa[SD_NAME].evaluationRed + '</p> ' +
+                                '<p><b>' + "Medium-risk : " + '</b>' + datosDibujoMapa[SD_NAME].evaluationOrange + '</p> ' +
+                                '<p><b>' + "Low risk: " + '</b>' + datosDibujoMapa[SD_NAME].evaluationYellow + '</p> ' +
+                                '<p><b>' + "Low risk: " + '</b>' + datosDibujoMapa[SD_NAME].evaluationGreen + '</p> ' +
+                                    '</div>';
+                            }
+                            else
+                            {
+                                contentStringb = '<div id="content">' +
+                                    '<div id="siteNotice">' +
+                                    '</div>' +
+                                    '<h5 id="firstHeading" class="firstHeading">Reported Cases</h5>' +
+                                    '<h6 id="firstHeading" class="firstHeading">' + SD_TYPE + ': ' + SD_NAME + '</h6>' +
+                                    '<div id="bodyContent">' +
+                                    '<p><b>No Cases Reported</b></p> ' +
+                                    '</div>';
+                            }
+                        }
+                        infowindow.setContent(contentStringb);
+                        infowindow.setPosition(evt.latLng);
+                        infowindow.open(map);
+                    });
+
+                    map.data.setStyle(function (feature) {
+                        var SD_NAME = feature.getProperty('NAME_3');
+                        if (countryData[countryRes] != undefined) {
+                            if (countryData[countryRes].drawlevel == "Administrative_area_level_1")
+                            {
+                                SD_NAME = feature.getProperty('NAME_1');
+                            }
+                            else if (countryData[countryRes].drawlevel == "Administrative_area_level_2") {
+                                SD_NAME = feature.getProperty('NAME_2');
+                            }
+                            else if (countryData[countryRes].drawlevel == "Administrative_area_level_3") {
+                                SD_NAME = feature.getProperty('NAME_3');
+                            }
+                            else if (countryData[countryRes].drawlevel == "Administrative_area_level_4") {
+                                SD_NAME = feature.getProperty('NAME_4');
+                            }
+                            else if (countryData[countryRes].drawlevel == "Administrative_area_level_5") {
+                                SD_NAME = feature.getProperty('NAME_5');
+                            }
+                        }
+                        var colorInt = 0;
+                        if (datosDibujoMapa[SD_NAME] != undefined)
+                        {
+                            colorInt = datosDibujoMapa[SD_NAME].color;
+                        }
+
+                        var color = "gray";
+                        if (colorInt == 1) {
+                            color = "green";
+                        }
+                        else if (colorInt == 2) {
+                            color = "yellow";
+                        }
+                        else if (colorInt == 3) {
+                            color = "orange";
+                        }
+                        else if (colorInt == 4) {
+                            color = "red";
+                        }
+                        return {
+                            fillColor: color,
+                            strokeWeight: 1
+                        }
+                    });
+
+                    infoWindows.push(infowindow);
+                   
+                    for (j = 0; j < data.resultMaps.length; j++)
+                    {
+
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            title: data.resultMaps[j].name,
+                            position: new google.maps.LatLng(data.resultMaps[j].lat, data.resultMaps[j].long)
+                        });
+                        var circle = new google.maps.Circle({
+                            map: map,                           
+                            position: new google.maps.LatLng(data.resultMaps[j].lat, data.resultMaps[j].long),
+                            radius: 200,    // 10 miles in metres
+                            fillColor: '#AA0000',
+                            title: data.resultMaps[j].name,
+                            zIndex: 1000
+
+                        });
+                        circle.bindTo('center', marker, 'position');
+                        marker.setVisible(false);
+                        
+
+                        
+                        var infowindowCirc = new google.maps.InfoWindow({
+                            //content: contentStringMar,
+                            //id: data.resultMaps[j].name
+
+                        });
+                        //infowindowCirc.setContent(contentStringMar);
+                        google.maps.event.addListener(circle, 'mouseover', (function (circle) {
+                            return function () {
+                                var contentStringMar = '<div id="content">' +
+                                    '<div id="siteNotice">' +
+                                    '</div>' +
+                                    '<h5 id="firstHeading" class="firstHeading">Reported Cases</h5>' +
+                                    '<h6 id="firstHeading" class="firstHeading">Postal Code: ' + datosDetalleMapa[circle.title].name + '</h6>' +
+                                    '<div id="bodyContent">' +
+                                    '<p><b>' + "High Risk : " + '</b>' + datosDetalleMapa[circle.title].evaluationRed + '</p> ' +
+                                    '<p><b>' + "Medium-risk : " + '</b>' + datosDetalleMapa[circle.title].evaluationOrange + '</p> ' +
+                                    '<p><b>' + "Low risk: " + '</b>' + datosDetalleMapa[circle.title].evaluationYellow + '</p> ' +
+                                    '<p><b>' + "No risk: " + '</b>' + datosDetalleMapa[circle.title].evaluationGreen + '</p> ' +
+                                    '</div>';
+                                infowindowCirc.setContent(contentStringMar);
+                                infowindowCirc.open(map, circle);
+                                //infowindowCirc.setPosition(circle.position);
+                                //infowindowCirc.open(map);
+                            }
+                        })(circle));
+                        google.maps.event.addListener(circle, 'mouseout', function () {
+                            infowindowCirc.close();
+                        });
+
+                        markers.push(marker);
+                        circles.push(circle);
+                        infoWindows.push(infowindowCirc);
+                    }
+
+                },
+                error: function(errorMsg) {
+                //alert("Error, hay que seleccionar ambas revisiones para comparar");
+                }
+                });
+
+                } else {
+                    alert("Geocoder failed due to: " + status);
+                }
+            });
+        }
+
+        function center(lat, long)
+        {
+            map.setCenter(new google.maps.LatLng(lat, long));
+        }
+
+        function search()
+        {
+          $("#search-here").hide();
+          var zip = $("#postCode").val();
+          var address = $("#autocomplete").val();
+          var country = $("#selectCountry").val();
+          geocoder = new google.maps.Geocoder();
+          var addressb = address + ","+ zip + "," + country;
+          geocoder = new google.maps.Geocoder();
+          geocoder.geocode({
+              'address': addressb
+          }, function (results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+                  latlng = results[0].geometry.location;
+                  center(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                  getMaps();
+              }
+          });
+        }
+
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=APIKEY&libraries=visualization,places&callback=initMap&language=en"></script>
+@*<script type="text/javascript" src="~/js/CustomGoogleMapMarker.js"></script>*@
+

@@ -1,0 +1,394 @@
+﻿@using CovidTest.Controllers;
+@using System.Globalization;
+@model SelectCountry;
+@{
+    ViewData["Title"] = "Heat Maps";
+    Assesment assesment = (Assesment)ViewData["User"];
+}
+<link rel="stylesheet" href="~/css/example-commons.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+<style>
+    #share {
+        display: none;
+        float: right;
+        font-size: 14px;
+        line-height: 170%;
+    }
+
+    #map {
+        height: 100%;
+        position: absolute;
+    }
+
+    /*.btn {
+        padding: 0px;
+    }*/
+
+    .symbol {
+        display: inline !important;
+        float: right;
+    }
+
+    #search-here {
+        z-index: 999;
+        width: 12em;
+        height: 3em;
+        /*position: absolute;*/
+        border-radius: 0.5em;
+        box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+        background-color: #eee;
+        text-align: center;
+        line-height: 3em;
+        font-weight: bold;
+        font-size: 1.2em;
+        /*top: 0;
+        bottom: 0;
+        margin: auto;
+        right: 0;
+        left: 0;*/
+        cursor: pointer;
+        position: absolute;
+        bottom: 8%;
+        left: 40%;
+        display: none;
+    }
+
+    /*#postCode {
+        z-index: 999;
+        width: 12em;
+        border-radius: 0.5em;
+        position: absolute;
+        top: 15%;
+        left: 24%;
+    }
+    #selectCountry {
+        z-index: 999;
+        width: 12em;
+        border-radius: 0.5em;
+        position: absolute;
+        top: 15%;
+        left: 40%;
+    }*/
+    .message-window {
+        position: absolute;
+        /*width: 27%;*/
+        width: 320px;
+        z-index: 777;
+        left: 0;
+        top: 5%;
+    }
+</style>
+<div class="wrapper" style="background-color:white; padding: 30px;height:90vh;">
+    <div id="TestMaps" style="width:30%; float:left;">
+
+        </div>
+    <div class="demo-wrapper" style="margin-top:-10px; width:70%; float:right; height:85vh;overflow: hidden;position: relative;">
+        <div class="message-window">
+            <div style="float:right;"> <button type="button" id="buttonHideTab" style=" border-radius: 0  0.5em  0.5em 0; float:right; color:gray; height:60px;padding:4px;" class="photo-details-messages btn btn-light"><i class="fas fa-caret-left"></i></button> </div>
+            <div id="cos" style="background-color:white;padding:10px;float:left;border-radius: 0.5em;width: 300px;">
+                <input id="postCode" class="form-control mr-sm-2" style="margin-bottom: 10px;" type="search" placeholder="Postal Code" aria-label="Post Code">
+                <select id="selectCountry" class="browser-default custom-select" style="margin-bottom: 10px;" asp-for="country"
+                        asp-items="(List<SelectListItem>)@ViewData["Countries"]">
+                    <option>Please select country</option>
+                </select>
+                <button type="button" style="float:right;" onclick="search()" class="photo-details-messages btn btn-info btn-lg"><i class="fas fa-search"></i></button>
+            </div>
+
+        </div>
+        <div id="map" style="position: relative;">
+        </div>
+        <div id="search-here" onclick="getMaps()">Update Map</div>
+    </div>
+    <div style="clear:both;"> </div>
+</div>
+@*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=APIKEY&libraries=visualization,places"></script>*@
+<script type="text/javascript">
+    
+    $('.photo-details-messages').click(function () {
+
+        var hidden = $('.message-window');
+        if (hidden.hasClass('visible')) {
+            $('#buttonHideTab').html('<i class="fas fa-caret-left"></i>');
+            hidden.animate({ "left": "0" }, "slow").removeClass('visible');
+        } else {
+            $('#buttonHideTab').html('<i class="fas fa-caret-right"></i>');
+            hidden.animate({ "left": "-300px" }, "slow").addClass('visible');
+        }
+    });
+
+
+    var latlng;
+        var map, heatmap;
+    var markers = [];
+    var geocoder;
+        var styles = {
+            default: null,
+            hide: [
+                {
+                    featureType: 'poi.business',
+                    stylers: [{ visibility: 'off' }]
+                }
+            ]
+        };
+    function initMap() {
+
+        //$('.message-window').animate({ "left": "100%" }, "slow").addClass('visible');
+
+            geocoder= new google.maps.Geocoder();
+            latlng = getStartingLatLng();
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center:latlng,
+                mapTypeControlOptions: {
+                    mapTypeIds: []
+                },
+                minZoom: 8, maxZoom: 17,
+                mapTypeId: 'roadmap',
+                fullscreenControl: false,
+                streetViewControl: false
+            });
+            map.setOptions({ styles: styles['hide'] });
+            var primer = true;
+            google.maps.event.addListener(map, 'idle', function () {
+              
+                $("#search-here").show();
+                if (primer) {
+                    $("#search-here").hide();
+                    primer = false;
+                }
+            });
+
+            getMaps();
+            
+
+            //Ejemplo Circulos informativos
+            var infowindow = new google.maps.InfoWindow({});
+            var marker = new google.maps.Marker({
+                map: map,
+                position: latlng
+            });
+            var circle = new google.maps.Circle({
+                map: map,
+                position: latlng,
+                radius: 200,    // 10 miles in metres
+                fillColor: '#AA0000',
+                title: "contagiados 2",
+                zIndex:1000
+            
+            });
+        circle.bindTo('center', marker, 'position');
+        marker.setVisible(false);
+            var contentStringb = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h5 id="firstHeading" class="firstHeading">Reported Cases</h5>' +
+                '<div id="bodyContent">' +
+                '<p><b>' + "High Risk : " + '</b>' + 0 + '</p> ' +
+                '<p><b>' + "Medium-risk : " + '</b>' + 0 + '</p> ' +
+                '<p><b>' + "Low risk: " + '</b>' + 20 + '</p> ' +
+                '</div>';
+            google.maps.event.addListener(circle, 'mouseover', function () {
+                if (typeof this.title !== "undefined") {
+                    marker.setPosition(this.getCenter()); // get circle's center
+                    infowindow.setContent(contentStringb); // set content
+                    infowindow.open(map, marker); // open at marker's location
+                     // hide the marker
+                }
+            });
+            google.maps.event.addListener(circle, 'mouseout', function () {
+                infowindow.close();
+            });
+
+            //map.data.loadGeoJson('https://localhost:44344/Shapes/Greece/GRC_3_4_54.json');
+            //map.data.loadGeoJson('https://localhost:44344/Shapes/Greece/GRC_3_4_65.json');
+            //map.data.loadGeoJson('https://localhost:44344/Shapes/Greece/GRC_3_4_108.json');
+            //map.data.loadGeoJson('https://localhost:44344/Shapes/Greece/GRC_3_4_55.json');
+            
+            var src = 'https://hackit19.azurewebsites.net/images/ctb.kml';
+
+            //var ctaLayer = new google.maps.KmlLayer({
+            //    url: 'https://hackit19.azurewebsites.net/images/ctb.kml',
+            //    //url: 'https://localhost:44344/images/ol.kml',
+            //    map: map
+            //});
+            //var kmlLayer = new google.maps.KmlLayer(src, {
+            //    suppressInfoWindows: false,
+            //    preserveViewport: false,
+            //    map: map
+            //});
+            //map.data.loadGeoJson(
+            //    'https://localhost:44344/images/hola.geojson');
+            //map.data.loadGeoJson(
+            //    'https://localhost:44344/images/hola2.geojson');
+            //map.data.setStyle({
+            //    fillColor: 'green',
+            //    strokeWeight: 3
+            //});
+            //kmlLayer.addListener('click', function (event) {
+            //    alert("click");
+            //});
+            //heatmap = new google.maps.visualization.HeatmapLayer({
+            //    data: getPoints(),
+            //    map: map
+            //});
+            //heatmap.set('radius', heatmap.get('radius') ? null : 20);
+            $("#search-here").hide();
+
+
+            //geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+            //    if (status == google.maps.GeocoderStatus.OK) {
+            //        if (results[0]) {
+            //            for (j = 0; j < results[0].address_components.length; j++) {
+            //                if (results[0].address_components[j].types[0] == 'postal_code')
+            //                {
+            //                    //alert("Zip Code: " + results[0].address_components[j].short_name);
+            //                    zipcofg = results[0].address_components[j].short_name;
+            //                    var address = zipcofg +", spain";
+            //                    geocoder = new google.maps.Geocoder();
+            //                    geocoder.geocode({
+            //                        'address': address
+            //                    }, function (results, status) {
+            //                        if (status == google.maps.GeocoderStatus.OK) {
+            //                            var myOptions = {
+            //                                zoom: 14,
+            //                                center: results[0].geometry.location,
+            //                                mapTypeId: google.maps.MapTypeId.ROADMAP
+            //                            }
+            //                            map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+            //                            var marker = new google.maps.Marker({
+            //                                map: map,
+            //                                position: results[0].geometry.location
+            //                            });
+            //                        }
+            //                    });
+            //                }
+            //            }
+            //        }
+            //    } else {
+            //        alert("Geocoder failed due to: " + status);
+            //    }
+            //});
+        }
+
+   
+
+        function getStartingLatLng()
+        {
+            var LatStart = 41.378633;
+            var LngStart = 2.1523914;
+            LatStart = 37.9843892;
+            LngStart = 23.7274669;
+            @*@if (assesment != null && assesment.PartitionKey != "0"&& assesment.LatPost!=0)
+            {
+                @:LatStart = @assesment.LatPost.ToString().Replace(',','.');
+                @:LngStart = @assesment.LongPost.ToString().Replace(',','.');
+            }*@
+            return new google.maps.LatLng(LatStart, LngStart);
+        }
+
+    function getMunicipality(latlngSearch)
+    {
+        
+                            
+                            
+    }
+
+
+        function getMaps()
+        {
+
+            map.data.forEach(function (feature) {
+                // filter...
+                map.data.remove(feature);
+            });
+
+            
+            $("#search-here").hide();
+            latlng = map.center;
+            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                var contentStringb = '<div id="content">';
+                if (status == google.maps.GeocoderStatus.OK) {
+                    for (i = 0; i < results.length; i++) {
+                         
+                                contentStringb += '<p><b>' + results[i].address_components[0].types[0] + '</b>' + results[i].address_components[0].long_name + '</p> ';
+                       
+                    }
+                  
+                } else {
+                    alert("Geocoder failed due to: " + status);
+                }
+
+                contentStringb += '</div>';
+
+                $("#TestMaps").html(contentStringb);
+            });
+
+           
+        }
+
+        function center(lat, long)
+        {
+            map.setCenter(new google.maps.LatLng(lat, long));
+        }
+
+        function search()
+        {
+
+            $("#search-here").hide();
+            var zip = $("#postCode").val();
+            var fechaIni =  "";
+            var fechaFin = "";
+            var country = $("#selectCountry").val();
+            var dataMapa = "";
+            var pints = [];
+  $.ajax({
+    type: 'GET',
+    url: '@Url.Action("GetInfo", "Home")',
+      data: { ZipCode: zip, fechaIni: fechaIni, fechaFin: fechaFin },
+      dataType: "json",
+      cache: false,
+      async: false,
+      success: function (data) {
+          dataMapa = data;
+          //for (var i = 0; i < data.length; i++){
+
+          //    pints.push(new google.maps.LatLng(data[i].lat, data[i].long));
+          //}
+          geocoder = new google.maps.Geocoder();
+          var addressb = zip + "," + country;
+          geocoder = new google.maps.Geocoder();
+          geocoder.geocode({
+              'address': addressb
+          }, function (results, status) {
+              if (status == google.maps.GeocoderStatus.OK) {
+
+                  latlng = results[0].geometry.location;
+                  center(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+                  getMaps();
+                  //heatmap = new google.maps.visualization.HeatmapLayer({
+                  //    //data: getPointsa(),
+                  //    data: pints,
+                  //    map: map
+                  //});
+                  //heatmap.set('radius', heatmap.get('radius') ? null : 20);
+              }
+          });
+
+            },
+    error: function(errorMsg) {
+                //alert("Error, hay que seleccionar ambas revisiones para comparar");
+            }
+        });
+
+        }
+
+
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=APIKEY&libraries=visualization,places&callback=initMap&language=en"></script>
+@*<script type="text/javascript" src="~/js/CustomGoogleMapMarker.js"></script>*@
+

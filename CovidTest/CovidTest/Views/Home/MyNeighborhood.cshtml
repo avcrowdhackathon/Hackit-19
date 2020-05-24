@@ -1,0 +1,354 @@
+﻿@using CovidTest.Controllers;
+@using System.Globalization;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "My Neighborhood";
+    Assesment assesment = (Assesment)ViewData["User"];
+
+    bool InTest = (bool)ViewData["Construction"];
+}
+
+@if (!InTest)
+{
+    <link rel="stylesheet" href="~/css/example-commons.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        #share {
+            display: none;
+            float: right;
+            font-size: 14px;
+            line-height: 170%;
+        }
+
+        #map {
+            height: 100%;
+        }
+
+        /*.btn {
+            padding: 0px;
+        }*/
+
+        .symbol {
+            display: inline !important;
+            float: right;
+        }
+
+        #search-here {
+            z-index: 999;
+            width: 12em;
+            height: 3em;
+            /*position: absolute;*/
+            border-radius: 0.5em;
+            box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+            background-color: #eee;
+            text-align: center;
+            line-height: 3em;
+            font-weight: bold;
+            font-size: 1.2em;
+            /*top: 0;
+            bottom: 0;
+            margin: auto;
+            right: 0;
+            left: 0;*/
+            cursor: pointer;
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            display: none;
+        }
+
+        /* The popup bubble styling. */
+        .popup-bubble {
+            /* Position the bubble centred-above its parent. */
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -100%);
+            /* Style the bubble. */
+            background-color: white;
+            padding: 5px;
+            border-radius: 5px;
+            font-family: sans-serif;
+            overflow-y: auto;
+            max-height: 60px;
+            box-shadow: 0px 2px 10px 1px rgba(0,0,0,0.5);
+        }
+        /* The parent of the bubble. A zero-height div at the top of the tip. */
+        .popup-bubble-anchor {
+            /* Position the div a fixed distance above the tip. */
+            position: absolute;
+            width: 100%;
+            bottom: /* TIP_HEIGHT= */ 8px;
+            left: 0;
+        }
+            /* This element draws the tip. */
+            .popup-bubble-anchor::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                /* Center the tip horizontally. */
+                transform: translate(-50%, 0);
+                /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
+                width: 0;
+                height: 0;
+                /* The tip is 8px high, and 12px wide. */
+                border-left: 6px solid transparent;
+                border-right: 6px solid transparent;
+                border-top: /* TIP_HEIGHT= */ 8px solid white;
+            }
+        /* JavaScript will position this div at the bottom of the popup tip. */
+        .popup-container {
+            cursor: auto;
+            height: 0;
+            position: absolute;
+            /* The max width of the info window. */
+            width: 200px;
+        }
+    </style>
+    <div class="wrapper" style="background-color:white; padding: 30px;">
+        <div class="demo-wrapper" style="margin-top:-10px; width:100%; float:right; height:85vh;">
+            <div id="map" style="position: relative;">
+            </div>
+        </div>
+        <div style="clear:both;"> </div>
+    </div>
+    @*<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=APIKEY&libraries=visualization,places"></script>*@
+    <script type="text/javascript">
+        var latlng;
+        var map, heatmap;
+        var infowindow;
+        var selected = 0;
+        var markers = [];
+        var styles = {
+            default: null,
+            hide: [
+                {
+                    featureType: 'poi.business',
+                    stylers: [{ visibility: 'off' }]
+                }
+            ]
+        };
+        function initMap() {
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h5 id="firstHeading" class="firstHeading">How are you feeling?</h5>' +
+                '<img id="emot1" class="emot" src="../images/emotions/Emot1.png" onclick=clickEmot("1") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot2" class="emot" src="../images/emotions/Emot2.png" onclick=clickEmot("2") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot3" class="emot" src="../images/emotions/Emot3.png" onclick=clickEmot("3") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot4" class="emot" src="../images/emotions/Emot4.png" onclick=clickEmot("4") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +               
+                '<br/>' +
+                '<img id="emot5" class="emot" src="../images/emotions/Emot5.png" onclick=clickEmot("5") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot6" class="emot" src="../images/emotions/Emot6.png" onclick=clickEmot("6") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot7" class="emot" src="../images/emotions/Emot7.png" onclick=clickEmot("7") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot8" class="emot" src="../images/emotions/Emot8.png" onclick=clickEmot("8") style="width:30px;margin-left:5px;margin-bottom:5px;" />' + 
+                '<br/>' +
+                '<img id="emot9" class="emot" src="../images/emotions/Emot9.png" onclick=clickEmot("9") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot10" class="emot" src="../images/emotions/Emot10.png" onclick=clickEmot("10") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot11" class="emot" src="../images/emotions/Emot11.png" onclick=clickEmot("11") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot12" class="emot" src="../images/emotions/Emot12.png" onclick=clickEmot("12") style="width:30px;margin-left:5px;margin-bottom:5px;" />' + 
+                '<br/>' +
+                '<img id="emot13" class="emot" src="../images/emotions/Emot13.png" onclick=clickEmot("13") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot14" class="emot" src="../images/emotions/Emot14.png" onclick=clickEmot("14") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot15" class="emot" src="../images/emotions/Emot15.png" onclick=clickEmot("15") style="width:30px;margin-left:5px;margin-bottom:5px;" />' +
+                '<img id="emot16" class="emot" src="../images/emotions/Emot16.png" onclick=clickEmot("16") style="width:30px;margin-left:5px;margin-bottom:5px;" />' + 
+                '<div id="bodyContent">' +
+                '<br/>' +
+                '<input id="nameUser" class="form-control mr-sm-2" style="font-family:Poppins;" type="search" placeholder="Name / nickname" aria-label="Name">'+
+                '<br/>' +
+                '<button type="button" onclick="add()" style="float:right;" class="btn btn-info btn">Add</button>' +
+                '</div>' +
+                '</div>';
+            infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            var zipcofg = '';
+            latlng = getStartingLatLng();
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                center:latlng,
+                mapTypeControlOptions: {
+                    mapTypeIds: []
+                },
+                minZoom: 15, maxZoom: 18,
+                mapTypeId: 'roadmap'
+            });
+            map.setOptions({ styles: styles['hide'] });
+            google.maps.event.addListenerOnce(map, 'tilesloaded', fixMyPageOnce);
+
+            google.maps.event.addListener(map, 'click', function (event) {            
+                latlng = event.latLng;
+                setTimeout(placeMarker, 600);
+            });
+
+            function placeMarker() {
+                var marker=new google.maps.Marker({ position: latlng, map: map });
+                marker.setVisible(false); 
+                infowindow.open(map, marker);
+                
+                
+            }
+
+        }
+        function add() {
+
+            var icon = "../images/emotions/Emot" + selected+".png";
+            var gpmarker = new google.maps.MarkerImage(icon, null,  new google.maps.Point(0, 0),
+                new google.maps.Point(17, 34), new google.maps.Size(30, 30));
+
+            var image = {
+                url: icon,
+                size: new google.maps.Size(71, 71),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(0, 0),
+                labelOrigin: new google.maps.Point(10, 40),
+                scaledSize: new google.maps.Size(30, 30)
+            };
+            var marker = new google.maps.Marker(
+                {
+                    map: map,
+                    position: latlng,
+                    icon: image,
+                    title: $("#nameUser").val(),
+                    label: $("#nameUser").val(),
+                    labelOrigin: new google.maps.Point(9, 9)
+                }
+
+            );
+        }
+        function clickEmot(id) {
+            selected = id;
+            for (var i = 1; i < 17; i++) {
+                $("#emot" + i).css("border-style", "none");
+            }
+           
+            $("#emot"+id).css("border-style","dotted");
+        }
+    function fixMyPageOnce() {
+        var lastValidCenter = map.getCenter();
+        var allowedBounds = map.getBounds();
+        var bounds = map.getBounds();
+
+        google.maps.event.addListener(map, 'center_changed', function () {
+            if (allowedBounds.contains(map.getCenter())) {
+                // still within valid bounds, so save the last valid position
+                lastValidCenter = map.getCenter();
+                return;
+            }
+
+            // not valid anymore => return to last valid position
+            map.panTo(lastValidCenter);
+        });
+    }
+
+        function getStartingLatLng()
+        {
+            var LatStart = 41.378633;
+            var LngStart = 2.1523914;
+            LatStart = 37.9843892;
+            LngStart = 23.7274669;
+            @if (assesment != null && assesment.PartitionKey != "0"&& assesment.LatPost!=0)
+            {
+                @:LatStart = @assesment.LatPost.ToString().Replace(',','.');
+                @:LngStart = @assesment.LongPost.ToString().Replace(',','.');
+            }
+            return new google.maps.LatLng(LatStart, LngStart);
+        }
+
+        function center(lat, long)
+        {
+            map.setCenter(new google.maps.LatLng(lat, long));
+        }
+        function callback(results, status)
+        {
+            var rellenoLista = "";
+            if (status == google.maps.places.PlacesServiceStatus.OK)
+            {
+                for (var i = 0; i < results.length; i++)
+                {
+                    rellenoLista += '<div class="card">';
+                    rellenoLista += '<div class="card-body">';
+                    rellenoLista += '<h6 class="card-title" style="cursor:pointer;" onclick="center(' + results[i].geometry.location.lat() + ',' + results[i].geometry.location.lng()+')">' + results[i].name + '</h5>';
+                    rellenoLista += '<h7 class="card-subtitle mb-2 text-muted">' + results[i].vicinity + '</h6>';
+                    rellenoLista += '</div>';
+                    rellenoLista += '</div>';
+                    createMarker(results[i]);
+                }
+
+            }
+            $("#listaResultados").html(rellenoLista);
+        }
+        function createMarker(place) {
+            var placeLoc = place.geometry.location;
+            var icon = "";
+            var tipo = "";
+            if ($("#typePlace").val() == "supermarket") {
+                tipo = "Supermarket";
+                icon = "../images/cart.png";
+            }
+            else {
+                tipo = "Pharmacy";
+                icon = "../images/pharmacy.png";
+            }
+            var gpmarker = new google.maps.MarkerImage(icon, null, null, null, new google.maps.Size(30, 30));
+            var marker = new google.maps.Marker(
+                {
+                    map: map,
+                    position: place.geometry.location,
+                    icon: gpmarker,
+                    title:place.name
+                }
+
+            );
+            var abierto = "Closed";
+            if (place.opening_hours != null && place.opening_hours.open_now)
+            {
+                abierto = "Open";
+            }
+
+           var contentStringb = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<h5 id="firstHeading" class="firstHeading">'+tipo+'</h5>' +
+                '<div id="bodyContent">' +
+               '<p><b>' + "Name: " + '</b>' + place.name + '</p> ' +
+               '<p><b>' + "Status: " + '</b>' + abierto + '</p> ' +
+                '<p><b>' + "Address: " + '</b>' + place.vicinity+'</p> ' +
+               //'<p><b>' + "Wait: " + '</b> 10 minutes </p> ' +
+               '<button type="button" onclick="add()" class="btn btn-info btn-lg">Add Queue info</button>'+
+
+                '</div>';
+           var infowindowb = new google.maps.InfoWindow({
+                content: contentStringb
+            });
+            google.maps.event.addListener(marker, 'click', (function (marker) {
+                return function () {
+                    infowindowb.open(map, marker);
+                }
+            })(marker));
+            //google.maps.event.addListener(marker, 'mouseout', (function (marker) {
+            //    return function () {
+            //        infowindowb.close();
+            //    }
+            //})(marker));
+            markers.push(marker);
+        }
+
+
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=APIKEY&libraries=visualization,places&callback=initMap"></script>
+}
+else
+{
+    <div class="container" style="background-color:white; padding: 30px;">
+        <img style="width:40%; display: block;margin-left:auto;margin-right:auto;" src="~/images/under_construction2@4x.png" />
+    
+    </div>
+}
+

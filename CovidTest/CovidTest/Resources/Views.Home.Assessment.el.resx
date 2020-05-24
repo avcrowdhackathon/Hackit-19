@@ -1,0 +1,618 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Disclaimer_title" xml:space="preserve">
+    <value>Προσοχή</value>
+  </data>
+  <data name="Disclaimer_paragraph1" xml:space="preserve">
+    <value>Aυτή η αυτοαξιολόγηση δεν αντικαθιστά μία εξέταση από γιατρό ή κάποιον επαγγελματία, ούτε είναι μια επίσημη διαγνωστική δοκιμασία</value>
+  </data>
+  <data name="Disclaimer_paragraph2" xml:space="preserve">
+    <value>COVID19 προκαλεί μερικά συμπτώματα ή μπορεί να μην προκαλεί και κανένα. Οι συστάσεις αυτής της αυτοαξιολόγησης βασίζονται στα πιο κοινά και σημαντικά συμπτώματα κατά τη λήψη αποφάσεων που σχετίζονται με ιατρική και επείγουσα περίθαλψη.</value>
+  </data>
+  <data name="Disclaimer_ok" xml:space="preserve">
+    <value>ΚΑΤΑΛΑΒΑΙΝΩ</value>
+  </data>
+  <data name="Screen1_Step" xml:space="preserve">
+    <value>Βήμα 1 από 10</value>
+  </data>
+  <data name="Screen1_instruction" xml:space="preserve">
+    <value>Πρώτα χρειαζόμαστε κάποιες πληροφορίες σχετικά με την περιοχή σας (για στατιστικούς λόγους)</value>
+  </data>
+  <data name="Screen1_postalcode" xml:space="preserve">
+    <value>Ταχυδρομικός Κώδικας</value>
+  </data>
+  <data name="Screen1_country" xml:space="preserve">
+    <value>Επιλέξτε την χώρα σας</value>
+  </data>
+  <data name="Screen1_Agreement_p1" xml:space="preserve">
+    <value>Συμφωνώ με την </value>
+  </data>
+  <data name="Screen1_Agreement_p2" xml:space="preserve">
+    <value>πολιτική απορρήτου</value>
+  </data>
+  <data name="Screen1_Agreement_p3" xml:space="preserve">
+    <value>και</value>
+  </data>
+  <data name="Screen1_Agreement_p4" xml:space="preserve">
+    <value>τους όρους παροχής υπηρεσιών.</value>
+  </data>
+  <data name="Screen1_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Screen2_Step" xml:space="preserve">
+    <value>Βήμα 2 από 10</value>
+  </data>
+  <data name="Screen2_Question" xml:space="preserve">
+    <value>Σας έχει διαγνώσει κάποιος γιατρός ή είχατε κάποιο από τα παρακάτω;</value>
+  </data>
+  <data name="Screen2_op1" xml:space="preserve">
+    <value>Κατάσταση των πνευμόνων (συμπεριλαμβανομένου του άσθματος)</value>
+  </data>
+  <data name="Screen2_op2" xml:space="preserve">
+    <value>Καρδιακή νόσος</value>
+  </data>
+  <data name="Screen2_op3" xml:space="preserve">
+    <value>Διαβήτης</value>
+  </data>
+  <data name="Screen2_op4" xml:space="preserve">
+    <value>Καρκίνος</value>
+  </data>
+  <data name="Screen2_op5" xml:space="preserve">
+    <value>Υπέρταση</value>
+  </data>
+  <data name="Screen2_op6" xml:space="preserve">
+    <value>Αδύναμο ανοσοποιητικό σύστημα (λόγω AIDS, μεταμόσχευσης οργάνων, χημειοθεραπείας κ.λπ.)</value>
+  </data>
+  <data name="Screen2_op7" xml:space="preserve">
+    <value>Σοβαρά υπέρβαρο (ΔΜΣ άνω των 40)</value>
+  </data>
+  <data name="Screen2_op8" xml:space="preserve">
+    <value>Μια άλλη χρόνια ασθένεια (νεφρού, ήπατος, νεύρων κ.λπ.)</value>
+  </data>
+  <data name="Screen2_op9" xml:space="preserve">
+    <value>Κανένα από τα παραπάνω</value>
+  </data>
+  <data name="Screen2_ButtBack" xml:space="preserve">
+    <value>Πίσω</value>
+  </data>
+  <data name="Screen2_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Screen3_Step" xml:space="preserve">
+    <value>Βήμα 3 από 10</value>
+  </data>
+  <data name="Screen3_Question" xml:space="preserve">
+    <value>Πόσο χρονών είσαι;</value>
+  </data>
+  <data name="Screen3_op1" xml:space="preserve">
+    <value>0-10</value>
+  </data>
+  <data name="Screen3_op2" xml:space="preserve">
+    <value>11-20</value>
+  </data>
+  <data name="Screen3_op3" xml:space="preserve">
+    <value>21-30</value>
+  </data>
+  <data name="Screen3_op4" xml:space="preserve">
+    <value>31-40</value>
+  </data>
+  <data name="Screen3_op5" xml:space="preserve">
+    <value>41-50</value>
+  </data>
+  <data name="Screen3_op6" xml:space="preserve">
+    <value>51-60</value>
+  </data>
+  <data name="Screen3_op7" xml:space="preserve">
+    <value>61-70</value>
+  </data>
+  <data name="Screen3_op8" xml:space="preserve">
+    <value>71-80</value>
+  </data>
+  <data name="Screen3_op9" xml:space="preserve">
+    <value>Άνω των 80 ετών</value>
+  </data>
+  <data name="Screen3_ButtBack" xml:space="preserve">
+    <value>Πίσω</value>
+  </data>
+  <data name="Screen3_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Screen4_Step" xml:space="preserve">
+    <value>Βήμα 4 από 10</value>
+  </data>
+  <data name="Screen4_Question" xml:space="preserve">
+    <value>Νιώθετε ζεστό όταν αγγίζετε το στήθος ή την πλάτη σας; (ή έχετε πυρετό - πάνω από 37,8º;)</value>
+  </data>
+  <data name="Screen4_op1" xml:space="preserve">
+    <value>Ναι</value>
+  </data>
+  <data name="Screen4_op2" xml:space="preserve">
+    <value>Όχι</value>
+  </data>
+  <data name="Screen4_ButtBack" xml:space="preserve">
+    <value>Πίσω</value>
+  </data>
+  <data name="Screen4_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Screen5.1_Step" xml:space="preserve">
+    <value>Βήμα 5 από 10</value>
+  </data>
+  <data name="Screen5.1_Question" xml:space="preserve">
+    <value>Έχετε έναν νέο, συνεχή βήχα;</value>
+  </data>
+  <data name="Screen5.1_Specification_New1" xml:space="preserve">
+    <value>Νέος:</value>
+  </data>
+  <data name="Screen5.1_Specification_New2" xml:space="preserve">
+    <value>Δηλαδη έναν βήχα που δεν είχατε πριν ή σε περίπτωση που έχετε έναν χρόνιο βήχα, αυτός έγινε χειρότερος</value>
+  </data>
+  <data name="Screen5.1_Specification_Continuous1" xml:space="preserve">
+    <value>Συνεχής:</value>
+  </data>
+  <data name="Screen5.1_Specification_Continuous2" xml:space="preserve">
+    <value>Δηλαδή να βήχετε επαναλαμβανόμενα</value>
+  </data>
+  <data name="Screen5.1_op1" xml:space="preserve">
+    <value>Ναι</value>
+  </data>
+  <data name="Screen5.1_op2" xml:space="preserve">
+    <value>Όχι</value>
+  </data>
+  <data name="Screen5.1_ButtBack" xml:space="preserve">
+    <value>Πίσω</value>
+  </data>
+  <data name="Screen5.1_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Screen5.2_Step" xml:space="preserve">
+    <value>Βήμα 5 από 10</value>
+  </data>
+  <data name="Screen5.2_Question" xml:space="preserve">
+    <value>Είναι ξηρός ο βήχας;</value>
+  </data>
+  <data name="Screen5.2_Specification_Dry1" xml:space="preserve">
+    <value>βήχας</value>
+  </data>
+  <data name="Screen5.2_Specification_Dry2" xml:space="preserve">
+    <value>σημαίνει ότι είναι ασταθής και δεν παράγει φλέγμα (παχιά βλέννα).</value>
+  </data>
+  <data name="Screen5.2_op1" xml:space="preserve">
+    <value>Ναι</value>
+  </data>
+  <data name="Screen5.2_op2" xml:space="preserve">
+    <value>Όχι</value>
+  </data>
+  <data name="Screen5.2_ButtBack" xml:space="preserve">
+    <value>Πίσω</value>
+  </data>
+  <data name="Screen5.2_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Results_Screen_Green_Title" xml:space="preserve">
+    <value>Αποτελέσματα</value>
+  </data>
+  <data name="Results_Screen_Green_p1" xml:space="preserve">
+    <value>Με βάση τα συμπτώματα που αναφέρατε, είναι μάλλον απίθανο να έχετε το νέο Coronavirus (COVID19).</value>
+  </data>
+  <data name="Results_Screen_Green_p2" xml:space="preserve">
+    <value>Σύμφωνα με αυτά που αναφέρατε:</value>
+  </data>
+  <data name="Results_Screen_Green_p3" xml:space="preserve">
+    <value>Δεν νιώθετε ζεστός όταν αγγίζετε το στήθος σας ή την πλάτη σας (ή δεν έχετε πυρετό)</value>
+  </data>
+  <data name="Results_Screen_Green_p4" xml:space="preserve">
+    <value>Δεν έχετε έναν νέο συνεχή βήχα</value>
+  </data>
+  <data name="Results_Screen_Green_p5" xml:space="preserve">
+    <value>Σε αυτή τη φάση, παρακαλώ:</value>
+  </data>
+  <data name="Results_Screen_Green_p6" xml:space="preserve">
+    <value>Πλένετε συχνά τα χέρια σας με σαπούνι και νερό - για τουλάχιστον 20 δευτερόλεπτα</value>
+  </data>
+  <data name="Results_Screen_Green_p7" xml:space="preserve">
+    <value>Εφαρμόστε κοινωνική απόσταση</value>
+  </data>
+  <data name="Results_Screen_Green_Recom" xml:space="preserve">
+    <value>Διαβάστε περισσότερα σχετικά με τον τρόπο πρόληψης της εξάπλωσης του Coronavirus</value>
+  </data>
+  <data name="Results_Screen_Green_ButtExit" xml:space="preserve">
+    <value>Έξοδος</value>
+  </data>
+  <data name="Results_Screen_Hey_Title" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Results_Screen_Hey_p1" xml:space="preserve">
+    <value>Με βάση τα συμπτώματα που αναφέρατε, μπορεί να έχετε τον νέο Κορωνοϊό (COVID19)</value>
+  </data>
+  <data name="Results_Screen_Hey_p2" xml:space="preserve">
+    <value>Θα σας κάνουμε μερικές ακόμη ερωτήσεις για να αξιολογήσετε την κατάστασή σας και θα σας ενημερώσουμε τι πρέπει να κάνετε στη συνέχεια.</value>
+  </data>
+  <data name="Results_Screen_Hey_p3" xml:space="preserve">
+    <value>Εν τω μεταξύ:</value>
+  </data>
+  <data name="Results_Screen_Hey_p4" xml:space="preserve">
+    <value>Πηγαίνετε σπίτι σας (αν δεν είστε ήδη εκεί)</value>
+  </data>
+  <data name="Results_Screen_Hey_p5" xml:space="preserve">
+    <value>Πάρτε την πιο άμεση διαδρομή (αν χρησιμοποιείτε μέσα μαζικής μεταφοράς)</value>
+  </data>
+  <data name="Results_Screen_Hey_p6" xml:space="preserve">
+    <value>Προσπαθήστε να μην αγγίξετε κάτι</value>
+  </data>
+  <data name="Results_Screen_Hey_p7" xml:space="preserve">
+    <value>Καλύψτε το στόμα και τη μύτη σας με μίας χρήσης ιστού ή στην καμπή του αγκώνα (όχι στα χέρια σας) όταν βήχετε ή φτάρνισμα.</value>
+  </data>
+  <data name="Results_Screen_Hey_p8" xml:space="preserve">
+    <value>Για την προστασία των άλλων μην επισκεφθείτε ένα σουπερμάρκετ, γιατρό, φαρμακείο ή νοσοκομείο.</value>
+  </data>
+  <data name="Results_Screen_Hey_p9" xml:space="preserve">
+    <value>Διαβάστε περισσότερες προτάσεις για το Coronavirus εδώ</value>
+  </data>
+  <data name="Results_Screen_Hey_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Screen6_Step" xml:space="preserve">
+    <value>Βήμα 6 από 10</value>
+  </data>
+  <data name="Screen6_Question" xml:space="preserve">
+    <value>Παρακαλώ επιλέξτε την δήλωση που είναι πιο κοντά σε αυτό που αισθάνεστε</value>
+  </data>
+  <data name="Screen6_op1" xml:space="preserve">
+    <value>Νιώθω σαν να μην μπορώ να πάρω ανάσα και δεν μπορώ να μιλήσω</value>
+  </data>
+  <data name="Screen6_op2" xml:space="preserve">
+    <value>Παίρνω ανάσα με πολλή δυσκολία και μπορώ να πω μερικές λέξεις μόνο</value>
+  </data>
+  <data name="Screen6_op3" xml:space="preserve">
+    <value>Αρχίζω να έχω δυσκολία με την ανάσα μου αλλά μπορώ να πω μια πρόταση</value>
+  </data>
+  <data name="Screen6_op4" xml:space="preserve">
+    <value>ΠΑρατηρώ κάποιες αλλαγές στην αναπνοή μου, μου είναι λιγο πιο δύσκολο να πάρω ανάσα αλλά μπορώ ακόμα να μιλάω κανονικά</value>
+  </data>
+  <data name="Screen6_op5" xml:space="preserve">
+    <value>Μου είναι εύκολο να πάρω ανάσα και μπορώ ακόμα να μιλάω κανονικά</value>
+  </data>
+  <data name="Screen6_ButtBack" xml:space="preserve">
+    <value>Πίσω</value>
+  </data>
+  <data name="Screen6_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Results_Screen_Red_Title" xml:space="preserve">
+    <value>Αποτελέσματα</value>
+  </data>
+  <data name="Results_Screen_Red_p1" xml:space="preserve">
+    <value>Τα συμπτώματά σας δείχνουν ότι σας ειναι πολύ δύσκολο να αναπνεύσετε. Αυτό χρειάζεται ΑΜΕΣΗ αντιμετώπιση από γιατρό. </value>
+  </data>
+  <data name="Results_Screen_Red_p2" xml:space="preserve">
+    <value>Μπορεί να χρειαστείτε ιατρική βοήθεια. Επικοινωνήστε με τη γραμμή έκτακτης ανάγκης το συντομότερο δυνατό</value>
+  </data>
+  <data name="Results_Screen_Red_p3" xml:space="preserve">
+    <value>Πείτε στο τηλέφωνο ότι μπορεί να έχετε συμπτώματα του κορωνοϊού και δώστε:</value>
+  </data>
+  <data name="Results_Screen_Red_p4" xml:space="preserve">
+    <value>την διεύθυνσή σας</value>
+  </data>
+  <data name="Results_Screen_Red_p5" xml:space="preserve">
+    <value>τον αριθμό τηλεφώνου σας για την περίπτωση που θα πέσει η γραμμή</value>
+  </data>
+  <data name="Results_Screen_Red_p6" xml:space="preserve">
+    <value>Μην ανησυχήσετε αν το προσωπικό του ασθενοφόρου φοράει προστατευτικό εξοπλισμό. </value>
+  </data>
+  <data name="Results_Screen_Red_p7" xml:space="preserve">
+    <value>Αυτό γίνεται για να μην εξαπλωθεί ο ιός. </value>
+  </data>
+  <data name="Results_Screen_Red_p8" xml:space="preserve">
+    <value>Μην πάτε σε γιατρό ή σε νοσοκομείο μόνος/η σας. Πάρτε τηλέφωνο πρώτα</value>
+  </data>
+  <data name="Results_Screen_Red_ButtExit" xml:space="preserve">
+    <value>Έξοδος</value>
+  </data>
+  <data name="Screen7_Step" xml:space="preserve">
+    <value>Βήμα 7 από 10</value>
+  </data>
+  <data name="Screen7_Instruction1" xml:space="preserve">
+    <value>Τώρα ας εξετάσουμε την αναπνοή σας. </value>
+  </data>
+  <data name="Screen7_Instruction2" xml:space="preserve">
+    <value>Παρακαλώ σταθείτε ή καθίστε με ίσια την πλάτη και ηρεμήστε. </value>
+  </data>
+  <data name="Screen7_Instruction3.1" xml:space="preserve">
+    <value>Θα σας ζητήσουμε να  </value>
+  </data>
+  <data name="Screen7_Instruction3.2" xml:space="preserve">
+    <value>να μετρήσετε τον αριθμό των αναπνοών σας σε ένα λεπτό. </value>
+  </data>
+  <data name="Screen7_Instruction3.3" xml:space="preserve">
+    <value> σε ένα λεπτό. </value>
+  </data>
+  <data name="Screen7_Instruction4" xml:space="preserve">
+    <value>Να μετράτε την εισπνοή και την εκπνοή σαν 1. </value>
+  </data>
+  <data name="Screen7_Instruction5" xml:space="preserve">
+    <value>Παρακαλώ, θυμηθείτε να μετράτε και τον αριθμό που μετρήσατε γιατι θα σας τον ζητήσουμε μετά. </value>
+  </data>
+  <data name="Screen7_Instruction6.1" xml:space="preserve">
+    <value>Όταν είστε άνετοι, χαλαροί και έτοιμοι, πατήστε</value>
+  </data>
+  <data name="Screen7_Instruction6.2" xml:space="preserve">
+    <value>"έναρξη".</value>
+  </data>
+  <data name="Screen7_ButtStart" xml:space="preserve">
+    <value>Έναρξη</value>
+  </data>
+  <data name="Activity_prep1" xml:space="preserve">
+    <value>Πάρτε μια βαθιά ανάσα και ετοιμαστείτε να μετρήσετε κάθε αναπνοή.</value>
+  </data>
+  <data name="Activity_prep2" xml:space="preserve">
+    <value>Ξεκινάμε σε ...</value>
+  </data>
+  <data name="Activity_Screen_line1" xml:space="preserve">
+    <value>Μετρήστε τις αναπνοές σας. </value>
+  </data>
+  <data name="Activity_Screen_line2" xml:space="preserve">
+    <value>Μια εισπνοή και μία εκπνοή μετράνε για 1</value>
+  </data>
+  <data name="Activity_Screen_restart" xml:space="preserve">
+    <value>Αν θέλετε να επανεκκινήσετε το ρολόι</value>
+  </data>
+  <data name="Activity_ButtRestart" xml:space="preserve">
+    <value>Επανεκκίνηση</value>
+  </data>
+  <data name="Screen8_Step" xml:space="preserve">
+    <value>Βήμα 8 από 10</value>
+  </data>
+  <data name="Screen8_Intro" xml:space="preserve">
+    <value>Βάσει της άσκησης που μόλις κάνατε, παρακαλώ απαντήστε τις επόμενες ερωτήσεις:</value>
+  </data>
+  <data name="Screen8_Question1" xml:space="preserve">
+    <value>Α) Πόσες αναπνοές πήρατε μέσα σε ένα λεπτό;</value>
+  </data>
+  <data name="Screen8_Question2" xml:space="preserve">
+    <value>Β) Σκεφτείτε την αναπνοή σας χθες. Σε σχέση με χθες, πώς ήταν η αναπνοή σας τώρα;</value>
+  </data>
+  <data name="Screen8_op1" xml:space="preserve">
+    <value>Είναι καλύτερη </value>
+  </data>
+  <data name="Screen8_op2" xml:space="preserve">
+    <value>Είναι χειρότερη</value>
+  </data>
+  <data name="Screen8_op3" xml:space="preserve">
+    <value>Είναι περίπου τα ίδια</value>
+  </data>
+  <data name="Screen8_ButtBack" xml:space="preserve">
+    <value>Πίσω</value>
+  </data>
+  <data name="Screen8_ButtNext" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Screen9_Step" xml:space="preserve">
+    <value>Βήμα 9 από 10</value>
+  </data>
+  <data name="Screen9_Question" xml:space="preserve">
+    <value>Έχετε κάποιο από τα παρακάτω συμπτώματα; </value>
+  </data>
+  <data name="Screen9_Line" xml:space="preserve">
+    <value>Παρακαλώ επιλέξτε όλα όσα ισχύουν:</value>
+  </data>
+  <data name="Screen9_op1" xml:space="preserve">
+    <value>Ξαφνικά μπερδεύεστε ή μπερδεύεστε πιο συχνά από ό,τι συνήθως</value>
+  </data>
+  <data name="Screen9_op2" xml:space="preserve">
+    <value>Πνίγεστε</value>
+  </data>
+  <data name="Screen9_op3" xml:space="preserve">
+    <value>Τα χείλη γίνονται μπλε</value>
+  </data>
+  <data name="Screen9_op4" xml:space="preserve">
+    <value>Κανένα από αυτά</value>
+  </data>
+  <data name="Screen9_ButtBack" xml:space="preserve">
+    <value>Τέλος</value>
+  </data>
+  <data name="Screen9_ButtFinish" xml:space="preserve">
+    <value>Επόμενο</value>
+  </data>
+  <data name="Results_Screen_Orange_Title" xml:space="preserve">
+    <value>Αποτελέσματα</value>
+  </data>
+  <data name="Results_Screen_Orange_p1" xml:space="preserve">
+    <value>Τα συμπτώματα σας υποδηλώνουν ότι μπορεί να έχετε μια λοίμωξη από κορωνοϊό.</value>
+  </data>
+  <data name="Results_Screen_Orange_p2" xml:space="preserve">
+    <value>Καλέστε την Εθνική γραμμή βοήθειας του Coronavirus ή προσπαθήστε να επικοινωνήσετε με τον γιατρό σας</value>
+  </data>
+  <data name="Results_Screen_Orange_p3" xml:space="preserve">
+    <value>Ο γιατρός / χειριστής θα σας κάνει επιπλέον ερωτήσεις σχετικά με τα συμπτώματά σας και θα σας πει τι να κάνετε στη συνέχεια. Περιγράψτε λεπτομερώς όλα τα συμπτώματά σας και τη συχνότητα της αναπνοής σας και πώς αισθάνεστε σήμερα σε σύγκριση με το χθες.</value>
+  </data>
+  <data name="Results_Screen_Orange_p4" xml:space="preserve">
+    <value>Πρέπει να μείνετε μακριά από τους άλλους έως ότου λάβετε περαιτέρω καθοδήγηση. Μην επισκεφτείτε σούπερ μάρκετ, γιατρό, φαρμακείο ή νοσοκομείο.</value>
+  </data>
+  <data name="Results_Screen_Orange_p5" xml:space="preserve">
+    <value>Μην επισκεφτείτε σούπερ μάρκετ, γιατρό, φαρμακείο ή νοσοκομείο.</value>
+  </data>
+  <data name="Results_Screen_Orange_ButtExit" xml:space="preserve">
+    <value>Έξοδος</value>
+  </data>
+  <data name="Results_Screen_Yellow_Title" xml:space="preserve">
+    <value>Αποτελέσματα</value>
+  </data>
+  <data name="Results_Screen_Yellow_p1" xml:space="preserve">
+    <value>Εχετε συμπτώματα του νέου κορωνοϊού (COVID-19)</value>
+  </data>
+  <data name="Results_Screen_Yellow_p2" xml:space="preserve">
+    <value>Εσεις και αυτοί που ζείτε μαζί πρέπει να παραμείνετε στο σπίτι</value>
+  </data>
+  <data name="Results_Screen_Yellow_p3.1" xml:space="preserve">
+    <value>Ως μέτρο προφύλαξης, εσείς και αυτοί με τους οποίους ζείτε μαζί </value>
+  </data>
+  <data name="Results_Screen_Yellow_p3.2" xml:space="preserve">
+    <value>πρέπει να ακολουθήσετε τις συμβουλές των αρχών.</value>
+  </data>
+  <data name="Results_Screen_Yellow_p3.3" xml:space="preserve">
+    <value> Αυτό σημαίνει ότι πρέπει:</value>
+  </data>
+  <data name="Results_Screen_Yellow_p4.1" xml:space="preserve">
+    <value>Μην αφήνετε το σπίτι σας για κανένα λόγο κατά τη διάρκεια αυτής της περιόδου</value>
+  </data>
+  <data name="Results_Screen_Yellow_p4.2" xml:space="preserve">
+    <value>να μην βγείτε για να πάρετε φαγητό ή φάρμακα. Ζητήστε να σας το φέρουν ή ζητήστε από καποιον να το αφήσει στην πόρτα σας. </value>
+  </data>
+  <data name="Results_Screen_Yellow_p4.3" xml:space="preserve">
+    <value>να μην έχετε επισκέψεις από φίλους ή οικογένεια (μόνο αυτούς με τους οποίους ζείτε μαζί πρέπει να είναι στο σπίτι σας)</value>
+  </data>
+  <data name="Results_Screen_Yellow_p5" xml:space="preserve">
+    <value>Για να προστατέψετε τους άλλους, παρακαλώ μην πάτε σε σουπερμαρκετ, γιατρό, φαρμακείο ή νοσοκομείο </value>
+  </data>
+  <data name="Results_Screen_Yellow_p6" xml:space="preserve">
+    <value>Δεν είναι απαραίτητο το τεστ για τον κορωνοϊό για αυτούς που μένουν στο σπίτι και αυτο-απομονώνονται. </value>
+  </data>
+  <data name="Results_Screen_Yellow_p7" xml:space="preserve">
+    <value>Συνεχίστε να παρακολουθείτε τα συμπτώματά σας καθημερινά. </value>
+  </data>
+  <data name="Results_Screen_Yellow_recom" xml:space="preserve">
+    <value>Διαβάστε περισσότερα σχετικά με την αυτο-απομόνωση</value>
+  </data>
+  <data name="Results_Screen_Yellow_ButtExit" xml:space="preserve">
+    <value>Έξοδος</value>
+  </data>
+  <data name="Screen1_search" xml:space="preserve">
+    <value>αναζητήστε τη διεύθυνσή σας</value>
+  </data>
+  <data name="WelcomeScreenTitle" xml:space="preserve">
+    <value>ΚΑΛΩΣ ΗΡΘΑΤΕ ΣΤΟΝ ΧΩΡΟ ΕΛΕΓΧΟΥ!</value>
+  </data>
+  <data name="WelcomeScreenWhoAssessing" xml:space="preserve">
+    <value>Πώς θα θέλατε να σας καλέσουμε ή το άτομο που αξιολογείτε;</value>
+  </data>
+  <data name="WelcomeScreenWhoAssessing2" xml:space="preserve">
+    <value>(Εισάγοντας τα ονόματα αυτών που αξιολογείτε, μπορείτε να παρακολουθείτε τα αποτελέσματα ξεχωριστά)</value>
+  </data>
+  <data name="WelcomeScreenWhoAssessingExists" xml:space="preserve">
+    <value>Ποιος αξιολογούμε τώρα;</value>
+  </data>
+  <data name="WelcomeScreenWhoAssessingPlaceHolder" xml:space="preserve">
+    <value>Εισαγάγετε Όνομα / Ψευδώνυμο</value>
+  </data>
+  <data name="WelcomeScreenWhoSomeoneElse" xml:space="preserve">
+    <value>Κάποιος άλλος</value>
+  </data>
+</root>

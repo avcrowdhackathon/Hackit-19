@@ -1,0 +1,1233 @@
+﻿@{
+    ViewData["Title"] = "Assessment";
+}
+
+<style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    html {
+        height: 100%
+    }
+
+    #grad1 {
+        background-color: white;
+    }
+
+    .progress-bar {
+        background-color: #15C5D8;
+    }
+
+    .progress {
+        background-color: #b8eef3;
+    }
+
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px
+    }
+
+        #msform fieldset .form-card {
+            background: white;
+            border: 0 none;
+            border-radius: 0px;
+            box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+            padding: 20px 40px 30px 40px;
+            box-sizing: border-box;
+            width: 94%;
+            margin: 0 3% 20px 3%;
+            position: relative
+        }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0;
+            padding-bottom: 20px;
+            position: relative
+        }
+
+            #msform fieldset:not(:first-of-type) {
+                display: none
+            }
+
+            #msform fieldset .form-card {
+                text-align: left;
+                color: #9E9E9E
+            }
+
+        #msform input,
+        #msform textarea {
+            padding: 0px 8px 4px 8px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            border-radius: 0px;
+            margin-bottom: 25px;
+            margin-top: 2px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 16px;
+            letter-spacing: 1px
+        }
+
+            #msform input:focus,
+            #msform textarea:focus {
+                -moz-box-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important;
+                border: none;
+                font-weight: bold;
+                border-bottom: 2px solid skyblue;
+                outline-width: 0
+            }
+
+        #msform .action-button {
+            width: 100px;
+            background: skyblue;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 0px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px
+        }
+
+            #msform .action-button:hover,
+            #msform .action-button:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
+            }
+
+        #msform .action-button-previous {
+            width: 100px;
+            background: #616161;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 0px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px
+        }
+
+            #msform .action-button-previous:hover,
+            #msform .action-button-previous:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
+            }
+
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px
+    }
+
+        select.list-dt:focus {
+            border-bottom: 2px solid skyblue
+        }
+
+    .card {
+        z-index: 0;
+        border: none;
+        border-radius: 0.5rem;
+        position: relative
+    }
+
+    .fs-title {
+        font-size: 25px;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey
+    }
+
+        #progressbar .active {
+            color: #000000
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            font-size: 12px;
+            width: 25%;
+            float: left;
+            position: relative
+        }
+
+        #progressbar #account:before {
+            font-family: FontAwesome;
+            content: "\f023"
+        }
+
+        #progressbar #personal:before {
+            font-family: FontAwesome;
+            content: "\f007"
+        }
+
+        #progressbar #payment:before {
+            font-family: FontAwesome;
+            content: "\f09d"
+        }
+
+        #progressbar #confirm:before {
+            font-family: FontAwesome;
+            content: "\f00c"
+        }
+
+        #progressbar li:before {
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            display: block;
+            font-size: 18px;
+            color: #ffffff;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            padding: 2px
+        }
+
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 25px;
+            z-index: -1
+        }
+
+        #progressbar li.active:before,
+        #progressbar li.active:after {
+            background: skyblue
+        }
+
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px
+    }
+
+    .radio {
+        display: inline-block;
+        width: 204;
+        height: 104;
+        border-radius: 0;
+        background: lightblue;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor: pointer;
+        margin: 8px 2px
+    }
+
+        .radio:hover {
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3)
+        }
+
+        .radio.selected {
+            box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1)
+        }
+
+    .fit-image {
+        width: 100%;
+        object-fit: cover
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #15C5D8;
+        border-color: #15C5D8;
+    }
+
+        .btn-primary:focus, .btn-primary.focus {
+            box-shadow: 0 0 0 0.2rem rgba(184, 238,243, 0.5);
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #15C5D8;
+            border-color: #15C5D8;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+            color: #fff;
+            background-color: #15C5D8;
+            border-color: #15C5D8;
+        }
+
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #656C64;
+        border-color: #656C64;
+    }
+
+        .btn-secondary:focus, .btn-secondary.focus {
+            box-shadow: 0 0 0 0.2rem rgba(184, 238,243, 0.5);
+        }
+
+        .btn-secondary:hover {
+            color: #fff;
+            background-color: #656C64;
+            border-color: #656C64;
+        }
+
+        .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
+            color: #fff;
+            background-color: #656C64;
+            border-color: #656C64;
+        }
+
+
+
+
+    .custom-control-label::after {
+        top: .8rem;
+        width: 50px;
+        height: 50px;
+        font-family: Poppins;
+    }
+
+    .custom-control-label::before {
+        top: .8rem;
+        width: 50px;
+        height: 50px;
+        background-color: #E1E1E1;
+        font-family: Poppins;
+    }
+
+    .custom-control-input:checked ~ .custom-control-label::before {
+        color: #fff;
+        width: 50px;
+        height: 50px;
+        border-color: #707070;
+        background-color: #707070;
+        font-family: Poppins;
+    }
+
+    .custom-control-lg .custom-control-label::before,
+    .custom-control-lg .custom-control-label::after {
+        top: -0.1rem !important;
+        left: -4rem !important;
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+        font-family: Poppins;
+    }
+
+    .custom-control-lg .custom-control-label {
+        margin-left: 0.5rem !important;
+        font-size: 1rem !important;
+        font-family: Poppins;
+        width: 230px;
+    }
+
+    p {
+        text-align: left;
+        font-family: Poppins;
+    }
+
+    .bd-example-modal-lg .modal-dialog {
+        display: table;
+        position: relative;
+        margin: 0 auto;
+        top: calc(50% - 24px);
+    }
+
+        .bd-example-modal-lg .modal-dialog .modal-content {
+            background-color: transparent;
+            border: none;
+        }
+    .fieldbasics {
+        padding-top: 20px;
+        min-height: 500px;
+    }
+
+    .buttEstilo {
+        font-family: Poppins;
+        font-size: 22px;
+        width: 13.5rem;
+        padding: 0.75rem;
+    }
+    .buttEstiloNext {
+        font-family: Poppins;
+        font-size: 22px;
+        width: 13.5rem;
+        padding: 0.75rem;
+        color: white;
+        background-color: #15C5D8;
+        float: right;
+    }
+        .buttEstiloNext:hover {
+            color: #fff;
+            background-color: #15C5D8;
+            border-color: #15C5D8;
+        }
+    .buttEstiloBack {
+        color: #707070;
+        float: left;
+        font-family: Poppins;
+        font-size: 22px;
+        font-size: 18px;
+        width: 8.5rem;
+        height: 3.675rem;
+    }
+    .buttEstiloEXIT {
+        color: white;
+        background-color: #D81515;
+        font-family: Poppins;
+        font-size: 22px;
+        width: 13.5rem;
+        padding: 0.75rem;
+        margin-top: 10px;
+        margin-left: auto;
+    }
+        .buttEstiloEXIT:hover {
+            color: #fff;
+            background-color: #D81515;
+            border-color: #D81515;
+        }
+    
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/js/bootstrap-spinedit.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=APIKEY&libraries=visualization"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
+        $('#confirmInfo').modal('show');
+        function modal() {
+            $('#myModal').modal('show');
+        }
+
+        window.mobilecheck = function () {
+            var check = false;
+            (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+
+        function moveForward(currentSlide,nextSlide) {
+            nextSlide.show();
+            //hide the current fieldset with style
+            currentSlide.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    currentSlide.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    nextSlide.css({ 'opacity': opacity });
+                },
+                duration: 600
+            });
+        }
+
+        $('.radio-group .radio').click(function () {
+            $(this).parent().find('.radio').removeClass('selected');
+            $(this).addClass('selected');
+        });
+        $(".submit").click(function () {
+            return false;
+        })
+        $('.age').on('click', function (event) {
+
+
+            $('.age').removeClass("btn-secondary");
+            $('.age').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#Age").val($(this)[0].id);
+            $('#buttAge').prop('disabled', false);
+        });
+        $('.AfT').on('click', function (event) {
+
+
+            $('.AfT').removeClass("btn-secondary");
+            $('.AfT').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#AfterTest").val($(this)[0].id);
+            $('#buttBreathAfterTest').prop('disabled', false);
+        });
+        $('.fever').on('click', function (event) {
+
+
+            $('.fever').removeClass("btn-secondary");
+            $('.fever').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#Fever").val($(this)[0].id);
+            $('#buttFever').prop('disabled', false);
+        });
+        $('.cough').on('click', function (event) {
+
+            $('.cough').removeClass("btn-secondary");
+            $('.cough').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#Cough").val($(this)[0].id);
+            $('#buttCough').prop('disabled', false);
+        });
+        $('.drycough').on('click', function (event) {
+
+            $('.drycough').removeClass("btn-secondary");
+            $('.drycough').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#DryCough").val($(this)[0].id);
+            $('#buttDryCough').prop('disabled', false);
+        });
+        //1
+        $('#buttDemo').on('click', function (event) {
+
+            if ($("#postCode").val() != "" && $("#country").val() != "0") {
+                current_fs = $("#DemograField");
+                next_fs = $("#DiseaseField");
+                $("#progressBarAssessment").width(20 + "%");
+                $("#Steps").text("STEP " + 2 + " of 10");
+                moveForward(current_fs, next_fs);
+            }
+            else {
+                alert("Please fill the information");
+            }
+
+        });
+        $('#buttDiseasesPrev').on('click', function (event) {
+            current_fs = $("#DiseaseField");
+            next_fs = $("#DemograField");
+            $("#progressBarAssessment").width(10 + "%");
+            $("#Steps").text("STEP " + 1 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        //2
+        $('#buttDiseases').on('click', function (event) {
+                current_fs = $("#DiseaseField");
+                next_fs = $("#AgeField");
+                $("#progressBarAssessment").width(30 + "%");
+                $("#Steps").text("STEP " + 3 + " of 10");
+                moveForward(current_fs, next_fs);
+        });
+        $('#buttAgePrev').on('click', function (event) {
+            current_fs = $("#AgeField");
+            next_fs = $("#DiseaseField");
+            $("#progressBarAssessment").width(20 + "%");
+            $("#Steps").text("STEP " + 2 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        //3
+        $('#buttAge').on('click', function (event) {
+            current_fs = $("#AgeField");
+            next_fs = $("#FeverField");
+            $("#progressBarAssessment").width(40 + "%");
+            $("#Steps").text("STEP " + 4 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttFeverPrev').on('click', function (event) {
+            current_fs = $("#FeverField");
+            next_fs = $("#AgeField");
+            $("#progressBarAssessment").width(30 + "%");
+            $("#Steps").text("STEP " + 3 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        //4
+        $('#buttFever').on('click', function (event) {
+            current_fs = $("#FeverField");
+            next_fs = $("#CoughField ");
+            $("#progressBarAssessment").width(50 + "%");
+            $("#Steps").text("STEP " + 5 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttCoughPrev').on('click', function (event) {
+            current_fs = $("#CoughField");
+            next_fs = $("#FeverField");
+            $("#progressBarAssessment").width(40 + "%");
+            $("#Steps").text("STEP " + 4 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        //5
+        $('#buttCough').on('click', function (event) {
+
+            if ($("#Cough").val() == "CoughYes")
+            {
+                current_fs = $("#CoughField");
+                next_fs = $("#DryCoughField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text("STEP " + 5 + " of 10");
+            }
+            else if ($("#Cough").val() == "CoughNo" && $("#Fever").val() == "FeverNo")
+            {
+                //Fin:verde
+                current_fs = $("#CoughField");
+                next_fs = $("#GreenField");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text("RESULTS");
+                SaveResults("1");
+            }
+            else if ($("#Cough").val() == "CoughNo" && $("#Fever").val() == "FeverYes") {                
+                current_fs = $("#CoughField");
+                next_fs = $("#DisclaimerField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text("STEP " + 5 + " of 10");
+            }
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttDryCoughPrev').on('click', function (event) {
+            current_fs = $("#DryCoughField");
+            next_fs = $("#CoughField");
+            $("#progressBarAssessment").width(50 + "%");
+            $("#Steps").text("STEP " + 5 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttDryCough').on('click', function (event) {
+
+            if ($("#Cough").val() == "CoughYes" || $("#Fever").val() == "FeverYes")
+            {
+                current_fs = $("#DryCoughField");
+                next_fs = $("#DisclaimerField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text("STEP " + 5 + " of 10");
+            }
+            moveForward(current_fs, next_fs);
+
+        });
+
+        $('#buttDisclaimerPrevious').on('click', function (event) {
+
+            if ($("#Cough").val() == "CoughYes") {
+                current_fs = $("#DisclaimerField");
+                next_fs = $("#DryCoughField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text("STEP " + 5 + " of 10");
+            }
+            else
+            {
+                current_fs = $("#DisclaimerField");
+                next_fs = $("#CoughField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text("STEP " + 5 + " of 10");
+            }
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttDisclaimer').on('click', function (event) {
+           current_fs = $("#DisclaimerField");
+           next_fs = $("#BreathField");
+           $("#progressBarAssessment").width(60 + "%");
+           $("#Steps").text("STEP " + 6 + " of 10");
+           moveForward(current_fs, next_fs);
+        });
+        $('#buttBreath').on('click', function (event) {
+
+            if ($("#chkBreathe1").is(':checked') ||
+                $("#chkBreathe2").is(':checked'))
+            {
+                //Fin:rojo
+                current_fs = $("#BreathField");
+                next_fs = $("#RedField");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text("RESULTS");
+                moveForward(current_fs, next_fs);
+                SaveResults("4");
+            }
+            else
+            {
+                current_fs = $("#BreathField");
+                next_fs = $("#BreathTest");
+                $("#progressBarAssessment").width(70 + "%");
+                $("#Steps").text("STEP " + 7 + " of 10");
+                moveForward(current_fs, next_fs);
+            }
+
+
+        });
+        $('#buttPreviousBreath').on('click', function (event) {
+
+            current_fs = $("#BreathField");
+            next_fs = $("#DisclaimerField");
+            $("#progressBarAssessment").width(50 + "%");
+            $("#Steps").text("STEP " + 5 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttStartBreathTest').on('click', function (event) {
+
+            current_fs = $("#BreathTest");
+            next_fs = $("#BreathTest2");
+            $("#progressBarAssessment").width(100 + "%");
+            $("#Steps").text("STEP " + 7 + " of 10");
+
+            moveForward(current_fs, next_fs);
+            StartBreath();
+        });
+        $('#buttBreathTestStop').on('click', function (event) {
+            
+            clearInterval(timer);
+            current_fs = $("#BreathTest2");
+            next_fs = $("#BreathTest");
+            $("#progressBarAssessment").width(100 + "%");
+            $("#Steps").text("STEP " + 7 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttPreviousGoToTest').on('click', function (event) {
+
+            current_fs = $("#BreathTest3");
+            next_fs = $("#BreathTest");
+            $("#progressBarAssessment").width(100 + "%");
+            $("#Steps").text("STEP " + 7 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttBreathAfterTest').on('click', function (event) {
+
+            if ($('#breathNumber').val() >=25)
+            {
+                if ($("#chkHeart").is(':checked') || $("#chkLung").is(':checked'))
+                {
+                    if ($("#AfterTest").val() == "AfterTest2")
+                    {
+                        //Fin:rojo
+                        current_fs = $("#BreathTest3");
+                        next_fs = $("#RedField");
+                        $("#progressBarAssessment").width(100 + "%");
+                        $("#Steps").text("RESULTS");
+                        moveForward(current_fs, next_fs);
+                        SaveResults("4");
+                    }
+                    else
+                    {
+                        current_fs = $("#BreathTest3");
+                        next_fs = $("#LastCondition");
+                        $("#progressBarAssessment").width(90 + "%");
+                        $("#Steps").text("STEP " + 9 + " of 10");
+                        moveForward(current_fs, next_fs);
+                    }
+                }
+                else
+                {
+                    //Fin:rojo
+                    current_fs = $("#BreathTest3");
+                    next_fs = $("#RedField");
+                    $("#progressBarAssessment").width(100 + "%");
+                    $("#Steps").text("RESULTS");
+                    moveForward(current_fs, next_fs);
+                    SaveResults("4");
+                }
+
+            }
+            else if ($('#breathNumber').val() < 25)
+            {
+                current_fs = $("#BreathTest3");
+                next_fs = $("#LastCondition");
+                $("#progressBarAssessment").width(90 + "%");
+                $("#Steps").text("STEP " + 9 + " of 10");
+                moveForward(current_fs, next_fs);
+            }
+            else
+            {
+                alert("Error amount of breathes")
+            }
+        });
+        $('#buttPreviousLast').on('click', function (event) {
+
+            current_fs = $("#LastCondition");
+            next_fs = $("#BreathTest3");
+            $("#progressBarAssessment").width(80 + "%");
+            $("#Steps").text("STEP " + 8 + " of 10");
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttLast').on('click', function (event) {
+
+            if ($("#chkConfused").is(':checked') ||
+                $("#chkChoking").is(':checked') ||
+                $("#chkLipsBlue").is(':checked')
+            ) {
+                //Fin:naranjo
+                current_fs = $("#LastCondition");
+                next_fs = $("#OrangeField");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text("RESULTS");
+                moveForward(current_fs, next_fs);
+                SaveResults("3");
+            }
+            else
+            {
+                //Fin:amarillo
+                current_fs = $("#LastCondition");
+                next_fs = $("#YellowField");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text("RESULTS");
+                moveForward(current_fs, next_fs);
+                SaveResults("2");
+            }
+        });
+        $('#linkIsolation').on('click', function (event) {
+
+            current_fs = $("#OrangeField");
+            next_fs = $("#IsolationField");
+            $("#progressBarAssessment").width(100 + "%");
+            $("#Steps").text("RESULTS");
+            moveForward(current_fs, next_fs);
+
+        });
+
+        var seconds = 70;
+        var timer;
+        function myFunctionBreath() {
+
+            if (seconds < 71 && seconds > 65) {
+                document.getElementById("orderTimer").innerHTML = "Please take a deep breath and prepare yourself to count each breath.";
+                $("#buttBreathTestStop").hide();
+                $("#restartBreath").hide();
+            }
+            else if (seconds < 66 && seconds > 62) {
+                document.getElementById("orderTimer").innerHTML = "Begin in…";
+                document.getElementById("timer").innerHTML = (seconds - 60);
+                $("#timer").css("color", "#F7AA18");
+                $("#buttBreathTestStop").hide();
+                $("#restartBreath").hide();
+            }
+            else if (seconds < 63 && seconds > 60) {
+                document.getElementById("orderTimer").innerHTML = "Begin in…";
+                document.getElementById("timer").innerHTML = (seconds - 60);
+                $("#timer").css("color", "#D81515");
+                $("#buttBreathTestStop").hide();
+                $("#restartBreath").hide();
+            }
+            else {
+                document.getElementById("orderTimer").innerHTML = "Count your breaths, ";
+                document.getElementById("orderTimerb").innerHTML = "inhale & exhale count as 1. ";
+                $("#buttBreathTestStop").show();
+                $("#restartBreath").show();
+            }
+            if (seconds < 61) {
+
+                $("#timer").css("color", "#15C5D8");
+                document.getElementById("timer").innerHTML = seconds;
+            }
+            if (seconds > 0) {
+                seconds--;
+            } else {
+                clearInterval(timer);
+                current_fs = $("#BreathTest2");
+                next_fs = $("#BreathTest3");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text("STEP " + 8 + " of 10");
+                moveForward(current_fs, next_fs);
+            }
+        }
+        function StartBreath() {
+            seconds = 70;
+            document.getElementById("orderTimer").innerHTML = "Please take a deep breath and prepare yourself to count each breath.";
+            document.getElementById("orderTimerb").innerHTML = "";
+            document.getElementById("timer").innerHTML = "";
+            $("#buttBreathTestStop").hide();
+            $("#restartBreath").hide();
+            timer = window.setInterval(function () {
+                myFunctionBreath();
+            }, 1000);
+        }        
+        function GetDeseases()
+        {
+            var resuDe = "";
+            var hasResDis = false;
+            if ($("#chkAids").is(':checked'))
+            {
+                hasResDis = true;
+                resuDe = resuDe + 1 + ",";
+            }
+            if ($("#chkHeart").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 2 + ",";
+            }
+            if ($("#chkCancer").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 3 + ",";
+            }
+            if ($("#chkDiabetes").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 4 + ",";
+            } if ($("#chkAuto").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 5 + ",";
+            }
+            if ($("#chkKidney").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 6 + ",";
+            }
+            if ($("#chkLung").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 7 + ",";
+            }
+            if (hasResDis) {
+
+                resuDe = resuDe.substring(0, resuDe.length-1);
+            }
+            else {
+                resuDe = "0";
+            }
+            return resuDe;
+
+        }
+        function GetBreath() {
+           
+            if ($("#chkBreathe1").is(':checked')) {
+                return "1";
+            }
+            if ($("#chkBreathe2").is(':checked')) {
+                hasResDis = true;
+                return "2";
+            }
+            if ($("#chkBreathe3").is(':checked')) {
+                return "3";
+            }
+            if ($("#chkBreathe4").is(':checked')) {
+                return "4";
+            } if ($("#chkBreathe5").is(':checked')) {
+                return "5";
+            }
+            return "0";
+        }
+        function GetBreathTest() {
+
+            if ($("#AfterTest").val() =="AfterTest1") {
+                return "1";
+            }
+            if ($("#AfterTest").val() == "AfterTest2") {
+                hasResDis = true;
+                return "2";
+            }
+            if ($("#AfterTest").val() == "AfterTest3") {
+                return "3";
+            }
+            return "0";
+        }
+        function GetCondition() {
+            var resuDe = "";
+            var hasResDis = false;
+            if ($("#chkConfused").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 1 + ",";
+            }
+            if ($("#chkChoking").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 2 + ",";
+            }
+            if ($("#chkLipsBlue").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 3 + ",";
+            }
+            if (hasResDis) {
+
+                resuDe = resuDe.substring(0, resuDe.length - 1);
+            }
+            else
+            {
+                resuDe = "0";
+            }
+            return resuDe;
+
+        }
+        function SaveResults(Result) {
+
+            var userId = "";
+
+            var Mobile = window.mobilecheck();
+
+            if (checkCookie("UserID")) {
+                userId = getCookie("UserID")
+            }
+            var LatBrowser = "0";
+            if (checkCookie("latitude")) {
+                LatBrowser = getCookie("latitude")
+            }
+            var LongBrowser = "0";
+            if (checkCookie("longitude")) {
+                LongBrowser = getCookie("longitude")
+            }
+
+            var Postal = $("#postCode").val();
+            var Country = $("#country").val();
+            var PreDiseases = GetDeseases();
+            var Age = $("#Age").val();
+            var Fever = $("#Fever").val();
+            var Cough = $("#Cough").val();
+            var DryCough = $("#DryCough").val();
+            var Breath = GetBreath();
+            var BreathTimes= $('#breathNumber').val();
+            var BreathResults = GetBreathTest();
+            var Condition = GetCondition();
+
+            var LatPost = "0";
+            var LongPost = "0";
+
+            modal();
+
+            setTimeout(function () {
+
+                geocoder = new google.maps.Geocoder();
+                var addressb = Postal + "," + Country;
+                geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    'address': addressb
+                }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        results[0].geometry.location
+                        LatPost = results[0].geometry.location.lat();
+                        LongPost = results[0].geometry.location.lng();
+                    }
+                     $.ajax({
+                        type: 'GET',
+                        url: '@Url.Action("SaveAssesment", "Home")',
+                        data: {
+                            UserID: userId,
+                            Mobile: Mobile,
+                            Evaluation: Result,
+                            LatBrowser: LatBrowser,
+                            LongBrowser: LongBrowser,
+                            LatPost: LatPost,
+                            LongPost: LongPost,
+                            Postal: Postal,
+                            Country: Country,
+                            PreDiseases: PreDiseases,
+                            Age: Age,
+                            Fever: Fever,
+                            Cough: Cough,
+                            DryCough: DryCough,
+                            Breath: Breath,
+                            BreathTimes: BreathTimes,
+                            BreathResults: BreathResults,
+                            Condition: Condition
+                        },
+                        dataType: "json",
+                        cache: false,
+                        async: false,
+                        success: function (data) {
+                            setCookie("UserID", data, 10);
+                            $('#myModal').modal("hide");
+                        },
+                        error: function (errorMsg) {
+                           // alert("Data no de guardo");
+                        }
+                    });
+                });
+
+
+            }, 1000);
+
+
+            var f = 22;
+        }
+    });
+    function checkDem() {
+        if ($("#postCode").val() != "" && $("#country").val() != "0" && $("#chkPrivacy").is(':checked'))
+        {
+            $('#buttDemo').prop('disabled', false);
+
+        }
+        else
+        {
+            $('#buttDemo').prop('disabled', true);
+        }
+    }
+    function checkDis(cb) {
+
+        if (cb.id == "chkNone") {
+            $("#chkAids").prop("checked", false);
+            $("#chkHeart").prop("checked", false);
+            $("#chkCancer").prop("checked", false);
+            $("#chkDiabetes").prop("checked", false);
+            $("#chkAuto").prop("checked", false);
+            $("#chkKidney").prop("checked", false);
+            $("#chkLung").prop("checked", false);
+        }
+        if (cb.id == "chkAids" ||
+            cb.id == "chkHeart" ||
+            cb.id == "chkCancer" ||
+            cb.id == "chkDiabetes" ||
+            cb.id == "chkAuto" ||
+            cb.id == "chkKidney" ||
+            cb.id == "chkLung"  
+        ) {
+            $("#chkNone").prop("checked", false);
+        }
+        
+        if ($("#chkAids").is(':checked')      ||
+            $("#chkHeart").is(':checked')     ||
+            $("#chkCancer").is(':checked')    ||
+            $("#chkDiabetes").is(':checked')  ||
+            $("#chkAuto").is(':checked')      ||
+            $("#chkKidney").is(':checked')    ||
+            $("#chkLung").is(':checked')      ||
+            $("#chkNone").is(':checked')
+            ) {
+            $('#buttDiseases').prop('disabled', false);
+
+        }
+        else {
+            $('#buttDiseases').prop('disabled', true);
+        }
+    }
+    function checkBreath(cb) {
+
+        var bools = cb.checked;
+
+        $("#chkBreathe1").prop("checked", false);
+        $("#chkBreathe2").prop("checked", false);
+        $("#chkBreathe3").prop("checked", false);
+        $("#chkBreathe4").prop("checked", false);
+        $("#chkBreathe5").prop("checked", false);
+        cb.checked = bools;
+
+        if ($("#chkBreathe1").is(':checked') ||
+            $("#chkBreathe2").is(':checked') ||
+            $("#chkBreathe3").is(':checked') ||
+            $("#chkBreathe4").is(':checked') ||
+            $("#chkBreathe5").is(':checked')
+        ) {
+            $('#buttBreath').prop('disabled', false);
+
+        }
+        else {
+            $('#buttBreath').prop('disabled', true);
+        }
+    }
+    function checkBreathAfter(cb) {
+
+        var bools = cb.checked;
+
+        $("#chkBreatheAfterTest1").prop("checked", false);
+        $("#chkBreatheAfterTest2").prop("checked", false);
+        $("#chkBreatheAfterTest3").prop("checked", false);
+        cb.checked = bools;
+
+        if ($("#chkBreatheAfterTest1").is(':checked') ||
+            $("#chkBreatheAfterTest2").is(':checked') ||
+            $("#chkBreatheAfterTest3").is(':checked')
+        ) {
+            $('#buttBreathAfterTest').prop('disabled', false);
+
+        }
+        else {
+            $('#buttBreathAfterTest').prop('disabled', true);
+        }
+    }
+    function checkLast(cb) {
+        if (cb.id=="chkLastNone")
+        {
+            $("#chkConfused").prop("checked", false);
+            $("#chkChoking").prop("checked", false);
+            $("#chkLipsBlue").prop("checked", false);
+
+        }
+        if (cb.id =="chkConfused" ||
+            cb.id =="chkChoking"  ||
+            cb.id =="chkLipsBlue") {
+            $("#chkLastNone").prop("checked", false);
+        }
+
+        if ($("#chkConfused").is(':checked') ||
+            $("#chkChoking").is(':checked')  ||
+            $("#chkLipsBlue").is(':checked') ||
+            $("#chkLastNone").is(':checked')
+        ) {
+            $('#buttLast').prop('disabled', false);
+
+        }
+        else {
+            $('#buttLast').prop('disabled', true);
+        }
+    }
+
+
+
+</script>
+<input id="Diseases" type="hidden" value="0" />
+<input id="Age" type="hidden" value="0" />
+<input id="Fever" type="hidden" value="0" />
+<input id="Cough" type="hidden" value="0" />
+<input id="DryCough" type="hidden" value="0" />
+<input id="AfterTest" type="hidden" value="0" />
+<div class="container-fluid" id="grad1">
+    <div class="row justify-content-center mt-0">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <div class="progress">
+                    <div id="progressBarAssessment" class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mx-0">
+                        <form id="msform">
+                            <fieldset id="BreathTest" class="fieldbasics">
+                                <img style="height:200px;margin-bottom:20px;" src="~/images/lungs 2.png" />
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">Now let’s check your breathing</h3>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: center;"> Please stand, or sit up straight, and relax.</p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: center;margin-top: -16px;"> We are going to ask you to <b>count the amount of times you breathe</b> in one minute. </p>
+                                <p style="color:#15C5D8;font-family:Poppins; font-size:14px;text-align: center;margin-top: -16px;"><b> You should count an inhale & exhale as 1.</b> </p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: center;margin-top: -16px;"> <b>Please make sure to count and try to remember it, as we will ask for your answer afterwards.</b> </p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: center;"> When you are comfortable, relaxed, and ready, please press <b>‘start’</b>.  </p>
+                                <button id="buttStartBreathTest" type="button" style=" color:white;margin-top:30px; background-color:#15C5D8; font-family:Poppins; font-size:22px; padding: 0.75rem 5rem;" name="next" class="btn">START</button>
+                            </fieldset>
+                            <fieldset id="BreathTest2" class="fieldbasics">
+                                <h3 id="orderTimer" style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">Please take a deep breath and prepare yourself to count each breath.</h3>
+                                <h3 id="orderTimerb" style="color:#15C5D8; font-family:Poppins; font-size:25px; text-align:center;"></h3>
+                                <h3 id="timer" style="color:#707070; font-family:Poppins; font-size:50px;margin-top:80px;margin-bottom:60px; text-align:center;"></h3>
+                                <p id="restartBreath" style="color:#707070;font-family:Poppins; margin-top: 100px;margin-bottom: 0px; font-size:12px;text-align: center; display:none;"> If you want to restart the clock.  </p>
+                                <button id="buttBreathTestStop" type="button" style="font-family:Poppins; font-size:22px; padding: 0.75rem 5rem; display:none;" name="next" class="btn btn-light">RESTART</button>
+                            </fieldset>
+                            <fieldset id="BreathTest3" class="fieldbasics">
+                                <p id="restartBreath" style="color:#707070;font-family:Poppins;font-size:20px;text-align: center;"> Based on the exercise you just did, please answer the following questions:</p>
+                                <h4 style="color:#707070; font-family:Poppins; font-size:20px; text-align:center;margin-top: 30px;">A) How many breaths did you take within the timeframe of one minute?</h4>
+                                <input id="breathNumber" type="number" style="width:100px;margin-top: 30px;" value="0" min="0" max="50" step="1" />
+                                <h4 style="color:#707070; font-family:Poppins; font-size:20px; text-align:center;margin-top: 30px;">B) Think about your breathing yesterday. Compared to yesterday, how is your breathing now?</h4>
+                                <div class="row" style="padding-bottom:20px; padding-top:40px;">
+                                    <div class="col">
+                                        <button id="AfterTest1" type="button" style="font-family:Poppins;padding: 1rem 2rem;" class="AfT btn btn-light"> It's better</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="AfterTest2" type="button" style="font-family:Poppins;padding: 1rem 2rem;" class="AfT btn btn-light"> It's worse</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="AfterTest3" type="button" style="font-family:Poppins;padding: 1rem 2rem;" class="AfT btn btn-light">It's about the same</button>
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttPreviousGoToTest" type="button" type="button"  name="previous" class="btn btn-light buttEstiloBack"><  BACK</button>
+                                    </div>
+                                    @*<div class="col">
+                                        <button id="buttBreathAfterTest" type="button"  name="next" class="btn buttEstiloNext" disabled>NEXT</button>
+                                    </div>*@
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,293 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HacKIT19</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,700" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/landing-page.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <environment include="Development">
+
+    </environment>
+    <environment exclude="Development">
+        @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+                  asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+                  asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
+    </environment>
+</head>
+<body>
+    @*<nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">HacKIT19</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>*@
+
+    @*<partial name="_CookieConsentPartial" />*@
+    <script type="text/javascript">
+
+        //navigator.geolocation.getCurrentPosition(positionSuccess, positionError)
+
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie(name) {
+            var user = getCookie(name);
+            if (user != "") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function positionSuccess(geo) {
+
+            if (!checkCookie('latitude')) {
+                document.cookie = 'latitude=' + geo.coords.latitude;
+            }
+            if (!checkCookie('longitude')) {
+                document.cookie = 'longitude=' + geo.coords.longitude;
+            }
+            if (!checkCookie('accuracy')) {
+                document.cookie = 'accuracy=' + geo.coords.accuracy;
+            }
+        }
+
+        function positionError(geo) {
+            document.cookie = 'latitude=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+            document.cookie = 'longitude=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+            document.cookie = 'accuracy=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+        }
+    </script>
+    <div class="container body-content">
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #15c5d8; color:white;">
+            @*<a class="navbar-brand" href="/Home">HOME</a>*@
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;" href="/Home">@Localizer["op1_up"]<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;" href="/Home/Assessment">@Localizer["op2_up"] <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;" href="/Home/HeatMaps">@Localizer["op5_up"] <span class="sr-only">(current)</span></a>
+                    </li>
+                    @*<li class="nav-item active">
+                            <a class="nav-link" style="font-family:Poppins;" href="/Home/Decision">DECISION TOOLS <span class="sr-only">(current)</span></a>
+                        </li>*@
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;" href="/Home/Queues">@Localizer["op3_up"] <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" style="font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;" href="/Home/MyNeighborhood">@Localizer["op4_up"] <span class="sr-only">(current)</span></a>
+                    </li>
+                    @*<li class="nav-item active">
+                        <a class="nav-link" style="font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif;" href="/Home/Team">@Localizer["op5_down"] <span class="sr-only">(current)</span></a>
+
+
+                    </li>*@
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a style="color:white; font-family:Poppins;" href="?culture=en-US">EN</a></li>
+                    <li>|</li>
+                    <li><a style="color:white; font-family:Poppins;" href="?culture=el-GR">GR</a></li>
+                    <li>|</li>
+                    <li><a style="color:white; font-family:Poppins;" href="?culture=es-ES">ES</a></li>
+                </ul>
+
+
+                @*<img src="~/images/Hackit logo.png"/>*@
+                @*<partial name="_LoginPartial" />*@
+            </div>
+        </nav>
+        @RenderBody()
+        @*<hr />*@
+       
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <environment include="Development">
+        @*<script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+            <script src="~/js/site.js" asp-append-version="true"></script>*@
+    </environment>
+    <environment exclude="Development">
+        @*<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+            </script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd">
+            </script>
+            <script src="~/js/site.min.js" asp-append-version="true"></script>*@
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+
+        <script>
+       
+        (function ($) {
+
+            var settings = {};
+
+            $.cookieMessage = function (options) {
+                var defaults = {
+                    mainMessage: "",
+                    acceptButton: "Aceptar",
+                    expirationDays: 20,
+                    backgroundColor: '#666',
+                    fontSize: '14px',
+                    fontColor: 'white',
+                    btnBackgroundColor: '#f2a920',
+                    btnFontSize: '11px',
+                    btnFontColor: 'white',
+                    linkFontColor: '#ffff00',
+                    cookieName: 'cookieMessage'
+                };
+
+                settings = $.extend({}, defaults, options);
+                ready();
+            }
+
+            function ready() {
+                var coo = getCookie(settings.cookieName);
+                if (coo != "true") {
+                    $(document).ready(function () {
+                        cookieMessageGenerate();
+                    })
+                }
+            }
+
+            function setCookie(c_name, value, exdays) {
+                var exdate = new Date();
+                exdate.setDate(exdate.getDate() + exdays);
+                var c_value = escape(value) + ((exdays == null) ? "" : "; expires=" + exdate.toUTCString());
+                document.cookie = c_name + "=" + c_value;
+            }
+
+            function getCookie(c_name) {
+                var i, x, y, ARRcookies = document.cookie.split(";");
+                for (i = 0; i < ARRcookies.length; i++) {
+                    x = ARRcookies[i].substr(0, ARRcookies[i].indexOf("="));
+                    y = ARRcookies[i].substr(ARRcookies[i].indexOf("=") + 1);
+                    x = x.replace(/^\s+|\s+$/g, "");
+                    if (x == c_name) {
+                        return unescape(y);
+                    }
+                }
+            }
+
+            function cookieMessageGenerate() {
+                var html = '<div id="cookie-msg">' +
+                    '<span class="msg">' + settings.mainMessage +
+                    '<a href="" class="btn-aceptar">' + settings.acceptButton + '</a>' +
+                    '</span></div>';
+
+                $("body").append(html);
+
+                $("#cookie-msg").css({
+                    'position': 'fixed',
+                    'bottom': '0',
+                    'width': '100%',
+                    'text-align': 'center',
+                    'padding': '30px 50px',
+                    'background-color': settings.backgroundColor,
+                    'color': settings.fontColor,
+                    'font-size': settings.fontSize,
+                });
+
+                $("#cookie-msg a").css({
+                    'color': settings.linkFontColor,
+                    'text-decoration': 'underline',
+                });
+
+                $("#cookie-msg a.btn-aceptar").css({
+                    'padding': '5px 10px',
+                    'border-radius': '5px',
+                    'background-color': settings.btnBackgroundColor,
+                    'color': settings.btnFontColor,
+                    'font-size': settings.btnFontSize,
+                    'text-decoration': 'none',
+                });
+
+                $("#cookie-msg a.btn-aceptar").on("click", function () {
+                    var coo = setCookie(settings.cookieName, true, settings.expirationDays);
+                    $("#cookie-msg").remove();
+
+                    return false;
+                })
+            }
+
+        }(jQuery));
+
+    </script>
+    <script type="text/javascript">
+        $.cookieMessage({
+            mainMessage: 'We use our own cookies to guarantee the best experience for our users, prepare statistical information and improve the performance of our website. <br> If you click on <strong> Accept </strong> or continue browsing, you will be accepting the terms indicated in our <a href="/Home/Privacy"> Privacy and cookie policy </a>.  ',
+            acceptButton: "Accept",
+            expirationDays: 20,
+            backgroundColor: '#666',
+            fontSize: '14px',
+            fontColor: 'white',
+            btnBackgroundColor: '#15C5D8',
+            btnFontSize: '11px',
+            btnFontColor: 'white',
+            linkFontColor: '#15C5D8',
+            cookieName: 'cookieMessage'
+        });
+    </script>
+</body>
+</html>

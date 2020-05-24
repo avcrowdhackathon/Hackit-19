@@ -1,0 +1,153 @@
+﻿@using CovidTest.Controllers;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = "Home Page";
+
+    Reservation res = (Reservation)ViewData["Res"];
+}
+
+<div class="container" style="margin-top:100px;">
+    <div class="row">
+        <div class="col-sm">
+            <img style="width:100%;" src="~/images/Hackit element1.png" />
+        </div>
+        <div class="col-sm">
+            <img src="~/images/Hackit logo2.png" style="width:270px;" />
+            <br />
+            <h1 style="color:white; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:74px; text-align: left;">@Localizer["Moto"]</h1>
+            @*<h1 style="color:white; font-family:Poppins; font-size:74px; text-align: left;">We are <label id="stronger">stronger</label> together</h1>*@
+            <p style="color:white;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:22px;">@Localizer["underline1"]</p>
+            <p style="color:white;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:22px;">@Localizer["underline2"]</p>
+            @*<button type="button" data-toggle="modal" data-target="#confirmInfo" class="btn btn-secondary" style="color:white;background-color:#233d40; font-family:Poppins; font-size:22px; padding: 0.375rem 0.75rem;">CHECK MY SYMPTOMS</button>*@
+            <a role="button" href="/Home/Assessment" class="btn btn-secondary" style="color:white;background-color:#233d40; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:22px; padding: 0.375rem 0.75rem;">@Localizer["ButtCheck"]</a>
+            <a id="seeResults" class="btn" href="/Home/Results" role="button" style="color:white;background-color:#F8C295; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:22px; padding: 0.375rem 0.75rem; display:none;">@Localizer["ButtSeeLast"]</a>
+
+        </div>
+    </div>
+</div>
+<span class="badge badge-warning">Confirmed: @res.latest.confirmed</span>
+<span class="badge badge-danger">Deaths: @res.latest.deaths</span>
+<div class="container" style="margin-top:20px; margin-bottom:0px; background-color:#ecfafc ;">
+    <h1 style="color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:33px;padding-left:40px;padding-top:40px;">@Localizer["section2_title"]</h1>
+    <div class="row" style="padding:70px;">
+        <div class="col-sm">
+            <img style="width:80%; padding:20px; display:block;margin:auto;" src="~/images/self-check@4x.png" />
+            <h1 style="text-align: center;color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:25px;">@Localizer["self_check_title"]</h1>
+            <p style="text-align: center;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:18px;padding: 0px 20px 0px 20px;">
+                @Localizer["self_check1"]
+            </p>
+            <p style="text-align: center;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:18px;padding: 0px 20px 0px 20px;">
+                @Localizer["self_check2"]
+            </p>
+        </div>
+        <div class="col-sm">
+            <img style="width:80%; padding:20px; display:block;margin:auto;" src="~/images/mapa2@4x.png" />
+            <h1 style="text-align: center;color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:25px;">@Localizer["health-map_title"]</h1>
+            <p style="text-align: center;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:18px;padding: 0px 20px 0px 20px;">
+                @Localizer["health-map1"]
+            </p>
+        </div>
+        <div class="col-sm">
+            <img style="width:80%; padding:20px; display:block;margin:auto;" src="~/images/queue@4x.png" />
+            <h1 style="text-align: center;color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:25px;">@Localizer["queues_title"]</h1>
+            <p style="text-align: center;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:18px;padding: 0px 20px 0px 20px;">
+                @Localizer["queues1"]
+            </p>
+            <p style="text-align: center;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:18px;padding: 0px 20px 0px 20px;">
+                @Localizer["queues2"]
+            </p>
+        </div>
+        <div class="col-sm">
+            <img style="width:80%; padding:20px; display:block;margin:auto;" src="~/images/myhood@4x.png" />
+            <h1 style="text-align: center;color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:25px;"> @Localizer["myhood_title"]</h1>
+            <p style="text-align: center;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:18px;padding: 0px 20px 0px 20px;">
+                @Localizer["myhood"]
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div style="width:100%;background-color:white;">
+
+        <div class="row" style="padding:30px;float:left;width:50%;">
+            <div class="col-sm">
+                <img style="width:100%;" src="~/images/Hackit logo2.png" />
+            </div>
+            <div class="col-sm">
+                <h1 style="text-align: left;color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px;">@Localizer["BRAND_title1"]</h1>
+                <a href="/Home/Team" style="text-align: left;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;">
+                    @Localizer["Brand_title1_sub1"]
+                </a>
+            </div>
+            <div class="col-sm">
+                <h1 style="text-align: left;color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px;"> @Localizer["Title2"]</h1>
+                <p>
+                    <a href="/Home/Assessment" style="text-align: left;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;">
+                        @Localizer["Title2_sub1"]
+                    </a>
+                </p>
+                <p style="margin-top: -20px;">
+                    <a href="/Home/HeatMaps" style="text-align: left;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;">
+                        @Localizer["Title2_sub2"]
+                    </a>
+                </p>
+                <p style="margin-top: -20px;">
+                    <a href="/Home/Queues" style="text-align: left;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;">
+                        @Localizer["Title2_sub3"]
+                    </a>
+                </p>
+                <p style="margin-top: -20px;">
+                    <a href="/Home/MyNeighborhood" style="text-align: left;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;">
+                        @Localizer["Title2_sub4"]
+                    </a>
+                </p>
+            </div>
+            <div class="col-sm">
+                <h1 style="text-align: left;color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px;"> @Localizer["Title 3"]</h1>
+                <p>
+                    <a href="/Home/Privacy" style="text-align: left;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;">
+                        @Localizer["Title3_sub1"]
+                    </a>
+                </p>
+                <p style="margin-top: -20px;">
+                    <a href="/Home/Terms" style="text-align: left;color:#707070;font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:11px;">
+                        @Localizer["Title3_sub2"]
+                    </a>
+                </p>
+            </div>
+
+        </div>
+        <div style="clear:both;"> </div>
+    </div>
+</footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (checkCookie("UserID")) {
+            $("#seeResults").show();
+        }
+        //var timer = 5;
+        //setInterval(myMethod, 1000);
+
+        //function myMethod() {
+        //    if (timer == 5)
+        //        $("#stronger").html("stronger");
+        //    if (timer == 4)
+        //        $("#stronger").html("better");
+        //    if (timer == 3)
+        //        $("#stronger").html("happier");
+        //    if (timer == 2)
+        //        $("#stronger").html("piluier");
+        //    if (timer == 1) {
+        //        $("#stronger").html("greater");
+        //        timer = 6;
+        //    }
+        //    timer--;
+        //}
+    });
+</script>
+
+@*<span class="badge badge-success">Recovered: @res.latest.recovered</span>*@

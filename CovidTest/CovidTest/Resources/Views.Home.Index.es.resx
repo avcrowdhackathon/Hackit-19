@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ButtCheck" xml:space="preserve">
+    <value>RESVISAR MIS SINTOMAS</value>
+  </data>
+  <data name="ButtSeeLast" xml:space="preserve">
+    <value>VER MIS ULTIMOS RESULTADOS</value>
+  </data>
+ <data name="Moto" xml:space="preserve" ><value>Juntos somos más fuertes</value></data>
+<data name="underline1" xml:space="preserve" ><value>Venzamos al Coronavirus a través de pequeñas contribuciones individuales que nos protegen a nosotros  y nuestros seres queridos, así como a nuestra comunidad.</value></data>
+<data name="underline2" xml:space="preserve" ><value>¡Conviértete en tu héroe local (mientras nosotros protegemos tu privacidad)!</value></data>
+<data name="self_check_title" xml:space="preserve" ><value>AUTO-EVALUACIÓN</value></data>
+<data name="self_check1" xml:space="preserve" ><value>Revisa tus síntomas y recibe recomendaciones.</value></data>
+<data name="self_check2" xml:space="preserve" ><value>Tus resultados serán compartidos anónimamente con tu comunidad.</value></data>
+<data name="health-map_title" xml:space="preserve" ><value>MAPA DE SALUD</value></data>
+<data name="health-map1" xml:space="preserve" ><value>Revisa cómo tus vecinos y las personas que viven en tus alrededores se están sintiendo, de acuerdo a los resultados de sus auto-evaluaciones.</value></data>
+<data name="queues_title" xml:space="preserve" ><value>COLAS</value></data>
+<data name="queues1" xml:space="preserve" ><value>Averigua cuan llenos están aquellos lugares que están abiertos al día de hoy.</value></data>
+<data name="queues2" xml:space="preserve" ><value>¡Tú también puedes colaborar en tiempo real actualizando la información mientras esperas en la fila!</value></data>
+<data name="myhood_title" xml:space="preserve" ><value>MiBarrio</value></data>
+<data name="myhood" xml:space="preserve" ><value>Interactúa y apoya a tus vecinos (coming soon)</value></data>
+<data name="BRAND_title1" xml:space="preserve" ><value>HACKIT-19</value></data>
+<data name="Brand_title1_sub1" xml:space="preserve" ><value>Sobre nosotros</value></data>
+<data name="Title2" xml:space="preserve" ><value>SERVICIOS</value></data>
+<data name="Title2_sub1" xml:space="preserve" ><value>Auto-evaluación</value></data>
+<data name="Title2_sub2" xml:space="preserve" ><value>Mapas de salud</value></data>
+<data name="Title2_sub3" xml:space="preserve" ><value>Colas</value></data>
+<data name="Title2_sub4" xml:space="preserve" ><value>MiBarrio</value></data>
+<data name="Title 3" xml:space="preserve" ><value>LEGAL</value></data>
+<data name="Title3_sub1" xml:space="preserve" ><value>Política de Privacidad</value></data>
+<data name="Title3_sub2" xml:space="preserve" ><value>Términos y condiciones</value></data>
+<data name="section2_title" xml:space="preserve" ><value>¿Cómo funciona Hackit-19?</value></data>
+
+</root>

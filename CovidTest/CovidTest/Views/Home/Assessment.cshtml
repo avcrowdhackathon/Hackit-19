@@ -1,0 +1,2308 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = "Assessment";
+}
+
+<style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    html {
+        height: 100%
+    }
+
+    #grad1 {
+        background-color: white;
+    }
+
+    .progress-bar {
+        background-color: #15C5D8;
+    }
+
+    .progress {
+        background-color: #b8eef3;
+    }
+
+    #msform {
+        text-align: center;
+        position: relative;
+        margin-top: 20px
+    }
+
+        #msform fieldset .form-card {
+            background: white;
+            border: 0 none;
+            border-radius: 0px;
+            box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+            padding: 20px 40px 30px 40px;
+            box-sizing: border-box;
+            width: 94%;
+            margin: 0 3% 20px 3%;
+            position: relative
+        }
+
+        #msform fieldset {
+            background: white;
+            border: 0 none;
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+            width: 100%;
+            margin: 0;
+            padding-bottom: 20px;
+            position: relative
+        }
+
+            #msform fieldset:not(:first-of-type) {
+                display: none
+            }
+
+            #msform fieldset .form-card {
+                text-align: left;
+                color: #9E9E9E
+            }
+
+        #msform input,
+        #msform textarea {
+            padding: 0px 8px 4px 8px;
+            border: none;
+            border-bottom: 1px solid #ccc;
+            border-radius: 0px;
+            margin-bottom: 25px;
+            margin-top: 2px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: montserrat;
+            color: #2C3E50;
+            font-size: 16px;
+            letter-spacing: 1px
+        }
+
+            #msform input:focus,
+            #msform textarea:focus {
+                -moz-box-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important;
+                border: none;
+                font-weight: bold;
+                border-bottom: 2px solid skyblue;
+                outline-width: 0
+            }
+
+        #msform .action-button {
+            width: 100px;
+            background: skyblue;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 0px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px
+        }
+
+            #msform .action-button:hover,
+            #msform .action-button:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px skyblue
+            }
+
+        #msform .action-button-previous {
+            width: 100px;
+            background: #616161;
+            font-weight: bold;
+            color: white;
+            border: 0 none;
+            border-radius: 0px;
+            cursor: pointer;
+            padding: 10px 5px;
+            margin: 10px 5px
+        }
+
+            #msform .action-button-previous:hover,
+            #msform .action-button-previous:focus {
+                box-shadow: 0 0 0 2px white, 0 0 0 3px #616161
+            }
+
+    select.list-dt {
+        border: none;
+        outline: 0;
+        border-bottom: 1px solid #ccc;
+        padding: 2px 5px 3px 5px;
+        margin: 2px
+    }
+
+        select.list-dt:focus {
+            border-bottom: 2px solid skyblue
+        }
+
+    .card {
+        z-index: 0;
+        border: none;
+        border-radius: 0.5rem;
+        position: relative
+    }
+
+    .fs-title {
+        font-size: 25px;
+        color: #2C3E50;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey
+    }
+
+        #progressbar .active {
+            color: #000000
+        }
+
+        #progressbar li {
+            list-style-type: none;
+            font-size: 12px;
+            width: 25%;
+            float: left;
+            position: relative
+        }
+
+        #progressbar #account:before {
+            font-family: FontAwesome;
+            content: "\f023"
+        }
+
+        #progressbar #personal:before {
+            font-family: FontAwesome;
+            content: "\f007"
+        }
+
+        #progressbar #payment:before {
+            font-family: FontAwesome;
+            content: "\f09d"
+        }
+
+        #progressbar #confirm:before {
+            font-family: FontAwesome;
+            content: "\f00c"
+        }
+
+        #progressbar li:before {
+            width: 50px;
+            height: 50px;
+            line-height: 45px;
+            display: block;
+            font-size: 18px;
+            color: #ffffff;
+            background: lightgray;
+            border-radius: 50%;
+            margin: 0 auto 10px auto;
+            padding: 2px
+        }
+
+        #progressbar li:after {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: lightgray;
+            position: absolute;
+            left: 0;
+            top: 25px;
+            z-index: -1
+        }
+
+        #progressbar li.active:before,
+        #progressbar li.active:after {
+            background: skyblue
+        }
+
+    .radio-group {
+        position: relative;
+        margin-bottom: 25px
+    }
+
+    .radio {
+        display: inline-block;
+        width: 204;
+        height: 104;
+        border-radius: 0;
+        background: lightblue;
+        box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        cursor: pointer;
+        margin: 8px 2px
+    }
+
+        .radio:hover {
+            box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3)
+        }
+
+        .radio.selected {
+            box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.1)
+        }
+
+    .fit-image {
+        width: 100%;
+        object-fit: cover
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #15C5D8;
+        border-color: #15C5D8;
+    }
+
+        .btn-primary:focus, .btn-primary.focus {
+            box-shadow: 0 0 0 0.2rem rgba(184, 238,243, 0.5);
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #15C5D8;
+            border-color: #15C5D8;
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+            color: #fff;
+            background-color: #15C5D8;
+            border-color: #15C5D8;
+        }
+
+
+    .btn-secondary {
+        color: #fff;
+        background-color: #656C64;
+        border-color: #656C64;
+    }
+
+        .btn-secondary:focus, .btn-secondary.focus {
+            box-shadow: 0 0 0 0.2rem rgba(184, 238,243, 0.5);
+        }
+
+        .btn-secondary:hover {
+            color: #fff;
+            background-color: #656C64;
+            border-color: #656C64;
+        }
+
+        .btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active, .show > .btn-secondary.dropdown-toggle {
+            color: #fff;
+            background-color: #656C64;
+            border-color: #656C64;
+        }
+
+
+
+
+    .custom-control-label::after {
+        top: .8rem;
+        width: 50px;
+        height: 50px;
+        font-family: Poppins;
+    }
+
+    .custom-control-label::before {
+        top: .8rem;
+        width: 50px;
+        height: 50px;
+        background-color: #E1E1E1;
+        font-family: Poppins;
+    }
+
+    .custom-control-input:checked ~ .custom-control-label::before {
+        color: #fff;
+        width: 50px;
+        height: 50px;
+        border-color: #707070;
+        background-color: #707070;
+        font-family: Poppins;
+    }
+
+    .custom-control-lg .custom-control-label::before,
+    .custom-control-lg .custom-control-label::after {
+        top: -0.1rem !important;
+        left: -4rem !important;
+        width: 2.5rem !important;
+        height: 2.5rem !important;
+        font-family: Poppins;
+    }
+
+    .custom-control-lg .custom-control-label {
+        margin-left: 0.5rem !important;
+        font-size: 1rem !important;
+        font-family: Poppins;
+        width: 230px;
+    }
+
+    p {
+        text-align: left;
+        font-family: Poppins;
+    }
+
+    .bd-example-modal-lg .modal-dialog {
+        display: table;
+        position: relative;
+        margin: 0 auto;
+        top: calc(50% - 24px);
+    }
+
+        .bd-example-modal-lg .modal-dialog .modal-content {
+            background-color: transparent;
+            border: none;
+        }
+
+    .fieldbasics {
+        padding-top: 20px;
+        min-height: 500px;
+    }
+
+    .buttEstilo {
+        font-family: Poppins;
+        font-size: 22px;
+        width: 13.5rem;
+        padding: 0.75rem;
+    }
+
+    .buttEstiloNext {
+        font-family: Poppins;
+        font-size: 22px;
+        width: 13.5rem;
+        padding: 0.75rem;
+        color: white;
+        background-color: #15C5D8;
+        float: right;
+    }
+
+        .buttEstiloNext:hover {
+            color: #fff;
+            background-color: #15C5D8;
+            border-color: #15C5D8;
+        }
+
+    .buttEstiloBack {
+        color: #707070;
+        float: left;
+        font-family: Poppins;
+        font-size: 22px;
+        font-size: 18px;
+        width: 8.5rem;
+        height: 3.675rem;
+    }
+
+    .buttEstiloEXIT {
+        color: white;
+        background-color: #D81515;
+        font-family: Poppins;
+        font-size: 22px;
+        width: 13.5rem;
+        padding: 0.75rem;
+        margin-top: 10px;
+        margin-left: auto;
+    }
+
+        .buttEstiloEXIT:hover {
+            color: #fff;
+            background-color: #D81515;
+            border-color: #D81515;
+        }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/js/bootstrap-spinedit.js"></script>
+
+<script type="text/javascript">
+
+    var placeSearch, autocomplete;
+
+    var componentForm = {
+        //street_number: 'short_name',
+        //route: 'long_name',
+        //locality: 'long_name',
+        //administrative_area_level_1: 'short_name',
+        countryauto: 'long_name',
+        postal_code: 'short_name'
+    };
+
+    function initAutocomplete() {
+        // Create the autocomplete object, restricting the search predictions to
+        // geographical location types.
+        autocomplete = new google.maps.places.Autocomplete(
+            document.getElementById('autocomplete'), { types: ['geocode'] });
+
+        // Avoid paying for data that you don't need by restricting the set of
+        // place fields that are returned to just the address components.
+        autocomplete.setFields(['address_component']);
+
+        // When the user selects an address from the drop-down, populate the
+        // address fields in the form.
+        autocomplete.addListener('place_changed', fillInAddress);
+    }
+
+    function fillInAddress() {
+        // Get the place details from the autocomplete object.
+        var place = autocomplete.getPlace();
+
+        ////for (var component in componentForm) {
+        ////    document.getElementById(component).value = '';
+        ////    document.getElementById(component).disabled = false;
+        ////}
+
+        document.getElementById("postCode").value = '';
+        $("#country").val("Please select country");
+
+        // Get each component of the address from the place details,
+        // and then fill-in the corresponding field on the form.
+        for (var i = 0; i < place.address_components.length; i++) {
+            var addressType = place.address_components[i].types[0];
+            //if (addressType != "country")
+            //{
+            //if (componentForm[addressType]) {
+            //    var val = place.address_components[i][componentForm[addressType]];
+            //    document.getElementById(addressType).value = val;
+            //    }
+            //}
+            if (addressType == "postal_code") {
+                var val = place.address_components[i]['short_name'];
+                document.getElementById("postCode").value = val;
+            }
+            else if (addressType == "country") {
+                var val = place.address_components[i]['long_name'];
+                $("#country").val(val);
+            }
+            checkDem();
+        }
+    }
+
+    // Bias the autocomplete object to the user's geographical location,
+    // as supplied by the browser's 'navigator.geolocation' object.
+    function geolocate() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var geolocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+                var circle = new google.maps.Circle(
+                    { center: geolocation, radius: position.coords.accuracy });
+                autocomplete.setBounds(circle.getBounds());
+            });
+        }
+    }
+    var isUserReturn = false;
+    var isUserNew = true;
+    $(document).ready(function () {
+
+        //initAutocomplete();
+      
+        var current_fs, next_fs, previous_fs; //fieldsets
+        var opacity;
+        $('#confirmInfo').modal('show');
+        function modal() {
+            $('#myModal').modal('show');
+        }
+
+        var usuariosIniciales = getCookie("Users");
+        if (usuariosIniciales == "" || usuariosIniciales == "[]")
+        {
+            usuariosIniciales = "[]";
+            $('#noUsers').show();
+            $('#UsersExist').hide();
+          
+            isUserNew = true;
+        }
+        else
+        {
+            var obj = JSON.parse(usuariosIniciales);
+            console.log(obj);
+            $('#noUsers').hide();
+            var buttons = '<h6 style="margin-bottom: 30px;color: #707070; font-family: Poppins , Lato, Helvetica, Arial, sans-serif; font-size: 18px; text-align: center;">@Localizer["WelcomeScreenWhoAssessingExists"]</h6>';
+            for (var i = 0; i < obj.length; i++)
+            {
+                buttons += '<button  onclick="SetUser(' + obj[i].ID + ',' + "'" + obj[i].name + "'" + ')" type="button" style="margin-bottom: 10px;margin-left:10px;font-family:Poppins;width:15rem;height:4rem;" class="userbutton btn btn-light">' + obj[i].name+'</button>';
+            }
+            buttons +='<button  onclick="SomeoneElse()" type="button" style="margin-bottom: 10px;margin-left:10px;font-family:Poppins , Lato, Helvetica, Arial, sans-serif;width:15rem;height:4rem;" class="userbutton btn btn-light">@Localizer["WelcomeScreenWhoSomeoneElse"]</button>';
+            $('#UsersExist').html(buttons);
+            $('#UsersExist').show();
+            $('#txtNickName').hide();
+        }
+        $('.userbutton').on('click', function (event) {
+
+
+            $('.userbutton').removeClass("btn-secondary");
+            $('.userbutton').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+           
+        });
+        window.mobilecheck = function () {
+            var check = false;
+            (function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
+            return check;
+        };
+
+        function moveForward(currentSlide,nextSlide) {
+            nextSlide.show();
+            //hide the current fieldset with style
+            currentSlide.animate({ opacity: 0 }, {
+                step: function (now) {
+                    // for making fielset appear animation
+                    opacity = 1 - now;
+
+                    currentSlide.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    nextSlide.css({ 'opacity': opacity });
+                },
+                duration: 600
+            });
+        }
+
+        $('.radio-group .radio').click(function () {
+            $(this).parent().find('.radio').removeClass('selected');
+            $(this).addClass('selected');
+        });
+        $(".submit").click(function () {
+            return false;
+        })
+        $('.age').on('click', function (event) {
+
+
+            $('.age').removeClass("btn-secondary");
+            $('.age').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#Age").val($(this)[0].id);
+            $('#buttAge').prop('disabled', false);
+        });
+        $('.AfT').on('click', function (event) {
+
+
+            $('.AfT').removeClass("btn-secondary");
+            $('.AfT').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#AfterTest").val($(this)[0].id);
+            $('#buttBreathAfterTest').prop('disabled', false);
+        });
+        $('.fever').on('click', function (event) {
+
+
+            $('.fever').removeClass("btn-secondary");
+            $('.fever').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#Fever").val($(this)[0].id);
+            $('#buttFever').prop('disabled', false);
+        });
+        $('.cough').on('click', function (event) {
+
+            $('.cough').removeClass("btn-secondary");
+            $('.cough').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#Cough").val($(this)[0].id);
+            $('#buttCough').prop('disabled', false);
+        });
+        $('.drycough').on('click', function (event) {
+
+            $('.drycough').removeClass("btn-secondary");
+            $('.drycough').addClass("btn-light");
+
+            $(this).removeClass("btn-light");
+            $(this).addClass("btn-secondary");
+
+            $("#DryCough").val($(this)[0].id);
+            $('#buttDryCough').prop('disabled', false);
+        });
+        //0
+        $('#buttUser').on('click', function (event) {
+
+            current_fs = $("#UserField");
+            next_fs = $("#DemograField");
+            
+            $("#progressBarAssessment").width(10 + "%");
+            $("#Steps").show();
+            $(".progress").show();
+            $("#Steps").text('@Localizer["Screen1_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttDemo').on('click', function (event) {
+
+            if ($("#postCode").val() != "" && $("#country").val() != "0") {
+                current_fs = $("#DemograField");
+                next_fs = $("#DiseaseField");
+                $("#progressBarAssessment").width(20 + "%");
+                $("#Steps").text('@Localizer["Screen2_Step"]');
+                moveForward(current_fs, next_fs);
+            }
+            else {
+                alert("Please fill the information");
+            }
+
+        });
+        $('#buttDiseasesPrev').on('click', function (event) {
+            current_fs = $("#DiseaseField");
+            next_fs = $("#DemograField");
+            $("#progressBarAssessment").width(10 + "%");
+            $("#Steps").text('@Localizer["Screen1_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        //2
+        $('#buttDiseases').on('click', function (event) {
+                current_fs = $("#DiseaseField");
+                next_fs = $("#AgeField");
+                $("#progressBarAssessment").width(30 + "%");
+                $("#Steps").text('@Localizer["Screen3_Step"]');
+                moveForward(current_fs, next_fs);
+        });
+        $('#buttAgePrev').on('click', function (event) {
+            current_fs = $("#AgeField");
+            next_fs = $("#DiseaseField");
+            $("#progressBarAssessment").width(20 + "%");
+            $("#Steps").text('@Localizer["Screen2_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        //3
+        $('#buttAge').on('click', function (event) {
+            current_fs = $("#AgeField");
+            next_fs = $("#FeverField");
+            $("#progressBarAssessment").width(40 + "%");
+            $("#Steps").text('@Localizer["Screen4_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttFeverPrev').on('click', function (event) {
+            current_fs = $("#FeverField");
+            next_fs = $("#AgeField");
+            $("#progressBarAssessment").width(30 + "%");
+            $("#Steps").text('@Localizer["Screen3_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        //4
+        $('#buttFever').on('click', function (event) {
+            current_fs = $("#FeverField");
+            next_fs = $("#CoughField ");
+            $("#progressBarAssessment").width(50 + "%");
+            $("#Steps").text('@Localizer["Screen5.1_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttCoughPrev').on('click', function (event) {
+            current_fs = $("#CoughField");
+            next_fs = $("#FeverField");
+            $("#progressBarAssessment").width(40 + "%");
+            $("#Steps").text('@Localizer["Screen4_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        //5
+        $('#buttCough').on('click', function (event) {
+
+            if ($("#Cough").val() == "CoughYes")
+            {
+                current_fs = $("#CoughField");
+                next_fs = $("#DryCoughField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text('@Localizer["Screen5.1_Step"]');
+            }
+            else if ($("#Cough").val() == "CoughNo" && $("#Fever").val() == "FeverNo")
+            {
+                //Fin:verde
+                current_fs = $("#CoughField");
+                next_fs = $("#GreenField");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text('@Localizer["Results_Screen_Green_Title"]');
+                SaveResults("1");
+            }
+            else if ($("#Cough").val() == "CoughNo" && $("#Fever").val() == "FeverYes") {
+                current_fs = $("#CoughField");
+                next_fs = $("#DisclaimerField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text('@Localizer["Screen5.1_Step"]');
+            }
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttDryCoughPrev').on('click', function (event) {
+            current_fs = $("#DryCoughField");
+            next_fs = $("#CoughField");
+            $("#progressBarAssessment").width(50 + "%");
+            $("#Steps").text('@Localizer["Screen5.1_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttDryCough').on('click', function (event) {
+
+            if ($("#Cough").val() == "CoughYes" || $("#Fever").val() == "FeverYes")
+            {
+                current_fs = $("#DryCoughField");
+                next_fs = $("#DisclaimerField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text('@Localizer["Screen5.1_Step"]');
+            }
+            moveForward(current_fs, next_fs);
+
+        });
+
+        $('#buttDisclaimerPrevious').on('click', function (event) {
+
+            if ($("#Cough").val() == "CoughYes") {
+                current_fs = $("#DisclaimerField");
+                next_fs = $("#DryCoughField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text('@Localizer["Screen5.1_Step"]');
+            }
+            else
+            {
+                current_fs = $("#DisclaimerField");
+                next_fs = $("#CoughField");
+                $("#progressBarAssessment").width(50 + "%");
+                $("#Steps").text('@Localizer["Screen5.1_Step"]');
+            }
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttDisclaimer').on('click', function (event) {
+           current_fs = $("#DisclaimerField");
+           next_fs = $("#BreathField");
+           $("#progressBarAssessment").width(60 + "%");
+           $("#Steps").text('@Localizer["Screen6_Step"]');
+           moveForward(current_fs, next_fs);
+        });
+        $('#buttBreath').on('click', function (event) {
+
+            if ($("#chkBreathe1").is(':checked') ||
+                $("#chkBreathe2").is(':checked'))
+            {
+                //Fin:rojo
+                current_fs = $("#BreathField");
+                next_fs = $("#RedField");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text('@Localizer["Results_Screen_Red_Title"]');
+                moveForward(current_fs, next_fs);
+                SaveResults("4");
+            }
+            else
+            {
+                current_fs = $("#BreathField");
+                next_fs = $("#BreathTest");
+                $("#progressBarAssessment").width(70 + "%");
+                $("#Steps").text('@Localizer["Screen7_Step"]');
+                moveForward(current_fs, next_fs);
+            }
+
+
+        });
+        $('#buttPreviousBreath').on('click', function (event) {
+
+            current_fs = $("#BreathField");
+            next_fs = $("#DisclaimerField");
+            $("#progressBarAssessment").width(50 + "%");
+            $("#Steps").text('@Localizer["Screen5.1_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttStartBreathTest').on('click', function (event) {
+
+            current_fs = $("#BreathTest");
+            next_fs = $("#BreathTest2");
+            $("#progressBarAssessment").width(70 + "%");
+            $("#Steps").text('@Localizer["Screen7_Step"]');
+
+            moveForward(current_fs, next_fs);
+            StartBreath();
+        });
+        $('#buttBreathTestStop').on('click', function (event) {
+
+            clearInterval(timer);
+            current_fs = $("#BreathTest2");
+            next_fs = $("#BreathTest");
+            $("#progressBarAssessment").width(70 + "%");
+            $("#Steps").text('@Localizer["Screen7_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttPreviousGoToTest').on('click', function (event) {
+
+            current_fs = $("#BreathTest3");
+            next_fs = $("#BreathTest");
+            $("#progressBarAssessment").width(70 + "%");
+            $("#Steps").text('@Localizer["Screen7_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttBreathAfterTest').on('click', function (event) {
+
+            if ($('#breathNumber').val() >=13)
+            {
+                if ($("#chkHeart").is(':checked') || $("#chkLung").is(':checked'))
+                {
+                    if ($("#AfterTest").val() == "AfterTest2")
+                    {
+                        //Fin:rojo
+                        current_fs = $("#BreathTest3");
+                        next_fs = $("#RedField");
+                        $("#progressBarAssessment").width(100 + "%");
+                        $("#Steps").text('@Localizer["Results_Screen_Red_Title"]');
+                        moveForward(current_fs, next_fs);
+                        SaveResults("4");
+                    }
+                    else
+                    {
+                        current_fs = $("#BreathTest3");
+                        next_fs = $("#LastCondition");
+                        $("#progressBarAssessment").width(90 + "%");
+                        $("#Steps").text('@Localizer["Screen9_Step"]');
+                        moveForward(current_fs, next_fs);
+                    }
+                }
+                else
+                {
+                    //Fin:rojo
+                    current_fs = $("#BreathTest3");
+                    next_fs = $("#RedField");
+                    $("#progressBarAssessment").width(100 + "%");
+                    $("#Steps").text('@Localizer["Results_Screen_Red_Title"]');
+                    moveForward(current_fs, next_fs);
+                    SaveResults("4");
+                }
+
+            }
+            else if ($('#breathNumber').val() < 25)
+            {
+                current_fs = $("#BreathTest3");
+                next_fs = $("#LastCondition");
+                $("#progressBarAssessment").width(90 + "%");
+                $("#Steps").text('@Localizer["Screen9_Step"]');
+                moveForward(current_fs, next_fs);
+            }
+            else
+            {
+                alert("Error amount of breathes")
+            }
+        });
+        $('#buttPreviousLast').on('click', function (event) {
+
+            current_fs = $("#LastCondition");
+            next_fs = $("#BreathTest3");
+            $("#progressBarAssessment").width(80 + "%");
+            $("#Steps").text('@Localizer["Screen8_Step"]');
+            moveForward(current_fs, next_fs);
+        });
+        $('#buttLast').on('click', function (event) {
+
+            if ($("#chkConfused").is(':checked') ||
+                $("#chkChoking").is(':checked') ||
+                $("#chkLipsBlue").is(':checked')
+            ) {
+                //Fin:naranjo
+                current_fs = $("#LastCondition");
+                next_fs = $("#OrangeField");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text('@Localizer["Results_Screen_Orange_Title"]');
+                moveForward(current_fs, next_fs);
+                SaveResults("3");
+            }
+            else
+            {
+                //Fin:amarillo
+                current_fs = $("#LastCondition");
+                next_fs = $("#YellowField");
+                $("#progressBarAssessment").width(100 + "%");
+                $("#Steps").text('@Localizer["Results_Screen_Yellow_Title"]');
+                moveForward(current_fs, next_fs);
+                SaveResults("2");
+            }
+        });
+        $('#linkIsolation').on('click', function (event) {
+
+            current_fs = $("#OrangeField");
+            next_fs = $("#IsolationField");
+            $("#progressBarAssessment").width(100 + "%");
+            $("#Steps").text('@Localizer["Results_Screen_Orange_Title"]');
+            moveForward(current_fs, next_fs);
+
+        });
+
+        var seconds = 40;
+        var timer;
+        function myFunctionBreath() {
+
+            if (seconds < 41 && seconds > 35) {
+                document.getElementById("orderTimer").innerHTML = "@Localizer["Activity_prep1"]";
+                $("#buttBreathTestStop").hide();
+                $("#restartBreath").hide();
+            }
+            else if (seconds < 36 && seconds > 32) {
+                document.getElementById("orderTimer").innerHTML = "@Localizer["Activity_prep2"]";
+                document.getElementById("timer").innerHTML = (seconds - 30);
+                $("#timer").css("color", "#F7AA18");
+                $("#buttBreathTestStop").hide();
+                $("#restartBreath").hide();
+            }
+            else if (seconds < 33 && seconds > 30) {
+                document.getElementById("orderTimer").innerHTML = "@Localizer["Activity_prep2"]";
+                document.getElementById("timer").innerHTML = (seconds - 30);
+                $("#timer").css("color", "#D81515");
+                $("#buttBreathTestStop").hide();
+                $("#restartBreath").hide();
+            }
+            else {
+                document.getElementById("orderTimer").innerHTML = "@Localizer["Activity_Screen_line1"] ";
+                document.getElementById("orderTimerb").innerHTML = "@Localizer["Activity_Screen_line2"] ";
+                $("#buttBreathTestStop").show();
+                $("#restartBreath").show();
+            }
+            if (seconds < 31) {
+
+                $("#timer").css("color", "#15C5D8");
+                document.getElementById("timer").innerHTML = seconds;
+            }
+            if (seconds > 0) {
+                seconds--;
+            } else {
+                clearInterval(timer);
+                current_fs = $("#BreathTest2");
+                next_fs = $("#BreathTest3");
+                $("#progressBarAssessment").width(80 + "%");
+                $("#Steps").text('@Localizer["Screen8_Step"]');
+                moveForward(current_fs, next_fs);
+            }
+        }
+        function StartBreath() {
+            seconds = 40;
+            document.getElementById("orderTimer").innerHTML = "@Localizer["Activity_prep1"]";
+            document.getElementById("orderTimerb").innerHTML = "";
+            document.getElementById("timer").innerHTML = "";
+            $("#buttBreathTestStop").hide();
+            $("#restartBreath").hide();
+            timer = window.setInterval(function () {
+                myFunctionBreath();
+            }, 1000);
+        }
+        function GetDeseases()
+        {
+            var resuDe = "";
+            var hasResDis = false;
+            if ($("#chkAids").is(':checked'))
+            {
+                hasResDis = true;
+                resuDe = resuDe + 1 + ",";
+            }
+            if ($("#chkHeart").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 2 + ",";
+            }
+            if ($("#chkCancer").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 3 + ",";
+            }
+            if ($("#chkDiabetes").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 4 + ",";
+            } if ($("#chkAuto").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 5 + ",";
+            }
+            if ($("#chkKidney").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 6 + ",";
+            }
+            if ($("#chkLung").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 7 + ",";
+            }
+            if (hasResDis) {
+
+                resuDe = resuDe.substring(0, resuDe.length-1);
+            }
+            else {
+                resuDe = "0";
+            }
+            return resuDe;
+
+        }
+        function GetBreath() {
+
+            if ($("#chkBreathe1").is(':checked')) {
+                return "1";
+            }
+            if ($("#chkBreathe2").is(':checked')) {
+                hasResDis = true;
+                return "2";
+            }
+            if ($("#chkBreathe3").is(':checked')) {
+                return "3";
+            }
+            if ($("#chkBreathe4").is(':checked')) {
+                return "4";
+            } if ($("#chkBreathe5").is(':checked')) {
+                return "5";
+            }
+            return "0";
+        }
+        function GetBreathTest() {
+
+            if ($("#AfterTest").val() =="AfterTest1") {
+                return "1";
+            }
+            if ($("#AfterTest").val() == "AfterTest2") {
+                hasResDis = true;
+                return "2";
+            }
+            if ($("#AfterTest").val() == "AfterTest3") {
+                return "3";
+            }
+            return "0";
+        }
+        function GetCondition() {
+            var resuDe = "";
+            var hasResDis = false;
+            if ($("#chkConfused").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 1 + ",";
+            }
+            if ($("#chkChoking").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 2 + ",";
+            }
+            if ($("#chkLipsBlue").is(':checked')) {
+                hasResDis = true;
+                resuDe = resuDe + 3 + ",";
+            }
+            if (hasResDis) {
+
+                resuDe = resuDe.substring(0, resuDe.length - 1);
+            }
+            else
+            {
+                resuDe = "0";
+            }
+            return resuDe;
+
+        }
+        function SaveResults(Result) {
+
+            var userId = "";
+
+            var Mobile = window.mobilecheck();
+
+            if (checkCookie("UserID")) {
+                userId = getCookie("UserID")
+            }
+            var LatBrowser = "0";
+            if (checkCookie("latitude")) {
+                LatBrowser = getCookie("latitude")
+            }
+            var LongBrowser = "0";
+            if (checkCookie("longitude")) {
+                LongBrowser = getCookie("longitude")
+            }
+            var nickname = $("#nameUser").val();
+            var Postal = $("#postCode").val();
+            var Country = $("#country").val();
+            var PreDiseases = GetDeseases();
+            var Age = $("#Age").val();
+            var Fever = $("#Fever").val();
+            var Cough = $("#Cough").val();
+            var DryCough = $("#DryCough").val();
+            var Breath = GetBreath();
+            var BreathTimes= $('#breathNumber').val();
+            var BreathResults = GetBreathTest();
+            var Condition = GetCondition();
+
+            var LatPost = "0";
+            var LongPost = "0";
+
+            modal();
+
+            setTimeout(function () {
+
+                geocoder = new google.maps.Geocoder();
+                var addressb = Postal + "," + Country;
+                geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    'address': addressb
+                }, function (results, status) {
+
+                    var countryRes = "";
+                    var administrative_area_level_5Res = "";
+                    var administrative_area_level_4Res = "";
+                    var administrative_area_level_3Res = "";
+                    var administrative_area_level_2Res = "";
+                    var administrative_area_level_1Res = "";
+
+                    if (status == google.maps.GeocoderStatus.OK) {
+
+                        LatPost = results[0].geometry.location.lat();
+                        LongPost = results[0].geometry.location.lng();
+
+                        geocoder.geocode({ 'latLng': results[0].geometry.location }, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                    for (i = 0; i < results.length; i++) {
+                            for (j = 0; j < results[i].address_components.length; j++) {
+
+                                if (results[i].address_components[j].types[0] == 'country') {
+                                    countryRes = results[i].address_components[j].long_name;
+                                }
+                                else if (results[i].address_components[j].types[0] == 'administrative_area_level_5') {
+                                    administrative_area_level_5Res = results[i].address_components[j].long_name;
+                                }
+                                else if (results[i].address_components[j].types[0] == 'administrative_area_level_4') {
+                                    administrative_area_level_4Res = results[i].address_components[j].long_name;
+                                }
+                                else if (results[i].address_components[j].types[0] == 'administrative_area_level_3') {
+                                    administrative_area_level_3Res = results[i].address_components[j].long_name;
+                                }
+                                else if (results[i].address_components[j].types[0] == 'administrative_area_level_2') {
+                                    administrative_area_level_2Res = results[i].address_components[j].long_name;
+                                }
+                                else if (results[i].address_components[j].types[0] == 'administrative_area_level_1') {
+                                    administrative_area_level_1Res = results[i].address_components[j].long_name;
+                                }
+
+                            }
+                                }
+
+                                if (Country == countryRes)
+                                {
+                                                $.ajax({
+                                        type: 'GET',
+                                        url: '@Url.Action("SaveAssesment", "Home")',
+                                        data: {
+                                            UserID: userId,
+                                            Mobile: Mobile,
+                                            Evaluation: Result,
+                                            LatBrowser: LatBrowser,
+                                            LongBrowser: LongBrowser,
+                                            LatPost: LatPost,
+                                            LongPost: LongPost,
+                                            Postal: Postal,
+                                            Country: Country,
+                                            PreDiseases: PreDiseases,
+                                            Age: Age,
+                                            Fever: Fever,
+                                            Cough: Cough,
+                                            DryCough: DryCough,
+                                            Breath: Breath,
+                                            BreathTimes: BreathTimes,
+                                            BreathResults: BreathResults,
+                                            Condition: Condition,
+                                            Administrative_area_level_5: administrative_area_level_5Res,
+                                            Administrative_area_level_4: administrative_area_level_4Res,
+                                            Administrative_area_level_3: administrative_area_level_3Res,
+                                            Administrative_area_level_2: administrative_area_level_2Res,
+                                            Administrative_area_level_1: administrative_area_level_1Res
+                                        },
+                                        dataType: "json",
+                                        cache: false,
+                                        async: false,
+                                        success: function (data) {
+
+                                            var usuarios = getCookie("Users");
+                                            if (usuarios == "")
+                                                usuarios = "[]";
+                                            var obj = JSON.parse(usuarios);
+                                            var existUser = false;
+                                            for (var i = 0; i < obj.length; i++)
+                                            {
+                                                if (obj[i].ID == data)
+                                                    existUser = true;
+                                            }
+                                            if (existUser==false)
+                                                obj.push({ "name": nickname, "ID": data });
+
+                                            var myJSON = JSON.stringify(obj);
+                                            setCookie("Users", myJSON, 10);
+                                            setCookie("UserID", data, 10);
+                                            $('#myModal').modal("hide");
+                                        },
+                                        error: function (errorMsg) {
+                                           // alert("Data no de guardo");
+                                        }
+                                                });
+                                }
+                                else
+                                {
+                                    $('#myModal').modal("hide");
+                                }
+
+
+
+                            } else {
+                                alert("Geocoder failed due to: " + status);
+                            }
+                        });
+                    }
+                    $('#myModal').modal("hide");
+
+                });
+
+
+            }, 1000);
+
+
+            var f = 22;
+        }
+    });
+    function ChangeUser(change)
+    {
+        if (change) {
+            $('#labelNameUser').html("What name would you like us to use to identify you?");
+        }
+        else {
+            $('#labelNameUser').html("What’s his/her name?");
+        }
+    }
+    function checkUser() {
+
+        if ($("#nameUser").val() != "" && $("#chkPrivacy").is(':checked') && isUserNew) {
+            $('#buttUser').prop('disabled', false);
+
+        }
+        else if (isUserReturn && $("#chkPrivacy").is(':checked')) {
+            $('#buttUser').prop('disabled', false);
+        }
+        else {
+            $('#buttUser').prop('disabled', true);
+        }
+    }
+    function checkDem() {
+        if ($("#postCode").val() != "" && $("#country").val() != "0")
+        {
+            $('#buttDemo').prop('disabled', false);
+
+        }
+        else
+        {
+            $('#buttDemo').prop('disabled', true);
+        }
+    }
+    function checkDis(cb) {
+
+        if (cb.id == "chkNone") {
+            $("#chkAids").prop("checked", false);
+            $("#chkHeart").prop("checked", false);
+            $("#chkCancer").prop("checked", false);
+            $("#chkDiabetes").prop("checked", false);
+            $("#chkAuto").prop("checked", false);
+            $("#chkKidney").prop("checked", false);
+            $("#chkLung").prop("checked", false);
+        }
+        if (cb.id == "chkAids" ||
+            cb.id == "chkHeart" ||
+            cb.id == "chkCancer" ||
+            cb.id == "chkDiabetes" ||
+            cb.id == "chkAuto" ||
+            cb.id == "chkKidney" ||
+            cb.id == "chkLung"
+        ) {
+            $("#chkNone").prop("checked", false);
+        }
+
+        if ($("#chkAids").is(':checked')      ||
+            $("#chkHeart").is(':checked')     ||
+            $("#chkCancer").is(':checked')    ||
+            $("#chkDiabetes").is(':checked')  ||
+            $("#chkAuto").is(':checked')      ||
+            $("#chkKidney").is(':checked')    ||
+            $("#chkLung").is(':checked')      ||
+            $("#chkNone").is(':checked')
+            ) {
+            $('#buttDiseases').prop('disabled', false);
+
+        }
+        else {
+            $('#buttDiseases').prop('disabled', true);
+        }
+    }
+    function checkBreath(cb) {
+
+        var bools = cb.checked;
+
+        $("#chkBreathe1").prop("checked", false);
+        $("#chkBreathe2").prop("checked", false);
+        $("#chkBreathe3").prop("checked", false);
+        $("#chkBreathe4").prop("checked", false);
+        $("#chkBreathe5").prop("checked", false);
+        cb.checked = bools;
+
+        if ($("#chkBreathe1").is(':checked') ||
+            $("#chkBreathe2").is(':checked') ||
+            $("#chkBreathe3").is(':checked') ||
+            $("#chkBreathe4").is(':checked') ||
+            $("#chkBreathe5").is(':checked')
+        ) {
+            $('#buttBreath').prop('disabled', false);
+
+        }
+        else {
+            $('#buttBreath').prop('disabled', true);
+        }
+    }
+    function checkBreathAfter(cb) {
+
+        var bools = cb.checked;
+
+        $("#chkBreatheAfterTest1").prop("checked", false);
+        $("#chkBreatheAfterTest2").prop("checked", false);
+        $("#chkBreatheAfterTest3").prop("checked", false);
+        cb.checked = bools;
+
+        if ($("#chkBreatheAfterTest1").is(':checked') ||
+            $("#chkBreatheAfterTest2").is(':checked') ||
+            $("#chkBreatheAfterTest3").is(':checked')
+        ) {
+            $('#buttBreathAfterTest').prop('disabled', false);
+
+        }
+        else {
+            $('#buttBreathAfterTest').prop('disabled', true);
+        }
+    }
+    function checkLast(cb) {
+        if (cb.id=="chkLastNone")
+        {
+            $("#chkConfused").prop("checked", false);
+            $("#chkChoking").prop("checked", false);
+            $("#chkLipsBlue").prop("checked", false);
+
+        }
+        if (cb.id =="chkConfused" ||
+            cb.id =="chkChoking"  ||
+            cb.id =="chkLipsBlue") {
+            $("#chkLastNone").prop("checked", false);
+        }
+
+        if ($("#chkConfused").is(':checked') ||
+            $("#chkChoking").is(':checked')  ||
+            $("#chkLipsBlue").is(':checked') ||
+            $("#chkLastNone").is(':checked')
+        ) {
+            $('#buttLast').prop('disabled', false);
+
+        }
+        else {
+            $('#buttLast').prop('disabled', true);
+        }
+    }
+
+    function SetUser(user,name) {
+        setCookie("UserID", user, 10);
+        $('#txtNickName').hide();
+        $('#nameUser').val(name);
+        isUserReturn = true;
+        isUserNew = false;
+        checkUser();
+    }
+    function SomeoneElse() {
+        $('#nameUser').val("");
+        setCookie("UserID", "", 10);
+        $('#txtNickName').show();
+        isUserReturn = false;
+        isUserNew = true;
+        checkUser();
+    }
+
+
+
+</script>
+<div class="modal" id="confirmInfo" role="dialog">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 style="color:#707070;font-family:Poppins;font-size:26px; font-weight:normal;" class="modal-title">@Localizer["Disclaimer_title"]</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-4">
+                        <img style="width: 80%;  margin-left: 24px;" src="~/images/warning sign@4x.png" />
+                    </div>
+                    <div class="col-8" style="margin-top: 10px;">
+                        <p style="color:#707070;font-family:Poppins;font-size:15px;margin-right: 2rem;">@Localizer["Disclaimer_paragraph1"]</p>
+                        <p style="color:#707070;font-family:Poppins;font-size:15px;margin-right: 2rem;">@Localizer["Disclaimer_paragraph2"]</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button style="color:#707070; float:right;margin-right: 2rem;" type="button" class="btn btn-light buttEstilo" data-dismiss="modal">@Localizer["Disclaimer_ok"]</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModal" class="modal fade bd-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="width: 48px">
+            <span class="fa fa-spinner fa-spin fa-3x"></span>
+        </div>
+    </div>
+</div>
+<input id="Diseases" type="hidden" value="0" />
+<input id="Age" type="hidden" value="0" />
+<input id="Fever" type="hidden" value="0" />
+<input id="Cough" type="hidden" value="0" />
+<input id="DryCough" type="hidden" value="0" />
+<input id="AfterTest" type="hidden" value="0" />
+<input id="CurrentUser" type="hidden" value="" />
+<div class="container-fluid" id="grad1">
+    <div class="row justify-content-center mt-0">
+        <div class="col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
+            <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <p id="Steps" style="color:#707070; font-family:Poppins; font-size:18px; text-align:center;display:none;"> @Localizer["Screen1_Step"]</p>
+                <div class="progress" style="display:none;">
+                    <div id="progressBarAssessment" class="progress-bar" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mx-0">
+                        <form id="msform">
+                            <fieldset id="UserField" class="fieldbasics">
+                                <h3 style="color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:25px; text-align:center;">@Localizer["WelcomeScreenTitle"]</h3>
+                                <br />
+                                <div id="noUsers">
+                                    
+                                </div>
+                                <div id="UsersExist" style="display:none;">
+
+                                </div>
+                                <div id="txtNickName">
+                                    <div class="row" style="padding-bottom:10px; padding-top:40px;">
+                                        <div class="col">
+                                            <h6 style="color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:18px; text-align:center;">@Localizer["WelcomeScreenWhoAssessing"]</h6>
+                                            <p style="color:#707070; font-family:Poppins , 'Lato', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size:14px; text-align:center;">@Localizer["WelcomeScreenWhoAssessing2"]</p>
+                                            <br />
+                                            <input id="nameUser" onchange="checkUser()" class="form-control mr-sm-2" style="margin-left: 10px; margin-right:10px; font-family:Poppins;" type="search" placeholder="@Localizer["WelcomeScreenWhoAssessingPlaceHolder"]" aria-label="Name">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="padding-top:40px;padding-bottom:80px;">
+                                    <div style="margin-left:auto;margin-right:auto;">
+
+                                        <div style="float:left;" class="custom-control custom-checkbox">
+                                            <input onchange="checkUser()" class="custom-control-input" id="chkPrivacy" type="checkbox" />
+                                            <label class="custom-control-label" for="chkPrivacy" style="text-align: left;">
+                                                @*I agree to the <b style="color:#15C5D8;">privacy policy</b> & <b style="color:#15C5D8;">terms of service.</b>*@
+                                            </label>
+                                        </div>
+
+                                        <div style="float:left;margin-left: 3rem;margin-top: 25px;">
+                                            <p>
+                                                @Localizer["Screen1_Agreement_p1"] <a href="/Home/Privacy" target="_blank" style="color:#15C5D8;"><b>@Localizer["Screen1_Agreement_p2"]</b></a> & <a href="/Home/Terms" target="_blank" style="color:#15C5D8;"><b>@Localizer["Screen1_Agreement_p4"]</b></a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col" style="float:right;">
+                                    </div>
+                                    <div class="col" style="float:left;">
+                                        <button id="buttUser" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen1_ButtNext"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="DemograField" class="fieldbasics">
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen1_instruction"]</h3>
+                                <input id="autocomplete"
+                                       class="form-control mr-sm-2" style="margin-bottom: 10px;margin-top:40px;font-family:Poppins;"
+                                       placeholder="@Localizer["Screen1_search"]"
+                                       onFocus="geolocate()"
+                                       type="text" />
+                                <div class="row" style="padding-bottom:40px; padding-top:50px; border-color: #15C5D8;border-style: dashed;">
+                                    <div class="col">
+                                        <input id="postCode" onchange="checkDem()" class="form-control mr-sm-2" style="margin-left: 10px; margin-right:10px; font-family:Poppins;" type="search" placeholder="@Localizer["Screen1_postalcode"]" aria-label="Post Code">
+                                    </div>
+                                    <div class="col">
+                                        <select class="browser-default custom-select" onchange="checkDem()" style="margin-left: 10px; margin-right:10px; font-family:Poppins;" id="country" name="country">
+                                            <option value="0">@Localizer["Screen1_country"]</option>
+                                            <option value="Afganistan">Afghanistan</option>
+                                            <option value="Albania">Albania</option>
+                                            <option value="Algeria">Algeria</option>
+                                            <option value="American Samoa">American Samoa</option>
+                                            <option value="Andorra">Andorra</option>
+                                            <option value="Angola">Angola</option>
+                                            <option value="Anguilla">Anguilla</option>
+                                            <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                                            <option value="Argentina">Argentina</option>
+                                            <option value="Armenia">Armenia</option>
+                                            <option value="Aruba">Aruba</option>
+                                            <option value="Australia">Australia</option>
+                                            <option value="Austria">Austria</option>
+                                            <option value="Azerbaijan">Azerbaijan</option>
+                                            <option value="Bahamas">Bahamas</option>
+                                            <option value="Bahrain">Bahrain</option>
+                                            <option value="Bangladesh">Bangladesh</option>
+                                            <option value="Barbados">Barbados</option>
+                                            <option value="Belarus">Belarus</option>
+                                            <option value="Belgium">Belgium</option>
+                                            <option value="Belize">Belize</option>
+                                            <option value="Benin">Benin</option>
+                                            <option value="Bermuda">Bermuda</option>
+                                            <option value="Bhutan">Bhutan</option>
+                                            <option value="Bolivia">Bolivia</option>
+                                            <option value="Bonaire">Bonaire</option>
+                                            <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                                            <option value="Botswana">Botswana</option>
+                                            <option value="Brazil">Brazil</option>
+                                            <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+                                            <option value="Brunei">Brunei</option>
+                                            <option value="Bulgaria">Bulgaria</option>
+                                            <option value="Burkina Faso">Burkina Faso</option>
+                                            <option value="Burundi">Burundi</option>
+                                            <option value="Cambodia">Cambodia</option>
+                                            <option value="Cameroon">Cameroon</option>
+                                            <option value="Canada">Canada</option>
+                                            <option value="Canary Islands">Canary Islands</option>
+                                            <option value="Cape Verde">Cape Verde</option>
+                                            <option value="Cayman Islands">Cayman Islands</option>
+                                            <option value="Central African Republic">Central African Republic</option>
+                                            <option value="Chad">Chad</option>
+                                            <option value="Channel Islands">Channel Islands</option>
+                                            <option value="Chile">Chile</option>
+                                            <option value="China">China</option>
+                                            <option value="Christmas Island">Christmas Island</option>
+                                            <option value="Cocos Island">Cocos Island</option>
+                                            <option value="Colombia">Colombia</option>
+                                            <option value="Comoros">Comoros</option>
+                                            <option value="Congo">Congo</option>
+                                            <option value="Cook Islands">Cook Islands</option>
+                                            <option value="Costa Rica">Costa Rica</option>
+                                            <option value="Cote DIvoire">Cote DIvoire</option>
+                                            <option value="Croatia">Croatia</option>
+                                            <option value="Cuba">Cuba</option>
+                                            <option value="Curaco">Curacao</option>
+                                            <option value="Cyprus">Cyprus</option>
+                                            <option value="Czech Republic">Czech Republic</option>
+                                            <option value="Denmark">Denmark</option>
+                                            <option value="Djibouti">Djibouti</option>
+                                            <option value="Dominica">Dominica</option>
+                                            <option value="Dominican Republic">Dominican Republic</option>
+                                            <option value="East Timor">East Timor</option>
+                                            <option value="Ecuador">Ecuador</option>
+                                            <option value="Egypt">Egypt</option>
+                                            <option value="El Salvador">El Salvador</option>
+                                            <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                            <option value="Eritrea">Eritrea</option>
+                                            <option value="Estonia">Estonia</option>
+                                            <option value="Ethiopia">Ethiopia</option>
+                                            <option value="Falkland Islands">Falkland Islands</option>
+                                            <option value="Faroe Islands">Faroe Islands</option>
+                                            <option value="Fiji">Fiji</option>
+                                            <option value="Finland">Finland</option>
+                                            <option value="France">France</option>
+                                            <option value="French Guiana">French Guiana</option>
+                                            <option value="French Polynesia">French Polynesia</option>
+                                            <option value="French Southern Ter">French Southern Ter</option>
+                                            <option value="Gabon">Gabon</option>
+                                            <option value="Gambia">Gambia</option>
+                                            <option value="Georgia">Georgia</option>
+                                            <option value="Germany">Germany</option>
+                                            <option value="Ghana">Ghana</option>
+                                            <option value="Gibraltar">Gibraltar</option>
+                                            <option value="Great Britain">Great Britain</option>
+                                            <option value="Greece">Greece</option>
+                                            <option value="Greenland">Greenland</option>
+                                            <option value="Grenada">Grenada</option>
+                                            <option value="Guadeloupe">Guadeloupe</option>
+                                            <option value="Guam">Guam</option>
+                                            <option value="Guatemala">Guatemala</option>
+                                            <option value="Guinea">Guinea</option>
+                                            <option value="Guyana">Guyana</option>
+                                            <option value="Haiti">Haiti</option>
+                                            <option value="Hawaii">Hawaii</option>
+                                            <option value="Honduras">Honduras</option>
+                                            <option value="Hong Kong">Hong Kong</option>
+                                            <option value="Hungary">Hungary</option>
+                                            <option value="Iceland">Iceland</option>
+                                            <option value="Indonesia">Indonesia</option>
+                                            <option value="India">India</option>
+                                            <option value="Iran">Iran</option>
+                                            <option value="Iraq">Iraq</option>
+                                            <option value="Ireland">Ireland</option>
+                                            <option value="Isle of Man">Isle of Man</option>
+                                            <option value="Israel">Israel</option>
+                                            <option value="Italy">Italy</option>
+                                            <option value="Jamaica">Jamaica</option>
+                                            <option value="Japan">Japan</option>
+                                            <option value="Jordan">Jordan</option>
+                                            <option value="Kazakhstan">Kazakhstan</option>
+                                            <option value="Kenya">Kenya</option>
+                                            <option value="Kiribati">Kiribati</option>
+                                            <option value="Korea North">Korea North</option>
+                                            <option value="Korea Sout">Korea South</option>
+                                            <option value="Kuwait">Kuwait</option>
+                                            <option value="Kyrgyzstan">Kyrgyzstan</option>
+                                            <option value="Laos">Laos</option>
+                                            <option value="Latvia">Latvia</option>
+                                            <option value="Lebanon">Lebanon</option>
+                                            <option value="Lesotho">Lesotho</option>
+                                            <option value="Liberia">Liberia</option>
+                                            <option value="Libya">Libya</option>
+                                            <option value="Liechtenstein">Liechtenstein</option>
+                                            <option value="Lithuania">Lithuania</option>
+                                            <option value="Luxembourg">Luxembourg</option>
+                                            <option value="Macau">Macau</option>
+                                            <option value="Macedonia">Macedonia</option>
+                                            <option value="Madagascar">Madagascar</option>
+                                            <option value="Malaysia">Malaysia</option>
+                                            <option value="Malawi">Malawi</option>
+                                            <option value="Maldives">Maldives</option>
+                                            <option value="Mali">Mali</option>
+                                            <option value="Malta">Malta</option>
+                                            <option value="Marshall Islands">Marshall Islands</option>
+                                            <option value="Martinique">Martinique</option>
+                                            <option value="Mauritania">Mauritania</option>
+                                            <option value="Mauritius">Mauritius</option>
+                                            <option value="Mayotte">Mayotte</option>
+                                            <option value="Mexico">Mexico</option>
+                                            <option value="Midway Islands">Midway Islands</option>
+                                            <option value="Moldova">Moldova</option>
+                                            <option value="Monaco">Monaco</option>
+                                            <option value="Mongolia">Mongolia</option>
+                                            <option value="Montserrat">Montserrat</option>
+                                            <option value="Morocco">Morocco</option>
+                                            <option value="Mozambique">Mozambique</option>
+                                            <option value="Myanmar">Myanmar</option>
+                                            <option value="Nambia">Nambia</option>
+                                            <option value="Nauru">Nauru</option>
+                                            <option value="Nepal">Nepal</option>
+                                            <option value="Netherland Antilles">Netherland Antilles</option>
+                                            <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                                            <option value="Nevis">Nevis</option>
+                                            <option value="New Caledonia">New Caledonia</option>
+                                            <option value="New Zealand">New Zealand</option>
+                                            <option value="Nicaragua">Nicaragua</option>
+                                            <option value="Niger">Niger</option>
+                                            <option value="Nigeria">Nigeria</option>
+                                            <option value="Niue">Niue</option>
+                                            <option value="Norfolk Island">Norfolk Island</option>
+                                            <option value="Norway">Norway</option>
+                                            <option value="Oman">Oman</option>
+                                            <option value="Pakistan">Pakistan</option>
+                                            <option value="Palau Island">Palau Island</option>
+                                            <option value="Palestine">Palestine</option>
+                                            <option value="Panama">Panama</option>
+                                            <option value="Papua New Guinea">Papua New Guinea</option>
+                                            <option value="Paraguay">Paraguay</option>
+                                            <option value="Peru">Peru</option>
+                                            <option value="Phillipines">Philippines</option>
+                                            <option value="Pitcairn Island">Pitcairn Island</option>
+                                            <option value="Poland">Poland</option>
+                                            <option value="Portugal">Portugal</option>
+                                            <option value="Puerto Rico">Puerto Rico</option>
+                                            <option value="Qatar">Qatar</option>
+                                            <option value="Republic of Montenegro">Republic of Montenegro</option>
+                                            <option value="Republic of Serbia">Republic of Serbia</option>
+                                            <option value="Reunion">Reunion</option>
+                                            <option value="Romania">Romania</option>
+                                            <option value="Russia">Russia</option>
+                                            <option value="Rwanda">Rwanda</option>
+                                            <option value="St Barthelemy">St Barthelemy</option>
+                                            <option value="St Eustatius">St Eustatius</option>
+                                            <option value="St Helena">St Helena</option>
+                                            <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                                            <option value="St Lucia">St Lucia</option>
+                                            <option value="St Maarten">St Maarten</option>
+                                            <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
+                                            <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+                                            <option value="Saipan">Saipan</option>
+                                            <option value="Samoa">Samoa</option>
+                                            <option value="Samoa American">Samoa American</option>
+                                            <option value="San Marino">San Marino</option>
+                                            <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                                            <option value="Saudi Arabia">Saudi Arabia</option>
+                                            <option value="Senegal">Senegal</option>
+                                            <option value="Seychelles">Seychelles</option>
+                                            <option value="Sierra Leone">Sierra Leone</option>
+                                            <option value="Singapore">Singapore</option>
+                                            <option value="Slovakia">Slovakia</option>
+                                            <option value="Slovenia">Slovenia</option>
+                                            <option value="Solomon Islands">Solomon Islands</option>
+                                            <option value="Somalia">Somalia</option>
+                                            <option value="South Africa">South Africa</option>
+                                            <option value="Spain">Spain</option>
+                                            <option value="Sri Lanka">Sri Lanka</option>
+                                            <option value="Sudan">Sudan</option>
+                                            <option value="Suriname">Suriname</option>
+                                            <option value="Swaziland">Swaziland</option>
+                                            <option value="Sweden">Sweden</option>
+                                            <option value="Switzerland">Switzerland</option>
+                                            <option value="Syria">Syria</option>
+                                            <option value="Tahiti">Tahiti</option>
+                                            <option value="Taiwan">Taiwan</option>
+                                            <option value="Tajikistan">Tajikistan</option>
+                                            <option value="Tanzania">Tanzania</option>
+                                            <option value="Thailand">Thailand</option>
+                                            <option value="Togo">Togo</option>
+                                            <option value="Tokelau">Tokelau</option>
+                                            <option value="Tonga">Tonga</option>
+                                            <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+                                            <option value="Tunisia">Tunisia</option>
+                                            <option value="Turkey">Turkey</option>
+                                            <option value="Turkmenistan">Turkmenistan</option>
+                                            <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+                                            <option value="Tuvalu">Tuvalu</option>
+                                            <option value="Uganda">Uganda</option>
+                                            <option value="United Kingdom">United Kingdom</option>
+                                            <option value="Ukraine">Ukraine</option>
+                                            <option value="United Arab Erimates">United Arab Emirates</option>
+                                            <option value="United States of America">United States of America</option>
+                                            <option value="Uraguay">Uruguay</option>
+                                            <option value="Uzbekistan">Uzbekistan</option>
+                                            <option value="Vanuatu">Vanuatu</option>
+                                            <option value="Vatican City State">Vatican City State</option>
+                                            <option value="Venezuela">Venezuela</option>
+                                            <option value="Vietnam">Vietnam</option>
+                                            <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                                            <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                                            <option value="Wake Island">Wake Island</option>
+                                            <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+                                            <option value="Yemen">Yemen</option>
+                                            <option value="Zaire">Zaire</option>
+                                            <option value="Zambia">Zambia</option>
+                                            <option value="Zimbabwe">Zimbabwe</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col" style="float:right;">
+                                    </div>
+                                    <div class="col" style="float:left;">
+                                        <button id="buttDemo" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen1_ButtNext"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="DiseaseField" class="fieldbasics">
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen2_Question"]</h3>
+                                <div class="row" style="padding-top:70px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkDis(this)" class="custom-control-input" id="chkLung" type="checkbox" />
+                                            <label class="custom-control-label" for="chkLung" style="text-align: left;">
+                                                @Localizer["Screen2_op1"]
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkDis(this)" class="custom-control-input" id="chkHeart" type="checkbox" />
+                                            <label class="custom-control-label" for="chkHeart" style="text-align: left;top:-0.25rem !important;">
+                                                @Localizer["Screen2_op2"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:35px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkDis(this)" class="custom-control-input" id="chkCancer" type="checkbox" />
+                                            <label class="custom-control-label" for="chkCancer" style="text-align: left;">
+                                                @Localizer["Screen2_op3"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkDis(this)" class="custom-control-input" id="chkDiabetes" type="checkbox" />
+                                            <label class="custom-control-label" for="chkDiabetes" style="text-align: left;">
+                                                @Localizer["Screen2_op4"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:35px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkDis(this)" class="custom-control-input" id="chkAuto" type="checkbox" />
+                                            <label class="custom-control-label" for="chkAuto" style="text-align: left;">
+                                                @Localizer["Screen2_op5"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkDis(this)" class="custom-control-input" id="chkKidney" type="checkbox" />
+                                            <label class="custom-control-label" for="chkKidney" style="text-align: left;">
+                                                @Localizer["Screen2_op6"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-bottom:40px; padding-top:10px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkDis(this)" class="custom-control-input" id="chkAids" type="checkbox" />
+                                            <label class="custom-control-label" for="chkAids" style="text-align: left;">
+                                                @Localizer["Screen2_op7"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkDis(this)" class="custom-control-input" id="chkNone" type="checkbox" />
+                                            <label class="custom-control-label" for="chkNone" style="text-align: left;">
+                                                @Localizer["Screen2_op9"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttDiseasesPrev" type="button" name="previous" class="btn btn-light buttEstiloBack"><  @Localizer["Screen2_ButtBack"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="buttDiseases" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen2_ButtNext"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="AgeField" class="fieldbasics">
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen3_Question"]</h3>
+                                <div class="row" style="padding-bottom:20px; padding-top:80px;">
+                                    <div class="col">
+                                        <button id="Age1" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op1"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="Age2" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op2"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="Age3" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op3"]</button>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-bottom:20px;">
+                                    <div class="col">
+                                        <button id="Age4" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op4"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="Age5" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op5"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="Age6" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op6"]</button>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-bottom:20px;">
+                                    <div class="col">
+                                        <button id="Age7" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op7"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="Age8" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op8"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="Age9" type="button" style="font-family:Poppins;padding: 1rem 3rem;" class="age btn btn-light">@Localizer["Screen3_op9"]</button>
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttAgePrev" type="button" name="previous" class="btn btn-light buttEstiloBack"><  @Localizer["Screen3_ButtBack"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="buttAge" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen3_ButtNext"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="FeverField" class="fieldbasics">
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen4_Question"]</h3>
+
+                                <div class="row" style="padding-bottom:20px; padding-top:120px;">
+                                    <div class="col">
+                                    </div>
+                                    <div class="col">
+
+                                        <button id="FeverYes" type="button" style="font-family:Poppins;padding: 0.75rem 5rem;" class="fever btn btn-light">@Localizer["Screen4_op1"]</button>
+                                    </div>
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-bottom:40px; padding-top:20px;">
+                                    <div class="col">
+                                    </div>
+                                    <div class="col">
+                                        <button id="FeverNo" type="button" style="font-family:Poppins;padding: 0.75rem 5rem;" class="fever btn btn-light">@Localizer["Screen4_op2"]</button>
+                                    </div>
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttFeverPrev" type="button" name="previous" class="btn btn-light buttEstiloBack"><  @Localizer["Screen4_ButtBack"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="buttFever" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen4_ButtNext"]</button>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset id="CoughField" class="fieldbasics">
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen5.1_Question"]</h3>
+                                <p style="color:#707070;font-family:Poppins; font-size:20px;"><b>@Localizer["Screen5.1_Specification_New1"]</b> @Localizer["Screen5.1_Specification_New2"]</p>
+                                <p style="color:#707070;font-family:Poppins; font-size:20px;"><b>@Localizer["Screen5.1_Specification_Continuous1"]</b> @Localizer["Screen5.1_Specification_Continuous2"]</p>
+                                <div class="row" style="padding-bottom:20px; padding-top:20px;">
+                                    <div class="col">
+                                    </div>
+                                    <div class="col">
+                                        <button id="CoughYes" type="button" style="font-family:Poppins;padding: 0.75rem 5rem;" class="cough btn btn-light">@Localizer["Screen5.1_op1"]</button>
+                                    </div>
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-bottom:30px; padding-top:20px;">
+                                    <div class="col">
+                                    </div>
+                                    <div class="col">
+                                        <button id="CoughNo" type="button" style="font-family:Poppins;padding: 0.75rem 5rem;" class="cough btn btn-light">@Localizer["Screen5.1_op2"]</button>
+                                    </div>
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttCoughPrev" type="button" name="previous" class="btn btn-light buttEstiloBack"><  @Localizer["Screen5.1_ButtBack"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="buttCough" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen5.1_ButtNext"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="DryCoughField" class="fieldbasics">
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen5.2_Question"]</h3>
+                                <p style="color:#707070;font-family:Poppins; font-size:20px;"><b>@Localizer["Screen5.2_Specification_Dry1"]</b> @Localizer["Screen5.2_Specification_Dry2"]</p>
+                                <div class="row" style="padding-bottom:20px; padding-top:70px;">
+                                    <div class="col">
+                                    </div>
+                                    <div class="col">
+                                        <button id="DryCoughYes" type="button" style="padding: 0.75rem 5rem;" class="drycough btn btn-light">@Localizer["Screen5.2_op1"]</button>
+                                    </div>
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-bottom:40px; padding-top:20px;">
+                                    <div class="col">
+                                    </div>
+                                    <div class="col">
+                                        <button id="DryCoughNo" type="button" style="padding: 0.75rem 5rem;" class="drycough btn btn-light">@Localizer["Screen5.2_op2"]</button>
+                                    </div>
+                                    <div class="col">
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttDryCoughPrev" type="button" name="previous" class="btn btn-light buttEstiloBack"><  @Localizer["Screen5.2_ButtBack"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="buttDryCough" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen5.2_ButtNext"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="DisclaimerField" class="fieldbasics">
+
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <img style="width:30%;margin-bottom:20px;" src="~/images/doctorWarning.png" />
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="color:#15C5D8;font-family:Poppins; font-size:20px;"><b>@Localizer["Results_Screen_Hey_p1"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:18px;">@Localizer["Results_Screen_Hey_p2"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;"> <b>@Localizer["Results_Screen_Hey_p3"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- @Localizer["Results_Screen_Hey_p4"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- @Localizer["Results_Screen_Hey_p5"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- @Localizer["Results_Screen_Hey_p6"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- @Localizer["Results_Screen_Hey_p7"]</p>
+                                        <p style="color:#15C5D8;font-family:Poppins; font-size:18px;"><b>@Localizer["Results_Screen_Hey_p8"]</b></p>
+                                        <p style="color:#15C5D8;font-family:Poppins; font-size:14px; margin-top:-16px;"><a href="#" style="text-decoration: underline;cursor:pointer;">@Localizer["Results_Screen_Hey_p9"]</a></p>
+                                        <div class="row">
+
+                                            <button id="buttDisclaimer" style="margin-left:auto;" type="button" name="next" class="btn buttEstiloNext">@Localizer["Results_Screen_Hey_ButtNext"]</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </fieldset>
+                            <fieldset id="BreathField" class="fieldbasics">
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen6_Question"]</h3>
+                                <div class="row" style="padding-top:60px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkBreath(this)" class="custom-control-input" id="chkBreathe1" type="checkbox" />
+                                            <label class="custom-control-label" for="chkBreathe1" style="width: 500px;text-align: left;">
+                                                @Localizer["Screen6_op1"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:30px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkBreath(this)" class="custom-control-input" id="chkBreathe2" type="checkbox" />
+                                            <label class="custom-control-label" for="chkBreathe2" style="width: 500px; text-align: left;">
+                                                @Localizer["Screen6_op2"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:30px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkBreath(this)" class="custom-control-input" id="chkBreathe3" type="checkbox" />
+                                            <label class="custom-control-label" for="chkBreathe3" style="width: 500px; text-align: left;">
+                                                @Localizer["Screen6_op3"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkBreath(this)" class="custom-control-input" id="chkBreathe4" type="checkbox" />
+                                            <label class="custom-control-label" for="chkBreathe4" style="width: 500px; text-align: left;">
+                                                @Localizer["Screen6_op4"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:10px;padding-bottom:40px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkBreath(this)" class="custom-control-input" id="chkBreathe5" type="checkbox" />
+                                            <label class="custom-control-label" for="chkBreathe5" style="width: 500px; text-align: left;">
+                                                @Localizer["Screen6_op5"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttPreviousBreath" type="button" name="previous" class="btn btn-light buttEstiloBack"><  @Localizer["Screen6_ButtBack"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="buttBreath" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen6_ButtNext"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="BreathTest" class="fieldbasics">
+                                <img style="height:200px;margin-bottom:20px;" src="~/images/lungs 2.png" />
+                                <h3 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen7_Instruction1"]</h3>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: center;"> @Localizer["Screen7_Instruction2"]</p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: center;margin-top: -16px;"> @Localizer["Screen7_Instruction3.1"] <b>@Localizer["Screen7_Instruction3.2"]</b> @Localizer["Screen7_Instruction3.3"] </p>
+                                <p style="color:#15C5D8;font-family:Poppins; font-size:14px;text-align: center;margin-top: -16px;"><b> @Localizer["Screen7_Instruction4"]</b> </p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: center;margin-top: -16px;"> <b>@Localizer["Screen7_Instruction5"]</b> </p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: center;">@Localizer["Screen7_Instruction6.1"] <b>@Localizer["Screen7_Instruction6.2"]</b>.  </p>
+                                <button id="buttStartBreathTest" type="button" style=" color:white;margin-top:30px; background-color:#15C5D8; font-family:Poppins; font-size:22px; padding: 0.75rem 5rem;" name="next" class="btn">@Localizer["Screen7_ButtStart"]</button>
+                            </fieldset>
+                            <fieldset id="BreathTest2" class="fieldbasics">
+                                <h3 id="orderTimer" style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Activity_prep1"]</h3>
+                                <h3 id="orderTimerb" style="color:#15C5D8; font-family:Poppins; font-size:25px; text-align:center;"></h3>
+                                <h3 id="timer" style="color:#707070; font-family:Poppins; font-size:50px;margin-top:80px;margin-bottom:60px; text-align:center;"></h3>
+                                <p id="restartBreath" style="color:#707070;font-family:Poppins; margin-top: 100px;margin-bottom: 0px; font-size:12px;text-align: center; display:none;"> @Localizer["Activity_Screen_restart"]  </p>
+                                <button id="buttBreathTestStop" type="button" style="font-family:Poppins; font-size:22px; padding: 0.75rem 5rem; display:none;" name="next" class="btn btn-light">@Localizer["Activity_ButtRestart"]</button>
+                            </fieldset>
+                            <fieldset id="BreathTest3" class="fieldbasics">
+                                <p id="restartBreath" style="color:#707070;font-family:Poppins;font-size:20px;text-align: center;"> @Localizer["Screen8_Intro"]</p>
+                                <h4 style="color:#707070; font-family:Poppins; font-size:20px; text-align:center;margin-top: 30px;">@Localizer["Screen8_Question1"]</h4>
+                                <input id="breathNumber" type="number" style="width:100px;margin-top: 30px;" value="0" min="0" max="50" step="1" />
+                                <h4 style="color:#707070; font-family:Poppins; font-size:20px; text-align:center;margin-top: 30px;">@Localizer["Screen8_Question2"]</h4>
+                                <div class="row" style="padding-bottom:20px; padding-top:40px;">
+                                    <div class="col">
+                                        <button id="AfterTest1" type="button" style="font-family:Poppins;padding: 1rem 2rem;" class="AfT btn btn-light">@Localizer["Screen8_op1"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="AfterTest2" type="button" style="font-family:Poppins;padding: 1rem 2rem;" class="AfT btn btn-light">@Localizer["Screen8_op2"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="AfterTest3" type="button" style="font-family:Poppins;padding: 1rem 2rem;" class="AfT btn btn-light">@Localizer["Screen8_op3"]</button>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttPreviousGoToTest" type="button" name="previous" class="btn btn-light buttEstiloBack"><  @Localizer["Screen8_ButtBack"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="buttBreathAfterTest" type="button" name="next" class="btn buttEstiloNext" disabled>@Localizer["Screen8_ButtNext"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="LastCondition" class="fieldbasics">
+                                <h4 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen9_Question"]</h4>
+                                <h4 style="color:#707070; font-family:Poppins; font-size:25px; text-align:center;">@Localizer["Screen9_Line"]</h4>
+
+                                <div class="row" style="padding-top:90px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkLast(this)" class="custom-control-input" id="chkConfused" type="checkbox" />
+                                            <label class="custom-control-label" for="chkConfused" style="text-align: left;">
+                                                @Localizer["Screen9_op1"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkLast(this)" class="custom-control-input" id="chkChoking" type="checkbox" />
+                                            <label class="custom-control-label" for="chkChoking" style="text-align: left;">
+                                                @Localizer["Screen9_op2"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="padding-top:30px; padding-bottom:50px;">
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkLast(this)" class="custom-control-input" id="chkLipsBlue" type="checkbox" />
+                                            <label class="custom-control-label" for="chkLipsBlue" style="text-align: left;">
+                                                @Localizer["Screen9_op3"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col" style="width:60px">
+                                        <div class="custom-control-lg custom-control custom-checkbox">
+                                            <input onchange="checkLast(this)" class="custom-control-input" id="chkLastNone" type="checkbox" />
+                                            <label class="custom-control-label" for="chkLastNone" style="text-align: left;">
+                                                @Localizer["Screen9_op4"]
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="position:absolute;bottom:0;width:100%">
+                                    <div class="col">
+                                        <button id="buttPreviousLast" type="button" name="previous" class="btn btn-light buttEstiloBack"><  @Localizer["Screen9_ButtBack"]</button>
+                                    </div>
+                                    <div class="col">
+                                        <button id="buttLast" type="button" style="float:right;color:white;background-color:#15C5D8; font-family:Poppins; font-size:22px; padding: 0.75rem 5rem;" name="next" class="btn" disabled>@Localizer["Screen9_ButtFinish"]</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="YellowField" class="fieldbasics">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <img style="width: 100%;margin-bottom:20px;border-radius: 25px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" src="~/images/yellow warning@4x.png" />
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="color:#F9CC3D;font-family:Poppins;font-size:20px;"><b>@Localizer["Results_Screen_Yellow_p1"] </b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:18px; margin-top:-16px;">@Localizer["Results_Screen_Yellow_p2"] </p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;">@Localizer["Results_Screen_Yellow_p3.1"] <b style="color:#F9CC3D;">@Localizer["Results_Screen_Yellow_p3.2"]</b> @Localizer["Results_Screen_Yellow_p3.3"] </p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;">- @Localizer["Results_Screen_Yellow_p4.1"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- @Localizer["Results_Screen_Yellow_p4.2"] </p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- @Localizer["Results_Screen_Yellow_p4.3"] </p>
+                                        <p style="color:#F9CC3D;font-family:Poppins;margin-top:14px; font-size:18px;"><b>@Localizer["Results_Screen_Yellow_p5"] </b></p>
+                                        <p style="color:#F9CC3D;font-family:Poppins;margin-top:14px; font-size:18px;"><b>@Localizer["Results_Screen_Yellow_p6"] </b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:18px;"><b>@Localizer["Results_Screen_Yellow_p7"]</b></p>
+                                        <p style="color:#15C5D8;font-family:Poppins; font-size:14px; margin-top:-16px;"><a href="#" style="text-decoration: underline;cursor:pointer;">@Localizer["Results_Screen_Yellow_recom"]</a></p>
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                @*<a id="buttMyResults" role="button" style="color:white;background-color:#15C5D8; font-family:Poppins; font-size:22px; padding: 0.75rem 5rem; margin-left:auto;margin-right:auto;" name="next" href="/Home/Results" class="btn">Results</a>*@
+                                            </div>
+                                            <div class="col-sm">
+                                                <a name="next" style="float: right;" class="btn buttEstiloEXIT" href="/Home" role="button">@Localizer["Results_Screen_Yellow_ButtExit"]</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset id="OrangeField" class="fieldbasics">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <img style="width: 100%;margin-bottom:20px; border-radius: 15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" src="~/images/orange warning 3@4x.png" />
+
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="color:#ed7611;font-family:Poppins; font-size:20px;"><b>@Localizer["Results_Screen_Orange_p1"]</b></p>
+                                        <p style="color:#ed7611;font-family:Poppins;margin-top:18px; font-size:18px;"><b>@Localizer["Results_Screen_Orange_p2"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">@Localizer["Results_Screen_Orange_p3"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;"><b>@Localizer["Results_Screen_Orange_p4"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;"><b>@Localizer["Results_Screen_Orange_p5"]</b></p>
+                                        <p style="color:#15C5D8;font-family:Poppins; font-size:14px; margin-top:-16px;"><a href="#" style="text-decoration: underline;cursor:pointer;">@Localizer["Results_Screen_Yellow_recom"]</a></p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        @*<a id="buttMyResults" role="button" style="color:white;background-color:#15C5D8; font-family:Poppins; font-size:22px; padding: 0.75rem 5rem; margin-left:auto;margin-right:auto;" name="next" href="/Home/Results" class="btn">Results</a>*@
+                                    </div>
+                                    <div class="col-sm">
+                                        <a name="next" class="btn buttEstiloEXIT" href="/Home" role="button">@Localizer["Results_Screen_Orange_ButtExit"]</a>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset id="GreenField" class="fieldbasics">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <img style="width: 100%;margin-bottom:20px; border-radius: 25px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" src="~/images/green warning 4@4x.png" />
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="color:#83C96A;font-family:Poppins; font-size:20px;"> <b>@Localizer["Results_Screen_Green_p1"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:18px;"> <b>@Localizer["Results_Screen_Green_p2"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;"> • @Localizer["Results_Screen_Green_p3"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;"> • @Localizer["Results_Screen_Green_p4"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:18px;"><b>@Localizer["Results_Screen_Green_p5"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;"> • @Localizer["Results_Screen_Green_p6"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;"> • @Localizer["Results_Screen_Green_p7"]</p>
+                                        <p style="color:#15C5D8;font-family:Poppins; font-size:14px; margin-top:-16px;"><a href="#" style="text-decoration: underline;cursor:pointer;">@Localizer["Results_Screen_Green_Recom"]</a></p>
+                                        <div class="row">
+                                            @*<a id="buttMyResults" role="button" style="color:white;background-color:#15C5D8; font-family:Poppins; font-size:22px; padding: 0.75rem 5rem; margin-left:auto;margin-right:auto;" name="next" href="/Home/Results" class="btn">Results</a>*@
+                                        </div>
+                                        <div class="row">
+                                            <a name="next" class="btn buttEstiloEXIT" href="/Home" role="button">@Localizer["Results_Screen_Green_ButtExit"]</a>
+                                        </div>
+
+
+                                        @*<button id="buttExit" type="button" style="color:white;background-color:#D81515; font-family:Poppins; font-size:22px; margin-top:10px; padding: 0.75rem 5rem;" name="next" class="btn">Exit</button>*@
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset id="RedField" class="fieldbasics">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <img style="width: 100%;margin-bottom:20px;border-radius: 25px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);" src="~/images/red warning 3@4x.png" />
+                                    </div>
+                                    <div class="col-sm">
+                                        <p style="color:#D81515;font-family:Poppins; font-size:20px;text-align: left;"> <b>@Localizer["Results_Screen_Red_p1"]</b></p>
+                                        <p style="color:#D81515;font-family:Poppins; font-size:18px;text-align: left;"> <b>@Localizer["Results_Screen_Red_p2"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:18px;text-align: left;"> <b>@Localizer["Results_Screen_Red_p3"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: left;margin-top: -16px;">- @Localizer["Results_Screen_Red_p4"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: left;margin-top: -16px;">- @Localizer["Results_Screen_Red_p5"]</p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:18px;text-align: left;"> <b>@Localizer["Results_Screen_Red_p6"]</b></p>
+                                        <p style="color:#707070;font-family:Poppins; font-size:14px;text-align: left;margin-top: -16px;"> @Localizer["Results_Screen_Red_p7"]</p>
+                                        <p style="color:#D81515;font-family:Poppins; font-size:18px;text-align: left;"> <b>@Localizer["Results_Screen_Red_p8"]</b></p>
+                                        <div class="row">
+                                            <a name="next" style="float: right;" class="btn buttEstiloEXIT" href="/Home" role="button">@Localizer["Results_Screen_Red_ButtExit"]</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                            <fieldset id="IsolationField" class="fieldbasics">
+                                <p style="color:#15C5D8;font-family:Poppins;font-size:20px;"><b>• Self-isolation helps stop coronavirus from spreading</b></p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">You have symptoms of coronavirus (COVID-19). </p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px;">Therefore, you, and those you live with,<b style="color:#15C5D8;"> must self-isolate for 10 days.</b> This means you must:</p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- not leave your home for any reason</p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- not go out to buy food or pick up medicine – have it delivered, or ask someone to drop it off at your door</p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">- not have any visitors, such as friends and family (only those you live with should be in your home)</p>
+                                <p style="color:#15C5D8;font-family:Poppins;font-size:20px;"><b>• Please avoid sharing personal items like dishes, utensils, bedding and towels. Please do wash your hands with soap and water frequently, for at least 20 seconds.</b></p>
+                                <p style="color:#15C5D8;font-family:Poppins;font-size:20px;"><b>• You can use your yard (if you have one) as long as it is private</b></p>
+                                <p style="color:#707070;font-family:Poppins; font-size:14px; margin-top:-16px;">(meaning it is not shared with people from other units). </p>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        @*<a id="buttMyResults" role="button" style="color:white;background-color:#15C5D8; font-family:Poppins; font-size:22px; padding: 0.75rem 5rem; margin-left:auto;margin-right:auto;" name="next" href="/Home/Results" class="btn">Results</a>*@
+                                    </div>
+                                    <div class="col-sm">
+                                        <a name="next" style="float: right;" class="btn buttEstiloEXIT" href="/Home" role="button">EXIT</a>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=INSERTKEY&libraries=visualization,places&callback=initAutocomplete&language=en"></script>
