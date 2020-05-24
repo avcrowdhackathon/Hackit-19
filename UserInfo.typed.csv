@@ -1,0 +1,2 @@
+PartitionKey,PreviousDiseases,PreviousDiseases@type,Respiratory,Respiratory@type,RowKey,Sexo,Sexo@type,Timestamp
+1,"1,2,3",Edm.String,true,Edm.Boolean,8,1,Edm.String,2020-03-29T22:23:06.659Z

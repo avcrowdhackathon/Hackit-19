@@ -1,0 +1,5 @@
+DRAWLEVEL,DRAWLEVEL@type,PartitionKey,QUERYLEVEL,QUERYLEVEL@type,READLEVEL,READLEVEL@type,RowKey,Timestamp,WRITELEVEL,WRITELEVEL@type
+Administrative_area_level_3,Edm.String,Chile,Administrative_area_level_1,Edm.String,administrative_area_level_3,Edm.String,2020-04-26,2020-05-18T16:18:16.047Z,administrative_area_level_3,Edm.String
+Administrative_area_level_2,Edm.String,Germany,Administrative_area_level_2,Edm.String,administrative_area_level_3,Edm.String,2020-04-26,2020-04-27T21:18:40.468Z,postal_code,Edm.String
+Administrative_area_level_3,Edm.String,Greece,Administrative_area_level_2,Edm.String,Administrative_area_level_4,Edm.String,2020-04-26,2020-04-27T22:30:39.767Z,postal_code,Edm.String
+Administrative_area_level_4,Edm.String,Spain,Administrative_area_level_2,Edm.String,Administrative_area_level_4,Edm.String,2020-04-26,2020-04-27T21:47:13.336Z,postal_code,Edm.String
